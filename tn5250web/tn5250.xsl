@@ -15,18 +15,13 @@
 
 <!-- Named templates. -->
 
-<xsl:template name="copy-id-attr">
- <xsl:for-each select="@id">
-  <xsl:copy/>
- </xsl:for-each>
-</xsl:template>
-
 <xsl:template name="copy-lang-attr">
  <xsl:for-each select="@xml:lang">
   <xsl:attribute name="lang"><xsl:value-of select="."/></xsl:attribute>
  </xsl:for-each>
 </xsl:template>
 
+<xsl:parameter name="docuri">http%3A%2F%2Ftn5250.sourceforge.net%2F<xsl:value-of select="/webpage/head/docuri"/></xsl:parameter>
 
 <!-- Top-level document elements. -->
 
@@ -67,12 +62,12 @@
        width="88" height="31" alt="[SourceForge]" class="button"/>
     </a>
     <xsl:text> </xsl:text>
-    <a href="http://validator.w3.org/check?uri={head/docuri};doctype=Inline">
+    <a href="http://validator.w3.org/check?uri={$docuri};doctype=Inline">
      <img src="valid-html401.png"
        height="31" width="88" alt="[Valid HTML 4]" class="button"/>
     </a>
     <xsl:text> </xsl:text>
-    <a href="http://jigsaw.w3.org/css-validator/validator?uri={head/docuri}">
+    <a href="http://jigsaw.w3.org/css-validator/validator?uri={$docuri}">
      <img src="vcss.png"
        height="31" width="88" alt="[Valid CSS]" class="button"/>
     </a>
@@ -95,8 +90,14 @@
 
 <xsl:template match="h1|h2|h3">
  <xsl:copy>
-  <xsl:call-template name="copy-id-attr"/>
-  <xsl:value-of select="text()"/>
+  <xsl:choose>
+   <xsl:when test="@id">
+    <a name="{@id}">xsl:value-of select="text()"/></a>
+   </xsl:when>
+   <xsl:otherwise>
+    <xsl:value-of select="text()"/>
+   </xsl:otherwise>
+  </xsl:choose>
  </xsl:copy>
 </xsl:template>
 
@@ -120,8 +121,11 @@
 
 <xsl:template match="a">
  <a>
-  <xsl:call-template name="copy-id-attr"/>
+  <xsl:for-each select="@id">
+   <xsl:attribute name="name"><xsl:value-of select="."/></xsl:attribute>
+  </xsl:for-each>
   <xsl:for-each select="@href"><xsl:copy/></xsl:for-each>
+
   <xsl:apply-templates select="*|text()"/>
  </a>
 </xsl:template>

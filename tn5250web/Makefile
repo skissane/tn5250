@@ -5,8 +5,10 @@ HTMLDOCS = index.html resources.html
 
 all: $(HTMLDOCS)
 
+$(HTMLDOCS): tn5250.xsl
+
 %.html: %.xml
-	$(JRE) $(XSLTPROC) -a -o $@ $<
+	$(JRE) $(XSLTPROC) -a -o $@.tmp $< && mv $@.tmp $@
 
 clean:
 	$(RM) $(HTMLDOCS)

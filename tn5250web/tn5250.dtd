@@ -33,7 +33,7 @@
 <!ATTLIST webpage
 	xml:lang	CDATA		#IMPLIED>
 
-<!ELEMENT head (title, docuri, trail*)>
+<!ELEMENT head (title, docuri?, trail*)>
 
 <!ELEMENT title (#PCDATA)>
 
@@ -69,7 +69,7 @@
 <!ELEMENT a (%Inline;)*>
 <!ATTLIST a
 	%IdAttr;
-	href		CDATA		#IMPLIED>
+	href		CDATA		#REQUIRED>
 
 <!ELEMENT rfc EMPTY>
 <!ATTLIST rfc
