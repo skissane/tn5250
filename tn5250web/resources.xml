@@ -1,0 +1,100 @@
+<?xml version="1.0"?>
+
+<!DOCTYPE webpage SYSTEM "tn5250.dtd">
+
+<?xml-stylesheet href="tn5250.xsl" type="text/xml"?>
+
+<webpage xml:lang="en">
+  <head>
+    <title>Developer Resources</title>
+    <docuri>http%3A%2F%2Ftn5250.sourceforge.net%2Fresources.html</docuri>
+    <trail href="./">tn5250</trail>
+  </head>
+
+  <body>
+    <h1>tn5250 Developer Resources</h1>
+
+    <h2 id="ietf">IETF</h2>
+
+    <p>The
+      <a href="http://www.ietf.org/html.charters/tn3270e-charter.html">IETF
+        tn3270e Working Group</a> defines standards for 3270 and
+      5250 over TCP/IP.  These standards make use of the existing
+      Telnet standards.</p>
+
+    <dl>
+      <dt><rfc number="854"/></dt>
+      <dd>Telnet Protocol Specification</dd>
+
+      <dt><rfc number="855"/></dt>
+      <dd>Telnet Option Specifications</dd>
+
+      <dt><rfc number="856"/></dt>
+      <dd>Telnet Binary Transmission</dd>
+
+      <dt><rfc number="860"/></dt>
+      <dd>Telnet Timing Mark Option</dd>
+
+      <dt><rfc number="885"/></dt>
+      <dd>Telnet End Of Record Option</dd>
+
+      <dt><rfc number="1091"/></dt>
+      <dd>Telnet Terminal-Type Option</dd>
+
+      <dt><rfc number="1205"/></dt>
+      <dd>5250 Telnet Interface</dd>
+
+      <dt><rfc number="1572"/></dt>
+      <dd>Telnet Environment Option</dd>
+
+      <dt><rfc number="2877"/></dt>
+      <dd>5250 Telnet Enhancements.  This standard extends RFC 1250
+	and includes a useful list of references in section 13.</dd>
+    </dl>
+
+    <h2 id="ibm">IBM</h2>
+
+    <p>These documents are available online from IBM and include
+      information relevant to the tn5250 project.</p>
+
+    <dl>
+      <dt><ibmbook code="CO2E2001" pubnum="SC30-3533-03"/></dt>
+      <dd>5494 Remote Control Unit, Functions Reference</dd>
+
+      <dt><ibmbook code="QB3AQ501" pubnum="SC41-5603-01"/></dt>
+      <dd>AS/400 International Application Development V4R2.
+	Appendices A and F describe the EBCDIC and ASCII character
+	sets that the AS/400 supports.</dd>
+
+      <dt><ibmbook code="QB3AWC01" pubnum="SC41-5101-01"/></dt>
+      <dd>AS/400 National Language Support V4R2.  Further information
+	about character sets, especially as it relates to display
+	devices.</dd>
+
+      <dt><ibmbook code="QB3AQ501" pubnum="SC09-2190-01"/></dt>
+      <dd>CDRA Reference.  Even more information about how character
+	sets work on the AS/400, and how conversion between them
+	should work.</dd>
+
+      <dt><ibmbook code="QB3ANB00" pubnum="SC41-5401-00"/></dt>
+      <dd>OS/400 Communications Configuration V4R1.  Chapter 8 defines
+	the parameters that may be passed to the AS/400 over the
+	telnet connection to configure the display or printer device.</dd>
+
+      <dt><a href="ftp://ftp.networking.ibm.com/pub/standards/ciw/sig/sec/pwsubciw.zip">PWSUBS</a> (Zip file)</dt>
+      <dd>APPC Password Substitution.  This describes the currently
+	unimplemented scheme used for automatic signon.</dd>
+    </dl>
+
+    <p>The final document above is Postscript, and almost follows the
+      <a href="http://partners.adobe.com/asn/developer/technotes/postscript.html">Document
+	Structuring Conventions</a> which allow programs like
+      <a href="http://wwwthep.physik.uni-mainz.de/~plass/gv/">gv</a>
+      to go forwards and <em>backwards</em> through the document.  A
+      small Perl script <a href="splitpwsfont.pl">splitpwsfont.pl</a>
+      extracts the fonts and document into separate files.  You can
+      then set <var>GS_FONTPATH</var> to point at these files while
+      running gv: <kbd>env GS_FONTPATH=$PWD gv pwsubs.ps</kbd>.
+    </p>
+  </body>
+</webpage>

@@ -1,0 +1,36 @@
+body {
+  font-family: lucida, verdana, sans-serif;
+  color: black;
+  background: white;
+}
+
+h1, h2, h3 {
+  font-family: lucida, verdana, sans-serif;
+  text-align: left;
+  margin-left: 18pt;
+}
+
+p, ul, ol, dl {
+  font-family: lucida, verdana, sans-serif;
+}
+
+tt, pre, kbd {
+  font-family: lucidatypewriter, lucida console, monospace;
+}
+
+.titlebar {
+  color: black;
+  background: #d1d5d7;
+  border-style: none none solid none;
+  border-width: thin;
+}
+
+.titlecell {
+  font-family: tahoma, lucida, sans-serif;
+  font-size: smaller;
+}
+
+.button {
+  border-style: none;
+  border-width: 0;
+}

@@ -1,0 +1,107 @@
+<?xml version="1.0"?>
+
+<!DOCTYPE webpage SYSTEM "tn5250.dtd">
+
+<?xml-stylesheet href="tn5250.xsl" type="text/xml"?>
+
+<webpage xml:lang="en">
+  <head>
+    <title>tn5250</title>
+    <docuri>http%3A%2F%2Ftn5250.sourceforge.net%2F</docuri>
+  </head>
+
+  <body>
+    <h1>tn5250</h1>
+
+    <p>This is the homepage for the free tn5250 emulator.  It’s
+      sometimes described as “Linux tn5250”, although it
+      works on FreeBSD and any other modern Unix.</p>
+
+    <p>tn5250 is a telnet client for the
+<a href="http://www.iseries.ibm.com/">IBM AS/400</a> that emulates
+      5250 terminals and printers.  This function is the same as that
+      provided by the 5250 emulator in IBM Client Access.</p>
+
+    <p>The tn5250 project is kindly hosted by
+      <a href="http://sourceforge.net/">SourceForge</a>.  Thanks!</p>
+
+
+    <h2>People</h2>
+
+    <p><a href="http://www.linux-sna.org/software/5250/">Michael
+	Madore</a> is the principal author of tn5250 — he got the
+      whole thing going.</p>
+
+    <p><a href="http://www.nacs.net/~jasonf/">Jay Felice</a> has done
+      a lot of good work on tn5250 as well, and provided the CVS
+      server and download site for a few years.</p>
+
+    <p>Scott Klement has gotten himself into the ChangeLog a bit,
+      too.</p>
+
+    <p><a href="http://home.clear.net.nz/pages/c.evans/">Carey
+	Evans</a>, your humble narrator, hasn’t done much; he
+      contributed the initial
+      <a href="http://www.gnu.org/software/automake/automake.html">automake</a>
+      support and left it for Michael and Jay to get working, wrote
+      the man pages, and got the project set up on
+      SourceForge.</p>
+
+    <p>Many others have contributed
+      <a href="http://sourceforge.net/tracker/?group_id=27533&amp;atid=390791">bug reports</a>,
+      <a href="http://sourceforge.net/tracker/?group_id=27533&amp;atid=390794">feature requests</a>,
+      <a href="http://sourceforge.net/tracker/?group_id=27533&amp;atid=390793">patches</a>
+      and suggestions.  Thanks to you all!</p>
+
+
+<h2>Users</h2>
+
+<p>The source for the latest stable version of tn5250 should be
+able to be downloaded from the
+<a href="http://sourceforge.net/project/showfiles.php?group_id=27533">Sourceforge
+files page</a>.  <a href="http://www.debian.org/">Debian</a>
+users can install it via apt: <kbd>apt-get install
+tn5250</kbd>.  RedHat users can download
+<a href="ftp://ftp.falsehope.com/home/gomez/tn5250/">RPMs
+prepared by Henri Gomez</a>.</p>
+
+<p>Discussion about tn5250 takes place on the
+<a href="http://www.midrange.com/linux5250.shtml">LINUX5250
+mailing list</a>, which is located at
+<a href="http://www.midrange.com/">MIDRANGE dot COM</a>.
+The <a href="http://archive.midrange.com/linux5250/index.htm">mailing
+list archives</a> are also available there.</p>
+
+<p>You can report bugs and send patches to the mailing list, or use the
+<a href="http://sourceforge.net/tracker/?group_id=27533">SourceForge
+Trackers</a> on the
+<a href="http://sourceforge.net/projects/tn5250/">tn5250
+project pages</a>.</p>
+
+<p>There is also a
+<a href="http://perso.libertysurf.fr/plinux/tn5250-faq.html">tn5250
+FAQ</a> available.  It’s a little out of date, but still
+contains useful information.</p>
+
+
+<h2>Developers</h2>
+
+<p>As well as the resources for users listed above, the
+CVS repository is hosted on SourceForge.  See the
+<a href="http://sourceforge.net/cvs/?group_id=27533">tn5250
+CVS page</a>.</p>
+
+<p>There’s also a page of <a href="resources.html">links to
+related documentation</a> at this site.</p>
+
+
+<h2>Related Free Software</h2>
+
+<p><a href="http://tn5250j.sourceforge.net/">tn5250j</a> is a 5250
+emulator written in Java.</p>
+
+<p><a href="http://www.geocities.com/SiliconValley/Peaks/7814/">x3270</a>
+implements the tn3270 protocol, which is very similar to tn5250.</p>
+
+</body>
+</webpage>

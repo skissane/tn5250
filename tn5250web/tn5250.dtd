@@ -1,0 +1,81 @@
+<!--
+  DTD for tn5250 web pages source.
+  This code is placed in the public domain.
+-->
+
+<!-- Character entities from XHTML. -->
+
+<!ENTITY % HTMLlat1 PUBLIC
+   "-//W3C//ENTITIES Latin 1 for XHTML//EN"
+   "/usr/lib/sgml/dtd/xhtml-1.1/xhtml-lat1.ent">
+%HTMLlat1;
+
+<!ENTITY % HTMLsymbol PUBLIC
+   "-//W3C//ENTITIES Symbols for XHTML//EN"
+   "/usr/lib/sgml/dtd/xhtml-1.1/xhtml-symbol.ent">
+%HTMLsymbol;
+
+<!ENTITY % HTMLspecial PUBLIC
+   "-//W3C//ENTITIES Special for XHTML//EN"
+   "/usr/lib/sgml/dtd/xhtml-1.1/xhtml-special.ent">
+%HTMLspecial;
+
+
+<!-- Entity definitions. -->
+
+<!ENTITY % IdAttr "id ID #IMPLIED">
+
+<!ENTITY % Inline "#PCDATA|kbd|var|em|strong|a|rfc|ibmbook">
+
+<!-- Document structure. -->
+
+<!ELEMENT webpage (head, body)>
+<!ATTLIST webpage
+	xml:lang	CDATA		#IMPLIED>
+
+<!ELEMENT head (title, docuri, trail*)>
+
+<!ELEMENT title (#PCDATA)>
+
+<!ELEMENT docuri (#PCDATA)>
+
+<!ELEMENT trail (#PCDATA)>
+<!ATTLIST trail
+	href		CDATA		#REQUIRED>
+
+<!ELEMENT body (h1|h2|h3|p|dl|ul|ol)*>
+
+<!ELEMENT h1 (%Inline;)*>
+<!ATTLIST h1 %IdAttr;>
+
+<!ELEMENT h2 (%Inline;)*>
+<!ATTLIST h2 %IdAttr;>
+
+<!ELEMENT h3 (%Inline;)*>
+<!ATTLIST h3 %IdAttr;>
+
+<!ELEMENT dl (dt,dd)*>
+
+<!ELEMENT dt (%Inline;)*>
+<!ELEMENT dd (%Inline;)*>
+
+<!ELEMENT p (%Inline;)*>
+
+<!ELEMENT kbd (%Inline;)*>
+<!ELEMENT var (%Inline;)*>
+<!ELEMENT em (%Inline;)*>
+<!ELEMENT strong (%Inline;)*>
+
+<!ELEMENT a (%Inline;)*>
+<!ATTLIST a
+	%IdAttr;
+	href		CDATA		#IMPLIED>
+
+<!ELEMENT rfc EMPTY>
+<!ATTLIST rfc
+	number		CDATA		#REQUIRED>
+
+<!ELEMENT ibmbook EMPTY>
+<!ATTLIST ibmbook
+	code		CDATA		#REQUIRED
+	pubnum		CDATA		#REQUIRED>
