@@ -1,3 +1,7 @@
+2003-07-30  Scott Klement <klemscot@klements.com>
+        * Changed link for James' HOWTO to point to his web site so users
+           dont have to read the entire thread
+
 2003-06-11  Carey Evans  <careye@spamcop.net>
 
 	* style.css: Slightly reduce base font size.
