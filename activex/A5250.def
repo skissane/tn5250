@@ -1,0 +1,9 @@
+; A5250.def : Declares the module parameters.
+
+LIBRARY      "A5250.DLL"
+
+EXPORTS
+	DllCanUnloadNow		PRIVATE
+	DllGetClassObject	PRIVATE
+	DllRegisterServer	PRIVATE
+	DllUnregisterServer	PRIVATE

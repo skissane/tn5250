@@ -1,0 +1,36 @@
+HKCR
+{
+	A5250.Term5250.1 = s 'Term5250 Class'
+	{
+		CLSID = s '{4F051715-BD6B-4BEF-988A-6F70E7F149FC}'
+		'Insertable'
+	}
+	A5250.Term5250 = s 'Term5250 Class'
+	{
+		CLSID = s '{4F051715-BD6B-4BEF-988A-6F70E7F149FC}'
+		CurVer = s 'A5250.Term5250.1'
+	}
+	NoRemove CLSID
+	{
+		ForceRemove {4F051715-BD6B-4BEF-988A-6F70E7F149FC} = s 'Term5250 Class'
+		{
+			ProgID = s 'A5250.Term5250.1'
+			VersionIndependentProgID = s 'A5250.Term5250'
+			ForceRemove 'Programmable'
+			InprocServer32 = s '%MODULE%'
+			{
+				val ThreadingModel = s 'Apartment'
+			}
+			val AppID = s '%APPID%'
+			ForceRemove 'Control'
+			ForceRemove 'Insertable'
+			ForceRemove 'ToolboxBitmap32' = s '%MODULE%, 105'
+			'MiscStatus' = s '0'
+			{
+			    '1' = s '%OLEMISC%'
+			}
+			'TypeLib' = s '{AF9845C2-042D-411F-B6E1-D67693760752}'
+			'Version' = s '1.0'
+		}
+	}
+}

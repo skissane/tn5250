@@ -1,0 +1,74 @@
+<HTML>
+	<HEAD>
+		<TITLE>Terminal 5250</TITLE>
+		<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+
+		<SCRIPT LANGUAGE="JScript">
+			<!-- Look into the IDL to know the methods and properties available. -->
+			var SizeBig = true;
+
+			function MyOnLoadPage()
+			{
+				// Term5250.MouseMoveCursor = true;
+				Term5250.SelectionEnabled = false;
+				Term5250.Caption = "Won't connect";
+				window.defaultStatus = "Waiting to connect";
+
+				// Autoconnect code
+				// Connect();
+				Term5250.focus();
+			}
+			function Connect()
+			{
+				Term5250.HostName = "127.0.0.1";
+	  			Term5250.Connect();
+			}
+	
+			function Disconnect()
+			{
+	  			Term5250.Disconnect();
+			}
+			function ToggleSize()
+			{
+				if ( SizeBig )
+				{
+					ResizeSmall();
+					SizeBig = false;
+				}
+				else
+				{
+					ResizeBig();
+					SizeBig = true;
+				}
+			}
+
+			function ResizeSmall()
+			{
+	  			Term5250.style.width = 564;
+	  			Term5250.style.height = 352;
+			}
+			function ResizeBig()
+			{
+	  			Term5250.style.width = 884;
+	  			Term5250.style.height = 579;
+			}
+		</SCRIPT>
+		<SCRIPT FOR="Term5250" EVENT="Connected()" LANGUAGE="JScript">
+				window.defaultStatus = "Connected to " + Term5250.HostName;
+		</SCRIPT>
+		<SCRIPT FOR="Term5250" EVENT="Disconnected()" LANGUAGE="JScript">
+				window.defaultStatus = "Disconnected";
+		</SCRIPT>
+
+	</HEAD>
+	<BODY OnLoad="MyOnLoadPage()">
+		<b>Note:</b> &nbsp;&nbsp; Use the button above to show the keyboard. &nbsp;&nbsp;&nbsp;&nbsp; Click on the button below to change the size of the terminal.
+		<br>
+		<OBJECT id="Term5250" style="width:884;height:579" classid="CLSID:4F051715-BD6B-4BEF-988A-6F70E7F149FC"></OBJECT>
+		<p>
+		&nbsp;&nbsp;&nbsp;&nbsp;
+		<INPUT type="button" name="ResetConnectionBtn" value="Reset Connection" onclick="Connect()">
+		&nbsp;&nbsp;&nbsp;&nbsp;
+		<INPUT type="button" name="ToggleSizeBtn" value="Toggle Terminal Size" onclick="ToggleSize()">
+	</BODY>
+</HTML>
