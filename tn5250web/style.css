@@ -26,11 +26,16 @@ tt, pre, kbd {
 }
 
 .titlecell {
-  font-family: tahoma, lucida, sans-serif;
+  font-family: tahoma, lucida, verdana, sans-serif;
   font-size: smaller;
 }
 
 .button {
   border-style: none;
   border-width: 0;
+}
+
+.lastmod {
+  font-family: lucida, verdana, sans-serif;
+  font-size: smaller;
 }
