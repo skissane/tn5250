@@ -70,7 +70,7 @@ cvs -d:pserver:anonymous@cvs.tn5250.sourceforge.net:/cvs/tn5250 co tn5250</pre>
 
 <p>To build tn5250 from CVS, you’ll need automake, autoconf, libtool and
 ncurses.  Run <kbd>./autogen.sh</kbd>, <kbd>./configure</kbd> then
-<kbd>make && make install</kbd> from the checked out directory.</p>
+<kbd>make &amp;&amp; make install</kbd> from the checked out directory.</p>
 
 
 <h2 id="list">Mailing list</h2>
