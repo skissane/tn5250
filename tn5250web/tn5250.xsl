@@ -50,7 +50,7 @@
    <hr/>
    <p>
     <a href="http://sourceforge.net/">
-     <img src="http://sourceforge.net/sflogo.php?group_id=27533"
+     <img src="http://sflogo.sourceforge.net/sflogo.php?group_id=27533"
        width="88" height="31" alt="[SourceForge]" class="button"/>
     </a>
     <xsl:text> </xsl:text>

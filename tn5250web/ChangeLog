@@ -1,3 +1,8 @@
+2005-03-01  Carey Evans  <careye@spamcop.net>
+
+	* tn5250.xsl: Changed host for SourceForge logo to
+	sflogo.sourceforge.net.
+
 2004-06-15  Scott Klement <klemscot@klements.com>
 	* index.xml: Changed "cvs.tn5250.sourceforge.net" to 
 	"cvs.sourceforge.net", because the former no longer works, and
