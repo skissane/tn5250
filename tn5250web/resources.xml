@@ -71,7 +71,7 @@
 	about character sets, especially as it relates to display
 	devices.</dd>
 
-      <dt><ibmbook code="QB3AQ501" pubnum="SC09-2190-01"/></dt>
+      <dt><ibmbook code="FOCREF00" pubnum="SC09-2190-01"/></dt>
       <dd>CDRA Reference.  Even more information about how character
 	sets work on the AS/400, and how conversion between them
 	should work.</dd>
