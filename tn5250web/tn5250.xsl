@@ -107,7 +107,7 @@
 
 <xsl:template match="p|dt|dd|li|kbd|var|em|strong">
  <xsl:copy>
-  <xsl:apply-templates select="*|text()"/>
+  <xsl:apply-templates/>
  </xsl:copy>
 </xsl:template>
 
@@ -118,7 +118,7 @@
   </xsl:for-each>
   <xsl:for-each select="@href|@title"><xsl:copy/></xsl:for-each>
 
-  <xsl:apply-templates select="*|text()"/>
+  <xsl:apply-templates/>
  </a>
 </xsl:template>
 
