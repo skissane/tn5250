@@ -1,3 +1,8 @@
+2003-08-13  Carey Evans  <careye@spamcop.net>
+
+	* index.xml: Write about stable Debian package.
+	Include size and format of HOWTO PDF.
+
 2003-07-30  Scott Klement <klemscot@klements.com>
         * Changed link for James' HOWTO to point to his web site so users
            dont have to read the entire thread
