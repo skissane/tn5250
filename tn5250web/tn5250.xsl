@@ -67,7 +67,7 @@
     </a>
    </p>
 
-   <xsl:if test="{$lastmod}">
+   <xsl:if test="$lastmod">
     <p class="lastmod">Last modified: <xsl:value-of select="$lastmod"/></p>
    </xsl:if>
   </body>
