@@ -1,3 +1,7 @@
+2005-03-02  Carey Evans  <careye@spamcop.net>
+
+	* resources.xml: Fix link to IETF tn3270e working group.
+
 2005-03-01  Carey Evans  <careye@spamcop.net>
 
 	* tn5250.xsl: Changed host for SourceForge logo to
