@@ -21,7 +21,7 @@
  </xsl:for-each>
 </xsl:template>
 
-<xsl:parameter name="docuri">http%3A%2F%2Ftn5250.sourceforge.net%2F<xsl:value-of select="/webpage/head/docuri"/></xsl:parameter>
+<xsl:param name="docuri">http%3A%2F%2Ftn5250.sourceforge.net%2F<xsl:value-of select="/webpage/head/docuri"/></xsl:param>
 
 <!-- Top-level document elements. -->
 
