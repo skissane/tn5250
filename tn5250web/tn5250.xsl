@@ -17,6 +17,8 @@
 
 <xsl:param name="docuri">http%3A%2F%2Ftn5250.sourceforge.net%2F<xsl:value-of select="/webpage/head/docuri"/></xsl:param>
 
+<xsl:param name="lastmod"/>
+
 <!-- Top-level document elements. -->
 
 <xsl:template match="/webpage">
@@ -64,6 +66,10 @@
        height="31" width="88" alt="[Valid CSS]" class="button"/>
     </a>
    </p>
+
+   <xsl:if test="{$lastmod}">
+    <p class="lastmod">Last modified: <xsl:value-of select="$lastmod"/></p>
+   </xsl:if>
   </body>
  </html>
 </xsl:template>
