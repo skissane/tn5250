@@ -65,8 +65,8 @@ them online</a>.</p>
 <p>To check tn5250 out via anonymous CVS, enter the following commands.
 When asked for a password for ‘anonymous’, just press Enter.</p>
 
-<pre xml:space="preserve">cvs -d:pserver:anonymous@cvs.tn5250.sourceforge.net:/cvs/tn5250 login
-cvs -z3 -d:pserver:anonymous@cvs.tn5250.sourceforge.net:/cvs/tn5250 co tn5250</pre>
+<pre xml:space="preserve">cvs -d:pserver:anonymous@cvs.tn5250.sourceforge.net:/cvsroot/tn5250 login
+cvs -z3 -d:pserver:anonymous@cvs.tn5250.sourceforge.net:/cvsroot/tn5250 co tn5250</pre>
 
 <p>To build tn5250 from CVS, you’ll need automake, autoconf, libtool and
 ncurses.  Run <kbd>./autogen.sh</kbd>, <kbd>./configure</kbd> then
