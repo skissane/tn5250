@@ -43,7 +43,7 @@ to work with.</p>
 
 <p>To get the latest stable release of tn5250, visit the
 <a href="http://sourceforge.net/project/showfiles.php?group_id=27533">tn5250
-files list</a>.
+files list</a>.</p>
 
 <p>If you don't want to have to compile the program yourself, there are
 another two options:</p>
@@ -61,7 +61,7 @@ it by typing: <kbd>apt-get install tn5250</kbd> as root.</li>
 <p>Finally, you can get the latest tn5250 sources from anonymous CVS,
 or just browse them online.  See the
 <a href="http://sourceforge.net/cvs/?group_id=27533">tn5250 CVS page</a>
-on SourceForge for more information.</a>
+on SourceForge for more information.</p>
 
 
 <h2 id="list">Mailing list</h2>
@@ -70,10 +70,10 @@ on SourceForge for more information.</a>
 provided by <a href="http://www.midrange.com">MIDRANGE dot COM</a>.</p>
 
 <ul>
-<li><a href="http://www.midrange.com/linux5250.shtml">Subscribe to the
-linux5250 mailing list.</a></li>
-<li><a href="http://archive.midrange.com/linux5250/index.htm"</a>Read
-the tn5250 mailing list archives.</a></li>
+<li><a href="http://www.midrange.com/linux5250.shtml">Subscribe</a> to the
+linux5250 mailing list.</li>
+<li><a href="http://archive.midrange.com/linux5250/index.htm">Read
+the archives</a> of the tn5250 mailing list.</li>
 </ul>
 
 

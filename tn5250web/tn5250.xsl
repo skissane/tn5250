@@ -124,7 +124,7 @@
   <xsl:for-each select="@id">
    <xsl:attribute name="name"><xsl:value-of select="."/></xsl:attribute>
   </xsl:for-each>
-  <xsl:for-each select="@href"><xsl:copy/></xsl:for-each>
+  <xsl:for-each select="@href|@title"><xsl:copy/></xsl:for-each>
 
   <xsl:apply-templates select="*|text()"/>
  </a>

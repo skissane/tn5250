@@ -61,6 +61,10 @@
 
 <!ELEMENT p (%Inline;)*>
 
+<!ELEMENT ul (li+)>
+<!ELEMENT ol (li+)>
+<!ELEMENT li (%Inline;)*>
+
 <!ELEMENT kbd (%Inline;)*>
 <!ELEMENT var (%Inline;)*>
 <!ELEMENT em (%Inline;)*>
@@ -69,7 +73,8 @@
 <!ELEMENT a (%Inline;)*>
 <!ATTLIST a
 	%IdAttr;
-	href		CDATA		#REQUIRED>
+	href		CDATA		#REQUIRED
+	title		CDATA		#IMPLIED>
 
 <!ELEMENT rfc EMPTY>
 <!ATTLIST rfc
