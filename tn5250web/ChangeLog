@@ -1,5 +1,7 @@
 2003-06-11  Carey Evans  <careye@spamcop.net>
 
+	* style.css: Slightly reduce base font size.
+
 	* tn5250.xsl, resources.xml: Use referer check for HTML and CSS
 	validators.
 
