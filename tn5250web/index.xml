@@ -14,7 +14,7 @@
 
 <p>This is the homepage for the free “Linux tn5250” emulator.
 That’s a bit of a misnomer though, since it works on FreeBSD
-and any other modern Unix.</p>
+and any other modern Unix, and starting with the 0.16.4 release, it also runs on 32-bit versions of Windows.</p>
 
 <p>tn5250 is a telnet client for the
 <a href="http://www.iseries.ibm.com/">IBM AS/400</a> that emulates
@@ -56,6 +56,14 @@ by Henri Gomez</a>.</li>
 <li><a href="http://www.debian.org/">Debian</a> users have it a little easier —
 tn5250 is part of the main distribution.  You should be able to install
 it by typing <kbd>apt-get install tn5250</kbd> as root.</li>
+
+<li><a href="http://www.freebsd.org">FreeBSD</a> users can install
+it by typing <kbd>cd /usr/ports/net/tn5250 &amp;&amp; make install</kbd> as root.</li>
+
+<li><a href="http://www.microsoft.com/windows">Microsoft Windows</a> 
+users can download the 
+<a href="http://sourceforge.net/project/showfiles.php?group_id=27533">
+Win32 Installer from our files area</a></li>
 </ul>
 
 <p>Finally, you can get the latest tn5250 sources from anonymous CVS, or just
