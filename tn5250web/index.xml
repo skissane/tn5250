@@ -77,8 +77,8 @@ them online</a>.</p>
 enter the following commands.
 When asked for a password for ‘anonymous’, just press Enter.</p>
 
-<pre>cvs -d:pserver:anonymous@cvs.tn5250.sourceforge.net:/cvsroot/tn5250 login
-cvs -z3 -d:pserver:anonymous@cvs.tn5250.sourceforge.net:/cvsroot/tn5250 co -r b0-16 tn5250</pre>
+<pre>cvs -d:pserver:anonymous@cvs.sourceforge.net:/cvsroot/tn5250 login
+cvs -z3 -d:pserver:anonymous@cvs.sourceforge.net:/cvsroot/tn5250 co -r b0-16 tn5250</pre>
 
 <p>To build the Unix version of tn5250 from CVS, you’ll need automake,
 autoconf, libtool and ncurses.  Run <kbd>./autogen.sh</kbd>, 
