@@ -58,10 +58,19 @@ tn5250 is part of the main distribution.  You should be able to install
 it by typing <kbd>apt-get install tn5250</kbd> as root.</li>
 </ul>
 
-<p>Finally, you can get the latest tn5250 sources from anonymous CVS,
-or just browse them online.  See the
-<a href="http://sourceforge.net/cvs/?group_id=27533">tn5250 CVS page</a>
-on SourceForge for more information.</p>
+<p>Finally, you can get the latest tn5250 sources from anonymous CVS, or just
+<a href="http://cvs.sourceforge.net/cgi-bin/viewcvs.cgi/tn5250/tn5250/">browse
+them online</a>.</p>
+
+<p>To check tn5250 out via anonymous CVS, enter the following commands.
+When asked for a password for ‘anonymous’, just press Enter.</p>
+
+<pre xml:space="preserve">cvs -d:pserver:anonymous@cvs.tn5250.sourceforge.net:/cvs/tn5250 login
+cvs -d:pserver:anonymous@cvs.tn5250.sourceforge.net:/cvs/tn5250 co tn5250</pre>
+
+<p>To build tn5250 from CVS, you’ll need automake, autoconf, libtool and
+ncurses.  Run <kbd>./autogen.sh</kbd>, <kbd>./configure</kbd> then
+<kbd>make && make install</kbd> from the checked out directory.</p>
 
 
 <h2 id="list">Mailing list</h2>
