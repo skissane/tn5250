@@ -48,7 +48,7 @@
       <dd>Telnet Environment Option</dd>
 
       <dt><rfc number="2877"/></dt>
-      <dd>5250 Telnet Enhancements.  This standard extends RFC 1250
+      <dd>5250 Telnet Enhancements.  This standard extends RFC 1205
 	and includes a useful list of references in section 13.</dd>
     </dl>
 
@@ -82,8 +82,8 @@
 	telnet connection to configure the display or printer device.</dd>
 
       <dt><a href="ftp://ftp.networking.ibm.com/pub/standards/ciw/sig/sec/pwsubciw.zip">PWSUBS</a> (Zip file)</dt>
-      <dd>APPC Password Substitution.  This describes the currently
-	unimplemented scheme used for automatic signon.</dd>
+      <dd>APPC Password Substitution.  This describes the scheme used
+        for automatic signon, which is currently unimplemented in tn5250.</dd>
     </dl>
 
     <p>The final document above is Postscript, and almost follows the
