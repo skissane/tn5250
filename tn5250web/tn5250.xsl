@@ -83,7 +83,7 @@
 <!-- Document text elements. -->
 
 <xsl:template match="body">
- <xsl:apply-templates select="h1|h2|h3|p|dl|ul|ol"/>
+ <xsl:apply-templates select="h1|h2|h3|p|dl|ul|ol|pre"/>
 </xsl:template>
 
 <xsl:template match="h1|h2|h3">
