@@ -76,9 +76,15 @@ When asked for a password for ‘anonymous’, just press Enter.</p>
 <pre xml:space="preserve">cvs -d:pserver:anonymous@cvs.tn5250.sourceforge.net:/cvsroot/tn5250 login
 cvs -z3 -d:pserver:anonymous@cvs.tn5250.sourceforge.net:/cvsroot/tn5250 co tn5250</pre>
 
-<p>To build tn5250 from CVS, you’ll need automake, autoconf, libtool and
-ncurses.  Run <kbd>./autogen.sh</kbd>, <kbd>./configure</kbd> then
-<kbd>make &amp;&amp; make install</kbd> from the checked out directory.</p>
+<p>To build the Unix version of tn5250 from CVS, you’ll need automake,
+autoconf, libtool and ncurses.  Run <kbd>./autogen.sh</kbd>, 
+<kbd>./configure</kbd> then <kbd>make &amp;&amp; make install</kbd> from 
+the checked out directory.</p>
+
+<p>To build the Windows version of tn5250 from CVS, you’ll need
+a CVS client (Maybe <a href="http://www.wincvs.com">WinCVS</a>).  Once you've
+downloaded the sources, detailed build instructions can be found in the
+README.txt file in the win32 subdirectory.</p>
 
 
 <h2 id="list">Mailing list</h2>
