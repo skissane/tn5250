@@ -43,7 +43,7 @@
 <!ATTLIST trail
 	href		CDATA		#REQUIRED>
 
-<!ELEMENT body (h1|h2|h3|p|dl|ul|ol)*>
+<!ELEMENT body (h1|h2|h3|p|dl|ul|ol|pre)*>
 
 <!ELEMENT h1 (%Inline;)*>
 <!ATTLIST h1 %IdAttr;>
@@ -64,6 +64,10 @@
 <!ELEMENT ul (li+)>
 <!ELEMENT ol (li+)>
 <!ELEMENT li (%Inline;)*>
+
+<!ELEMENT pre (%Inline;)*>
+<!ATTLIST pre
+	xml:space	(preserve|default)	"preserve">
 
 <!ELEMENT kbd (%Inline;)*>
 <!ELEMENT var (%Inline;)*>

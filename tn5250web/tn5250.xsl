@@ -111,7 +111,7 @@
  </xsl:copy>
 </xsl:template>
 
-<xsl:template match="p|dt|dd|li|kbd|var|em|strong">
+<xsl:template match="p|pre|dt|dd|li|kbd|var|em|strong">
  <xsl:copy>
   <xsl:apply-templates/>
  </xsl:copy>
