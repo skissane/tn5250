@@ -15,8 +15,6 @@
 
 <!-- Parameters. -->
 
-<xsl:param name="docuri">http%3A%2F%2Ftn5250.sourceforge.net%2F<xsl:value-of select="/webpage/head/docuri"/></xsl:param>
-
 <xsl:param name="lastmod"/>
 
 <!-- Top-level document elements. -->
@@ -56,13 +54,13 @@
        width="88" height="31" alt="[SourceForge]" class="button"/>
     </a>
     <xsl:text> </xsl:text>
-    <a href="http://validator.w3.org/check?uri={$docuri};doctype=Inline">
-     <img src="valid-html401.png"
+    <a href="http://validator.w3.org/check/referer">
+     <img src="http://www.w3.org/Icons/valid-html401"
        height="31" width="88" alt="[Valid HTML 4]" class="button"/>
     </a>
     <xsl:text> </xsl:text>
-    <a href="http://jigsaw.w3.org/css-validator/validator?uri={$docuri}">
-     <img src="vcss.png"
+    <a href="http://jigsaw.w3.org/css-validator/check/referer">
+     <img src="http://jigsaw.w3.org/css-validator/images/vcss"
        height="31" width="88" alt="[Valid CSS]" class="button"/>
     </a>
    </p>

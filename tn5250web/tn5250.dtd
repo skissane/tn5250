@@ -3,24 +3,6 @@
   This code is placed in the public domain.
 -->
 
-<!-- Character entities from XHTML. -->
-
-<!ENTITY % HTMLlat1 PUBLIC
-   "-//W3C//ENTITIES Latin 1 for XHTML//EN"
-   "/usr/lib/sgml/dtd/xhtml-1.1/xhtml-lat1.ent">
-%HTMLlat1;
-
-<!ENTITY % HTMLsymbol PUBLIC
-   "-//W3C//ENTITIES Symbols for XHTML//EN"
-   "/usr/lib/sgml/dtd/xhtml-1.1/xhtml-symbol.ent">
-%HTMLsymbol;
-
-<!ENTITY % HTMLspecial PUBLIC
-   "-//W3C//ENTITIES Special for XHTML//EN"
-   "/usr/lib/sgml/dtd/xhtml-1.1/xhtml-special.ent">
-%HTMLspecial;
-
-
 <!-- Entity definitions. -->
 
 <!ENTITY % IdAttr "id ID #IMPLIED">
@@ -33,11 +15,9 @@
 <!ATTLIST webpage
 	xml:lang	CDATA		#IMPLIED>
 
-<!ELEMENT head (title, docuri?, trail*)>
+<!ELEMENT head (title, trail*)>
 
 <!ELEMENT title (#PCDATA)>
-
-<!ELEMENT docuri (#PCDATA)>
 
 <!ELEMENT trail (#PCDATA)>
 <!ATTLIST trail

@@ -1,18 +1,17 @@
-JRE = java -classpath ../saxon.jar
-XSLTPROC = com.icl.saxon.StyleSheet
+XSLTPROC := xsltproc
 
 LASTMOD = $(shell date -u -r $<)
 
-HTMLDOCS = index.html resources.html
+HTMLDOCS := index.html resources.html
 
 all: $(HTMLDOCS)
 
 $(HTMLDOCS): tn5250.xsl
 
 %.html: %.xml
-	$(JRE) $(XSLTPROC) -a -o $@.tmp $< lastmod="$(LASTMOD)" && mv $@.tmp $@
+	$(XSLTPROC) --stringparam lastmod "$(LASTMOD)" -o $@ $<
 
 clean:
 	$(RM) $(HTMLDOCS)
 
-.PHONY: clean
+.PHONY: all clean

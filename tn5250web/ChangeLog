@@ -1,6 +1,29 @@
+2003-06-11  Carey Evans  <careye@spamcop.net>
+
+	* tn5250.xsl, resources.xml: Use referer check for HTML and CSS
+	validators.
+
+	* shot1.png: Run through pngcrush.
+
+	* tn5250.dtd: Don't import XHTML entities.
+
+	* style.css: Update font families.
+
+	* index.xml: Prefer bugs to be posted to mailing list.
+	Refer to James Rich's HOWTO.
+	Update RPM info and add Lindows info.
+	Change command to check out 0.16 branch using CVS.
+	Link to TortoiseCVS.
+	Use correct mailing list subscription page.
+
+	* Makefile: Use xsltproc for XSLT, use := correctly, add "all"
+	target to .PHONY.
+
+2002-05-06  Scott Klement <klemscot@klements.com>
+
+	* Added Windows info to web page
+
 2001-08-29  Carey Evans  <careye@spamcop.net>
 
 	* ChangeLog: New file.
 
-2002-05-06  Scott Klement <klemscot@klements.com>
-	* Added Windows info to web page

@@ -1,21 +1,16 @@
 body {
-  font-family: lucida, verdana, sans-serif;
+  font-family: Bitstream Vera Sans, Lucida, Verdana, sans-serif;
   color: black;
   background: white;
 }
 
 h1, h2, h3 {
-  font-family: lucida, verdana, sans-serif;
   text-align: left;
   margin-left: 18pt;
 }
 
-p, ul, ol, dl {
-  font-family: lucida, verdana, sans-serif;
-}
-
 tt, pre, kbd {
-  font-family: lucidatypewriter, lucida console, monospace;
+  font-family: Bitstream Vera Sans Mono, Lucidatypewriter, Lucida Console, monospace;
 }
 
 .titlebar {
@@ -26,7 +21,7 @@ tt, pre, kbd {
 }
 
 .titlecell {
-  font-family: tahoma, lucida, verdana, sans-serif;
+  font-family: Bitstream Vera Sans, Tahoma, Lucida, Verdana, sans-serif;
   font-size: smaller;
 }
 
@@ -36,6 +31,5 @@ tt, pre, kbd {
 }
 
 .lastmod {
-  font-family: lucida, verdana, sans-serif;
   font-size: smaller;
 }
