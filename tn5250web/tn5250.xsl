@@ -92,7 +92,7 @@
  <xsl:copy>
   <xsl:choose>
    <xsl:when test="@id">
-    <a name="{@id}">xsl:value-of select="text()"/></a>
+    <a name="{@id}"><xsl:value-of select="text()"/></a>
    </xsl:when>
    <xsl:otherwise>
     <xsl:value-of select="text()"/>
