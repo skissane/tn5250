@@ -53,7 +53,7 @@ another two options:</p>
 <a href="ftp://ftp.falsehope.com/home/gomez/tn5250/">RPMS provided
 by Henri Gomez</a>.</li>
 
-<li><a href="http://www.debian.org/">Debian</a> users are luckier —
+<li><a href="http://www.debian.org/">Debian</a> users have it a little easier —
 tn5250 is part of the main distribution.  You should be able to install
 it by typing <kbd>apt-get install tn5250</kbd> as root.</li>
 </ul>
@@ -67,7 +67,9 @@ on SourceForge for more information.</p>
 <h2 id="list">Mailing list</h2>
 
 <p>tn5250 development and discussion all happens on the mailing list,
-provided by <a href="http://www.midrange.com">MIDRANGE dot COM</a>.</p>
+provided by <a href="http://www.midrange.com">MIDRANGE dot COM</a>.
+You <em>must</em> subscribe to the mailing before you will be able to
+send email to it, but it’s very low traffic.</p>
 
 <ul>
 <li><a href="http://www.midrange.com/linux5250.shtml">Subscribe</a> to the
