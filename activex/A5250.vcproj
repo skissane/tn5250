@@ -21,24 +21,27 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories="..\src;.;..\.."
+				AdditionalIncludeDirectories="..\tn5250\src;.;..\glib\include\glib-2.0;..\glib\lib\glib-2.0\include;..\..\openssl-0.9.7b\inc32"
 				PreprocessorDefinitions="WIN32;_WINDOWS;_DEBUG;_USRDLL"
 				MinimalRebuild="TRUE"
 				BasicRuntimeChecks="3"
 				RuntimeLibrary="1"
+				EnableFunctionLevelLinking="TRUE"
 				DefaultCharIsUnsigned="TRUE"
 				TreatWChar_tAsBuiltInType="TRUE"
-				UsePrecompiledHeader="0"
+				UsePrecompiledHeader="3"
+				PrecompiledHeaderThrough="tn5250-private.h"
+				PrecompiledHeaderFile="$(IntDir)/tn5250-private.pch"
 				WarningLevel="3"
-				DebugInformationFormat="3"/>
+				DebugInformationFormat="4"/>
 			<Tool
 				Name="VCCustomBuildTool"/>
 			<Tool
 				Name="VCLinkerTool"
 				IgnoreImportLibrary="TRUE"
-				AdditionalDependencies="winmm.lib Ws2_32.lib"
+				AdditionalDependencies="winmm.lib Ws2_32.lib ..\glib\lib\glib-2.0.lib"
 				OutputFile="$(OutDir)/A5250.dll"
-				LinkIncremental="1"
+				LinkIncremental="2"
 				ModuleDefinitionFile=".\A5250.def"
 				GenerateDebugInformation="TRUE"
 				SubSystem="2"
@@ -99,14 +102,16 @@
 				EnableFiberSafeOptimizations="TRUE"
 				OptimizeForProcessor="0"
 				OptimizeForWindowsApplication="TRUE"
-				AdditionalIncludeDirectories="..\src;.;..\.."
+				AdditionalIncludeDirectories="..\tn5250\src;.;..\glib\include\glib-2.0;..\glib\lib\glib-2.0\include;..\..\openssl-0.9.7b\inc32"
 				PreprocessorDefinitions="WIN32;_WINDOWS;NDEBUG;_USRDLL"
 				StringPooling="TRUE"
 				RuntimeLibrary="0"
 				BufferSecurityCheck="FALSE"
 				DefaultCharIsUnsigned="TRUE"
 				TreatWChar_tAsBuiltInType="TRUE"
-				UsePrecompiledHeader="0"
+				UsePrecompiledHeader="3"
+				PrecompiledHeaderThrough="tn5250-private.h"
+				PrecompiledHeaderFile="$(IntDir)/tn5250-private.pch"
 				WarningLevel="4"
 				DebugInformationFormat="3"/>
 			<Tool
@@ -114,7 +119,7 @@
 			<Tool
 				Name="VCLinkerTool"
 				IgnoreImportLibrary="TRUE"
-				AdditionalDependencies="winmm.lib Ws2_32.lib"
+				AdditionalDependencies="winmm.lib Ws2_32.lib ..\glib\lib\glib-2.0.lib"
 				OutputFile="$(OutDir)/A5250.dll"
 				LinkIncremental="1"
 				ModuleDefinitionFile=".\A5250.def"
@@ -171,6 +176,20 @@
 			UniqueIdentifier="{4FC737F1-C7A5-4376-A066-2A32D752A2FF}">
 			<File
 				RelativePath=".\A5250.cpp">
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						PrecompiledHeaderThrough="stdafx.h"
+						PrecompiledHeaderFile="$(IntDir)/$(TargetName).pch"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						PrecompiledHeaderThrough="stdafx.h"
+						PrecompiledHeaderFile="$(IntDir)/$(TargetName).pch"/>
+				</FileConfiguration>
 			</File>
 			<File
 				RelativePath=".\A5250.def">
@@ -180,6 +199,22 @@
 			</File>
 			<File
 				RelativePath=".\conf.cpp">
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						PrecompiledHeaderThrough="stdafx.h"
+						PrecompiledHeaderFile="$(IntDir)/$(TargetName).pch"
+						ObjectFile="$(IntDir)/$(InputName).obj"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						PrecompiledHeaderThrough="stdafx.h"
+						PrecompiledHeaderFile="$(IntDir)/$(TargetName).pch"
+						ObjectFile="$(IntDir)/$(InputName).obj"/>
+				</FileConfiguration>
 			</File>
 			<File
 				RelativePath=".\stdafx.cpp">
@@ -187,20 +222,71 @@
 					Name="Debug|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
-						UsePrecompiledHeader="1"/>
+						UsePrecompiledHeader="1"
+						PrecompiledHeaderThrough="stdafx.h"
+						PrecompiledHeaderFile="$(IntDir)/$(TargetName).pch"/>
 				</FileConfiguration>
 				<FileConfiguration
 					Name="Release|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
-						UsePrecompiledHeader="1"/>
+						UsePrecompiledHeader="1"
+						PrecompiledHeaderThrough="stdafx.h"
+						PrecompiledHeaderFile="$(IntDir)/$(TargetName).pch"/>
 				</FileConfiguration>
 			</File>
 			<File
 				RelativePath=".\Tables.cpp">
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						PrecompiledHeaderThrough="stdafx.h"
+						PrecompiledHeaderFile="$(IntDir)/$(TargetName).pch"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						PrecompiledHeaderThrough="stdafx.h"
+						PrecompiledHeaderFile="$(IntDir)/$(TargetName).pch"/>
+				</FileConfiguration>
 			</File>
 			<File
 				RelativePath=".\Term5250.cpp">
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						PrecompiledHeaderThrough="stdafx.h"
+						PrecompiledHeaderFile="$(IntDir)/$(TargetName).pch"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						PrecompiledHeaderThrough="stdafx.h"
+						PrecompiledHeaderFile="$(IntDir)/$(TargetName).pch"/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath=".\tn5250-private.c">
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						UsePrecompiledHeader="1"
+						PrecompiledHeaderThrough="tn5250-private.h"
+						PrecompiledHeaderFile="$(IntDir)/tn5250-private.pch"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						UsePrecompiledHeader="1"
+						PrecompiledHeaderThrough="tn5250-private.h"
+						PrecompiledHeaderFile="$(IntDir)/tn5250-private.pch"/>
+				</FileConfiguration>
 			</File>
 			<File
 				RelativePath=".\Utils.cpp">
@@ -208,26 +294,39 @@
 					Name="Debug|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
-						UsePrecompiledHeader="3"/>
+						PrecompiledHeaderThrough="stdafx.h"
+						PrecompiledHeaderFile="$(IntDir)/$(TargetName).pch"/>
 				</FileConfiguration>
 				<FileConfiguration
 					Name="Release|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
-						UsePrecompiledHeader="3"/>
+						PrecompiledHeaderThrough="stdafx.h"
+						PrecompiledHeaderFile="$(IntDir)/$(TargetName).pch"/>
 				</FileConfiguration>
 			</File>
 			<File
 				RelativePath=".\winterm.cpp">
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						PrecompiledHeaderThrough="stdafx.h"
+						PrecompiledHeaderFile="$(IntDir)/$(TargetName).pch"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						PrecompiledHeaderThrough="stdafx.h"
+						PrecompiledHeaderFile="$(IntDir)/$(TargetName).pch"/>
+				</FileConfiguration>
 			</File>
 		</Filter>
 		<Filter
 			Name="Header Files"
 			Filter="h;hpp;hxx;hm;inl;inc;xsd"
 			UniqueIdentifier="{93995380-89BD-4b04-88EB-625FBE52EBFB}">
-			<File
-				RelativePath=".\glib.h">
-			</File>
 			<File
 				RelativePath=".\stdafx.h">
 			</File>
@@ -239,6 +338,9 @@
 			</File>
 			<File
 				RelativePath=".\Term5250CP.h">
+			</File>
+			<File
+				RelativePath=".\tn5250-config.h">
 			</File>
 			<File
 				RelativePath=".\Utils.h">
@@ -293,263 +395,101 @@
 				Name="C"
 				Filter="cpp;c">
 				<File
-					RelativePath="..\src\buffer.c">
-					<FileConfiguration
-						Name="Release|Win32">
-						<Tool
-							Name="VCCLCompilerTool"
-							WarningLevel="3"/>
-					</FileConfiguration>
+					RelativePath="..\tn5250\src\buffer.c">
 				</File>
 				<File
-					RelativePath="..\src\dbuffer.c">
-					<FileConfiguration
-						Name="Release|Win32">
-						<Tool
-							Name="VCCLCompilerTool"
-							WarningLevel="3"/>
-					</FileConfiguration>
+					RelativePath="..\tn5250\src\dbuffer.c">
 				</File>
 				<File
-					RelativePath="..\src\display.c">
-					<FileConfiguration
-						Name="Debug|Win32">
-						<Tool
-							Name="VCCLCompilerTool"
-							WarningLevel="2"/>
-					</FileConfiguration>
-					<FileConfiguration
-						Name="Release|Win32">
-						<Tool
-							Name="VCCLCompilerTool"
-							WarningLevel="2"/>
-					</FileConfiguration>
+					RelativePath="..\tn5250\src\display.c">
 				</File>
 				<File
-					RelativePath="..\src\field.c">
-					<FileConfiguration
-						Name="Debug|Win32">
-						<Tool
-							Name="VCCLCompilerTool"
-							WarningLevel="2"/>
-					</FileConfiguration>
-					<FileConfiguration
-						Name="Release|Win32">
-						<Tool
-							Name="VCCLCompilerTool"
-							WarningLevel="2"/>
-					</FileConfiguration>
+					RelativePath="..\tn5250\src\field.c">
 				</File>
 				<File
-					RelativePath="..\Src\macro.c">
-					<FileConfiguration
-						Name="Debug|Win32">
-						<Tool
-							Name="VCCLCompilerTool"
-							WarningLevel="3"/>
-					</FileConfiguration>
-					<FileConfiguration
-						Name="Release|Win32">
-						<Tool
-							Name="VCCLCompilerTool"
-							WarningLevel="3"/>
-					</FileConfiguration>
+					RelativePath="..\tn5250\src\macro.c">
 				</File>
 				<File
-					RelativePath="..\src\printsession.c">
-					<FileConfiguration
-						Name="Debug|Win32">
-						<Tool
-							Name="VCCLCompilerTool"
-							WarningLevel="2"/>
-					</FileConfiguration>
-					<FileConfiguration
-						Name="Release|Win32">
-						<Tool
-							Name="VCCLCompilerTool"
-							WarningLevel="2"/>
-					</FileConfiguration>
+					RelativePath="..\tn5250\src\record.c">
 				</File>
 				<File
-					RelativePath="..\src\record.c">
-					<FileConfiguration
-						Name="Debug|Win32">
-						<Tool
-							Name="VCCLCompilerTool"
-							WarningLevel="2"/>
-					</FileConfiguration>
-					<FileConfiguration
-						Name="Release|Win32">
-						<Tool
-							Name="VCCLCompilerTool"
-							WarningLevel="2"/>
-					</FileConfiguration>
+					RelativePath="..\tn5250\src\session.c">
 				</File>
 				<File
-					RelativePath="..\src\session.c">
-					<FileConfiguration
-						Name="Debug|Win32">
-						<Tool
-							Name="VCCLCompilerTool"
-							WarningLevel="2"/>
-					</FileConfiguration>
-					<FileConfiguration
-						Name="Release|Win32">
-						<Tool
-							Name="VCCLCompilerTool"
-							WarningLevel="2"/>
-					</FileConfiguration>
+					RelativePath="..\tn5250\src\sslstream.c">
 				</File>
 				<File
-					RelativePath="..\src\sslstream.c">
-					<FileConfiguration
-						Name="Debug|Win32">
-						<Tool
-							Name="VCCLCompilerTool"
-							WarningLevel="2"/>
-					</FileConfiguration>
-					<FileConfiguration
-						Name="Release|Win32">
-						<Tool
-							Name="VCCLCompilerTool"
-							WarningLevel="2"/>
-					</FileConfiguration>
+					RelativePath="..\tn5250\src\stream.c">
 				</File>
 				<File
-					RelativePath="..\src\stream.c">
-					<FileConfiguration
-						Name="Debug|Win32">
-						<Tool
-							Name="VCCLCompilerTool"
-							WarningLevel="2"/>
-					</FileConfiguration>
-					<FileConfiguration
-						Name="Release|Win32">
-						<Tool
-							Name="VCCLCompilerTool"
-							WarningLevel="2"/>
-					</FileConfiguration>
+					RelativePath="..\tn5250\src\telnetstr.c">
 				</File>
 				<File
-					RelativePath="..\src\telnetstr.c">
-					<FileConfiguration
-						Name="Debug|Win32">
-						<Tool
-							Name="VCCLCompilerTool"
-							WarningLevel="2"/>
-					</FileConfiguration>
-					<FileConfiguration
-						Name="Release|Win32">
-						<Tool
-							Name="VCCLCompilerTool"
-							WarningLevel="2"/>
-					</FileConfiguration>
+					RelativePath="..\tn5250\src\terminal.c">
 				</File>
 				<File
-					RelativePath="..\Src\terminal.c">
-					<FileConfiguration
-						Name="Debug|Win32">
-						<Tool
-							Name="VCCLCompilerTool"
-							WarningLevel="3"/>
-					</FileConfiguration>
-					<FileConfiguration
-						Name="Release|Win32">
-						<Tool
-							Name="VCCLCompilerTool"
-							WarningLevel="3"/>
-					</FileConfiguration>
+					RelativePath="..\tn5250\src\utility.c">
 				</File>
 				<File
-					RelativePath="..\src\utility.c">
-					<FileConfiguration
-						Name="Debug|Win32">
-						<Tool
-							Name="VCCLCompilerTool"
-							WarningLevel="2"/>
-					</FileConfiguration>
-					<FileConfiguration
-						Name="Release|Win32">
-						<Tool
-							Name="VCCLCompilerTool"
-							WarningLevel="2"/>
-					</FileConfiguration>
-				</File>
-				<File
-					RelativePath="..\src\wtd.c">
-					<FileConfiguration
-						Name="Debug|Win32">
-						<Tool
-							Name="VCCLCompilerTool"
-							WarningLevel="2"/>
-					</FileConfiguration>
-					<FileConfiguration
-						Name="Release|Win32">
-						<Tool
-							Name="VCCLCompilerTool"
-							WarningLevel="2"/>
-					</FileConfiguration>
+					RelativePath="..\tn5250\src\wtd.c">
 				</File>
 			</Filter>
 			<Filter
 				Name="H"
 				Filter="h">
 				<File
-					RelativePath="..\src\buffer.h">
+					RelativePath="..\tn5250\src\buffer.h">
 				</File>
 				<File
-					RelativePath="..\src\codes3270.h">
+					RelativePath="..\tn5250\src\codes5250.h">
 				</File>
 				<File
-					RelativePath="..\src\codes5250.h">
+					RelativePath="..\tn5250\src\conf.h">
 				</File>
 				<File
-					RelativePath="..\src\conf.h">
+					RelativePath="..\tn5250\src\dbuffer.h">
 				</File>
 				<File
-					RelativePath="..\src\dbuffer.h">
+					RelativePath="..\tn5250\src\display.h">
 				</File>
 				<File
-					RelativePath="..\src\display.h">
+					RelativePath="..\tn5250\src\field.h">
 				</File>
 				<File
-					RelativePath="..\src\field.h">
+					RelativePath="..\tn5250\src\macro.h">
 				</File>
 				<File
-					RelativePath="..\Src\macro.h">
+					RelativePath="..\tn5250\src\record.h">
 				</File>
 				<File
-					RelativePath="..\src\printsession.h">
+					RelativePath="..\tn5250\src\session.h">
 				</File>
 				<File
-					RelativePath="..\src\record.h">
+					RelativePath="..\tn5250\src\stream.h">
 				</File>
 				<File
-					RelativePath="..\src\session.h">
+					RelativePath="..\tn5250\src\terminal.h">
 				</File>
 				<File
-					RelativePath="..\src\stream.h">
+					RelativePath="..\tn5250\src\tn5250-private.h">
 				</File>
 				<File
-					RelativePath="..\src\terminal.h">
+					RelativePath="..\tn5250\src\transmaps.h">
 				</File>
 				<File
-					RelativePath="..\src\tn5250-config.h">
+					RelativePath="..\tn5250\src\utility.h">
 				</File>
 				<File
-					RelativePath="..\src\tn5250-private.h">
-				</File>
-				<File
-					RelativePath="..\src\transmaps.h">
-				</File>
-				<File
-					RelativePath="..\src\utility.h">
-				</File>
-				<File
-					RelativePath="..\src\wtd.h">
+					RelativePath="..\tn5250\src\wtd.h">
 				</File>
 			</Filter>
 		</Filter>
+		<File
+			RelativePath=".\ReadMe.txt">
+		</File>
+		<File
+			RelativePath=".\Technical.txt">
+		</File>
 		<File
 			RelativePath=".\Term5250.htm"
 			DeploymentContent="TRUE">

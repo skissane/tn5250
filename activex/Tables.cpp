@@ -26,31 +26,31 @@
 #include "Term.h"
 
 
-const char About[] =
-    PACKAGE " version " VERSION ":\n"
-    "Copyright (C) 1997-2003 by Michael Madore,"
-    " Jason M. Felice, and Scott Klement\n"
-    " and a bit Marc-Antoine Ruel\n"
-    "\n"
-    "Portions of this software were contributed "
-    "by many people.  See the AUTHORS.txt file for\n"
-    "details.\n"
-    "\n"
-    "For license information, see the COPYING.txt file "
-    "that was installed with this software.\n"
-    "\n"
-    "OpenSSL:\n"
-    "This product includes software developed by the "
-    "OpenSSL Project for use in the OpenSSL Toolkit "
-    "(http://www.openssl.org/)\n"
-    "This product includes cryptographic software "
-    "written by Eric Young (eay@crypsoft.com).\n"
-    "This product includes software written by Tim "
-    "Hudson (tjh@cryptsoft.com).\n"
-    "\n"
-    "For OpenSSL license information, see the "
-    "COPYING.txt file that was installed with "
-    "this software.";
+const wchar_t About[] =
+    WIDEN(PACKAGE) L" version " WIDEN(VERSION) L":\n"
+    L"Copyright (C) 1997-2003 by Michael Madore,"
+    L" Jason M. Felice, and Scott Klement\n"
+    L" and a bit Marc-Antoine Ruel\n"
+    L"\n"
+    L"Portions of this software were contributed "
+    L"by many people.  See the AUTHORS.txt file for\n"
+    L"details.\n"
+    L"\n"
+    L"For license information, see the COPYING.txt file "
+    L"that was installed with this software.\n"
+    L"\n"
+    L"OpenSSL:\n"
+    L"This product includes software developed by the "
+    L"OpenSSL Project for use in the OpenSSL Toolkit "
+    L"(http://www.openssl.org/)\n"
+    L"This product includes cryptographic software "
+    L"written by Eric Young (eay@crypsoft.com).\n"
+    L"This product includes software written by Tim "
+    L"Hudson (tjh@cryptsoft.com).\n"
+    L"\n"
+    L"For OpenSSL license information, see the "
+    L"COPYING.txt file that was installed with "
+    L"this software.";
 
 
 // The first column is automatically set by the colorlist[colorindex].ref values
@@ -100,7 +100,7 @@ const Tn5250Win32Attribute attribute_map[] =
 const keystroke_to_msg keydown2msg[] =
 {
 //  KeyState    Win32 VirtKey    5250 key   ctx ext
-   { VK_SHIFT,   VK_TAB,          K_BACKTAB, 0, 0 },
+   { VK_SHIFT,   VK_TAB,          K_BACKTAB, 1, 0 },
    { VK_SHIFT,   VK_F1,           K_F13    , 0, 0 },   
    { VK_SHIFT,   VK_F2,           K_F14    , 0, 0 },   
    { VK_SHIFT,   VK_F3,           K_F15    , 0, 0 },   
@@ -182,6 +182,7 @@ const win32_key_map win_kb[] =
    { 0x05,   K_ERASE },       // CTRL-E
    { 0x06,   K_ROLLUP },      // CTRL-F
    { VK_BACK,K_BACKSPACE },   // CTRL-H (backspace key)
+   // 9 TAB
    { 0x0b,   K_FIELDEXIT },   // CTRL-K
    { 0x0c,   K_REFRESH },     // CTRL-L
    { 0x0f,   K_HOME },        // CTRL-O

@@ -1,5 +1,7 @@
-/* src/tn5250-config.h.  Generated automatically by configure.  */
-/* src/tn5250-config.h.in.  Generated automatically from configure.in by autoheader.  */
+/* Modified version from src/tn5250-config.h which was generated 
+ * automatically by configure.
+ * Look at the end for usefull stuff */
+
 /* Define to your system's socket descriptor type. */
 /*#define SOCKET_TYPE int*/
 #define SOCKET_TYPE SOCKET
@@ -63,9 +65,6 @@
 
 /* Define if you have the `socket' library (-lsocket). */
 /* #undef HAVE_LIBSOCKET */
-
-/* Define if you have the `ssl' library (-lssl). */
-/*#define HAVE_LIBSSL 1*/
 
 /* Define if you have the `util' library (-lutil). */
 /* #undef HAVE_LIBUTIL */
@@ -180,14 +179,43 @@
 /* Define if you have the ANSI C header files. */
 #define STDC_HEADERS 1
 
+/* Define if the X Window System is missing or not being used. */
+/* #undef X_DISPLAY_MISSING */
+
+
+// Usefull stuff now.
+
+/* Define if you have the `ssl' library (-lssl). */
+#define HAVE_LIBSSL 1
+
 /* Version number of package */
-#define TN5250_LIB_VERSION "0.16.5"
+#define TN5250_LIB_VERSION "0.17.x"
 #define VERSION TN5250_LIB_VERSION
 #define PACKAGE "EON"
 #define SYSCONFDIR 
 #define __WIN32__ 1
 
-/* Define if the X Window System is missing or not being used. */
-/* #undef X_DISPLAY_MISSING */
 
+#ifdef _MSC_VER
 #define strcasecmp strcmpi
+// Pragmas for Warning level 4 for MSVC
+#pragma warning(disable:4100) // '' : unreferenced formal parameter
+#pragma warning(disable:4101) // '' : unreferenced local variable
+#pragma warning(disable:4189) // '' : local variable is initialized but not referenced
+#pragma warning(disable:4244) // 'function' : conversion from 'int' to 'unsigned char', possible loss of data
+#pragma warning(disable:4127) // conditional expression is constant
+#pragma warning(disable:4206) // nonstandard extension used : translation unit is empty
+#pragma warning(disable:4701) // local variable '' may be used without having been initialized
+#pragma warning(disable:4245) // 'initializing' : conversion from 'int' to 'COLORREF', signed/unsigned mismatch
+__declspec(noreturn) void clean_up_and_exit(int error);
+
+#ifdef HAVE_LIBSSL
+// Replace with you own path or modify your make file.
+#pragma comment(linker, "/defaultlib:../../openssl-0.9.7b/out32dll/libeay32.lib")
+#pragma comment(linker, "/defaultlib:../../openssl-0.9.7b/out32dll/ssleay32.lib")
+#endif
+
+#endif // _MSC_VER
+
+#include "Utils.h"
+

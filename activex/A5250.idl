@@ -57,7 +57,7 @@ interface ITerm5250 : IDispatch
     [propput, bindable, displaybind, requestedit, id(DISPID_FORECOLOR)]		HRESULT ForeColor([in]OLE_COLOR clr);
     [propget, bindable, displaybind, requestedit, id(DISPID_FORECOLOR)]		HRESULT ForeColor([out,retval]OLE_COLOR* pclr);
     [propget, bindable, displaybind, requestedit, id(DISPID_HWND)]		HRESULT HWND([out, retval]LONG_PTR* pHWND);
-    [propget, bindable, displaybind, requestedit, id(DISPID_READYSTATE), helpstring("Whether it is connected")]		HRESULT ReadyState([out, retval]long* pstate);
+    [propget, bindable, displaybind, id(DISPID_READYSTATE), helpstring("Whether it is connected")]		HRESULT ReadyState([out, retval]long* pstate);
     [propget, bindable, displaybind, requestedit, id(1), helpstring("server address")]	HRESULT HostName([out, retval] BSTR* pVal);
     [propput, bindable, displaybind, requestedit, id(1), helpstring("server address")]	HRESULT HostName([in] BSTR newVal);
     [propget, bindable, displaybind, requestedit, id(2), helpstring("Moves the cursor with mouse clicks")] HRESULT MouseMoveCursor([out, retval] VARIANT_BOOL* pVal);
@@ -68,6 +68,9 @@ interface ITerm5250 : IDispatch
     //	[propput, bindable, displaybind, requestedit, id(4)] HRESULT Colors([in] const OLE_COLOR Arr[10]);
     [propget, bindable, displaybind, requestedit, id(5), helpstring("Activate the Selection with the mouse")] HRESULT SelectionEnabled([out, retval] VARIANT_BOOL* pVal);
     [propput, bindable, displaybind, requestedit, id(5), helpstring("Activate the Selection with the mouse")] HRESULT SelectionEnabled([in] VARIANT_BOOL newVal);
+    [propget, bindable, displaybind, requestedit, id(6), helpstring("Make F-keys clickable")] HRESULT HotSpot([out, retval] VARIANT_BOOL* pVal);
+    [propput, bindable, displaybind, requestedit, id(6), helpstring("Make F-keys clickable")] HRESULT HotSpot([in] VARIANT_BOOL newVal);
+    [propget, id(7)] HRESULT About([out, retval] BSTR* pVal);
 
     //methods:
     [id(100), helpstring("Connect to the host")]		HRESULT Connect();

@@ -62,7 +62,6 @@
 #include <atlstr.h>
 #include <atltypes.h>
 #include <Utils.h>
-
 using namespace ATL;
 
 

@@ -1,6 +1,6 @@
 /* 
  * Copyright (C) 2001 Scott Klement
- * Copyright (C) 2003 Marc-Antoine Ruel at Cardinal Health
+ * Copyright (C) 2003 Marc-Antoine.Ruel at Cardinal.com
  * 
  * Some parts of This file is part of TN5250
  *
@@ -25,48 +25,51 @@
 #include "stdafx.h"
 #include "Term5250.h"
 #include <algorithm>
-#include "Term5250.h"
 
 
 // CTerm5250
-CTerm5250::CTerm5250() throw()
-:	m_bBorderVisible(true), 
-m_bEnabled(true),
-m_bstrCaption(),
-m_clrBorderColor(GetSysColor(COLOR_ACTIVEBORDER)), // COLOR_WINDOWFRAME
-m_HostName(L"127.0.0.1"),
-m_nAppearance(0),
-m_nBorderWidth(1),
-m_nReadyState(false),
-sess(NULL),
-stream(NULL),
-display(NULL),
-config(NULL),
-macro(NULL),
-m_hFont(NULL),
-m_hScreenBMP(NULL),
-m_hMemDC(NULL),
-m_hCaretBMP(NULL),
-m_hBackgroundBrush(NULL),
-m_ColSepStyle(COLSEPSTYLE_FULL),
-m_ThreadId(0),
-m_FontName(L"Courier New"),	// Terminal  
-m_Last_size(0,0),
-m_FontSize(0,0),
-m_CaretStyle(CARETSTYLE_BLINK),
-m_rctSelection(0,0,0,0),
-m_bHandledKey(false),
-m_bCaretOK(false),
-m_bResized(true),
-m_bDisplayRuler(false),
-m_bSelecting(false),
-m_bSelected(false),
-m_bUnixLikeCopy(false),
-m_KbBuf_len(0),
-m_bMouseMoveCursor(false),
-m_bSelectionEnabled(true),
-m_CopyMode(Both),
-m_hTimer(NULL)
+CTerm5250::CTerm5250() throw() :
+
+    m_nAppearance(0),
+    m_clrBorderColor(GetSysColor(COLOR_ACTIVEBORDER)), // COLOR_WINDOWFRAME
+    m_bBorderVisible(true),
+    m_nBorderWidth(1),
+    m_bstrCaption(),
+    m_bEnabled(true),
+    m_nReadyState(false),
+    m_HostName(L"127.0.0.1"),
+    m_CaretStyle(CARETSTYLE_BLINK),
+    m_CopyMode(Both),
+    m_FontName(L"Courier New"),	// Terminal  
+    config(NULL),
+    sess(NULL),
+    stream(NULL),
+    display(NULL),
+    macro(NULL),
+    m_ThreadId(0),
+    m_hFont(NULL),
+    m_hScreenBMP(NULL),
+    m_hMemDC(NULL),
+    m_hCaretBMP(NULL),
+    m_hBackgroundBrush(NULL),
+    m_ColSepStyle(COLSEPSTYLE_FULL),
+    m_hTimer(NULL),
+    m_KbBuf_len(0),
+    m_FontSize(0,0),
+    m_Last_size(0,0),
+    m_rctSelection(0,0,0,0),
+    m_PD(NULL),
+    m_bLocalPrint(false),
+    m_bHandledKey(false),
+    m_bCaretOK(false),
+    m_bResized(true),
+    m_bSelecting(false),
+    m_bSelected(false),
+    m_bSelectionEnabled(true),
+    m_bUnixLikeCopy(false),
+    m_bHotSpots(true),
+    m_bDisplayRuler(false),
+    m_bMouseMoveCursor(false)
 {
     FUNC_ENTER();
     dbgSetThreadName("CTerm5250 Thread");
@@ -87,17 +90,17 @@ m_hTimer(NULL)
     term.beep = ::win32_terminal_beep;
     term.config = NULL;
 
-    m_ColorList[A_5250_GREEN		] = RGB(0,   255,   0);
-    m_ColorList[A_5250_WHITE		] = RGB(255, 255, 255);
-    m_ColorList[A_5250_RED			] = RGB(255,   0,   0);
-    m_ColorList[A_5250_TURQ			] = RGB(0,   128, 128);
-    m_ColorList[A_5250_YELLOW		] = RGB(255, 255,   0);
-    m_ColorList[A_5250_PINK			] = RGB(255,   0, 255);
-    m_ColorList[A_5250_BLUE			] = RGB(0,   255, 255);
-    m_ColorList[A_5250_BLACK		] = RGB(0,     0,   0);
-    m_ColorList[A_5250_RULER_COLOR	] = RGB(192,   0,   0);
-    //	m_ColorList[A_5250_STATUS_COLOR	] = RGB(192, 128, 128);
-    m_ColorList[A_5250_STATUS_COLOR	] = RGB(128, 255, 128);
+    m_ColorList[A_5250_GREEN            ] = RGB(0,   255,   0);
+    m_ColorList[A_5250_WHITE            ] = RGB(255, 255, 255);
+    m_ColorList[A_5250_RED              ] = RGB(255,   0,   0);
+    m_ColorList[A_5250_TURQ             ] = RGB(0,   128, 128);
+    m_ColorList[A_5250_YELLOW           ] = RGB(255, 255,   0);
+    m_ColorList[A_5250_PINK             ] = RGB(255,   0, 255);
+    m_ColorList[A_5250_BLUE             ] = RGB(0,   255, 255);
+    m_ColorList[A_5250_BLACK            ] = RGB(0,     0,   0);
+    m_ColorList[A_5250_RULER_COLOR      ] = RGB(192,   0,   0);
+    //  m_ColorList[A_5250_STATUS_COLOR ] = RGB(192, 128, 128);
+    m_ColorList[A_5250_STATUS_COLOR     ] = RGB(128, 255, 128);
     m_clrForeColor = m_ColorList[A_5250_WHITE];
     m_clrBackColor = m_ColorList[A_5250_BLACK];
 
@@ -196,8 +199,8 @@ void CTerm5250::FinalRelease() throw()
 // actual window when WM_PAINT occurs
 HRESULT CTerm5250::OnDraw(ATL_DRAWINFO & di)
 {
-    if ( !m_bSelecting )
-        FUNC_ENTER();
+    //if ( !m_bSelecting )
+    //    FUNC_ENTER();
 
     // We need to know if we've been resized!
     if ( m_bResized )
@@ -216,7 +219,7 @@ HRESULT CTerm5250::OnDraw(ATL_DRAWINFO & di)
     {
         // BitBlt may fail if the OnDraw is called too often during one screen refresh (~1/60 sec)
         const DWORD Err = GetLastError();
-        Break();
+        // We must not care too much about that
         if ( Err )
             return HRESULT_FROM_WIN32(Err);
     }
@@ -228,7 +231,7 @@ HRESULT CTerm5250::OnDraw(ATL_DRAWINFO & di)
     }
 
     // Draw a rectangle if there's a selection
-    if (m_bSelected)
+    if (m_bSelected && m_bSelectionEnabled)
     {
         const int savemode = SetROP2(di.hdcDraw, R2_NOT);
         SelectObject(di.hdcDraw, GetStockObject(m_bSelecting?NULL_BRUSH:WHITE_BRUSH) );
@@ -268,7 +271,7 @@ void CTerm5250::RegenScreenBuffer()
 // actual window when WM_PAINT occurs
 void CTerm5250::RefreshScreenBuffer(bool FireViewEvent)
 {
-    FUNC_ENTER();
+    //FUNC_ENTER();
     assert( display );
 
     if ( !m_hScreenBMP )
@@ -374,7 +377,7 @@ void CTerm5250::RefreshScreenBuffer(bool FireViewEvent)
 
 void CTerm5250::DrawStatusLine()
 {
-    FUNC_ENTER();
+    //FUNC_ENTER();
     const int inds = tn5250_display_indicators(display);
 
     // m_hScreenBMP and m_hFont are already selected
@@ -382,6 +385,7 @@ void CTerm5250::DrawStatusLine()
     char ind_buf[81];
     memset(ind_buf, ' ', sizeof(ind_buf));
     ind_buf[80] = 0;	// closes it
+    // TBA Check if in 5250 or telnet mode.
     memcpy(ind_buf, "5250", 4);
     if ((inds & TN5250_DISPLAY_IND_INHIBIT) != 0)
         memcpy(ind_buf + 9, "X II", 4);
@@ -397,7 +401,6 @@ void CTerm5250::DrawStatusLine()
         memcpy(ind_buf + 33, "FER", 3);
     if ((inds & TN5250_DISPLAY_IND_MACRO) != 0)
         memcpy(ind_buf + 72-12, tn5250_macro_printstate (display), 11);
-    // TBM If connected
     BSTR swName = L"Disconnected";
     if ( m_bstrCaption.m_str )
     {
@@ -644,39 +647,10 @@ void CTerm5250::InternalFlush()
     RefreshScreenBuffer();
 }
 
-COLORREF CTerm5250::GetColor(int iColor) const throw()
-{
-    COLORREF ColorRef = RGB(0,255,0);	// Defaults to green.
-    ASSERT( iColor >= 0 && iColor < A_5250_NB_COLORS );
-    OleTranslateColor(m_ColorList[iColor], NULL, &ColorRef);
-    return ColorRef;
-}
-
-
-STDMETHODIMP CTerm5250::get_HostName(BSTR* pVal)
-{
-    //	FUNC_ENTER();
-    m_HostName.CopyTo(pVal);
-    return S_OK;
-}
-
-
-STDMETHODIMP CTerm5250::put_HostName(BSTR newVal)
-{
-    FUNC_ENTER1(" \"%ls\"", newVal);
-    // TBA Check validity, either IP or DNS.
-    if ( !newVal || newVal[0] == '[' )
-        return E_INVALIDARG;
-    if ( !CanEdit(1) )
-        return S_FALSE;
-    m_HostName = newVal;
-    ValueChanged(1);
-    return S_OK;
-}
-
 
 LRESULT CTerm5250::OnSetFocus(UINT /*uMsg*/, WPARAM /*wParam*/, LPARAM /*lParam*/, BOOL& bHandled)
 {
+    // TODO Ajouter une trappe pour alt-tab alt-tab ; on perd le caret!
     FUNC_ENTER();
     MakeNewCaret();
     HDC hdc = GetDC();
@@ -707,6 +681,48 @@ LRESULT CTerm5250::OnEraseBkgnd(UINT /*uMsg*/, WPARAM /*wParam*/, LPARAM /*lPara
 }
 
 
+// Controls which message to giveup to windows.
+BOOL CTerm5250::PreTranslateAccelerator(LPMSG pMsg, HRESULT & hRet) throw()
+{
+    //FUNC_ENTER3(" %u %u %X", pMsg->message, pMsg->wParam, pMsg->lParam);
+
+    // Signal that we processed the key
+    hRet = S_OK;
+
+    // Since TranslateMessage won't be automatically called, we 
+    // must do your processing here.
+    const UINT uMsg = pMsg->message;
+    const WPARAM wParam = pMsg->wParam;
+    const LPARAM lParam = pMsg->lParam;
+    BOOL bHandled = TRUE;
+
+    // Same has message dispatcher
+    switch (uMsg)
+    {
+    case WM_SYSKEYUP:
+    case WM_KEYUP:
+        OnKeyUp(uMsg, wParam, lParam, bHandled);
+        break;
+    case WM_SYSKEYDOWN:
+    case WM_KEYDOWN:
+        OnKeyDown(uMsg, wParam, lParam, bHandled);
+        break;
+    case WM_CHAR:
+        OnChar(uMsg, wParam, lParam, bHandled);
+        break;
+    default:
+        bHandled = FALSE;
+        break;
+    }
+
+    // So WM_CHAR are sent
+    if (!bHandled)
+        TranslateMessage(pMsg);
+
+    return TRUE;
+}
+
+
 LRESULT CTerm5250::OnKeyUp(UINT /*uMsg*/, WPARAM wParam, LPARAM lParam, BOOL& bHandled)
 {
     bHandled = false;
@@ -714,22 +730,26 @@ LRESULT CTerm5250::OnKeyUp(UINT /*uMsg*/, WPARAM wParam, LPARAM lParam, BOOL& bH
         return 0;
 
     //FUNC_ENTER1(" %d", wParam);
-    const int ext = (HIWORD (lParam) & 0x0100) >> 8;
-    BYTE KeyboardState[256] = { 0 };
+    // This is flawed for the sole reason that WM_xxKEYxx are synchronous
+    // and that GetKeyboardState is asynchronous. Should keep internal map
+    // instead?
+    BYTE KeyboardState[256] = { 0xff };   // so that keystate=0 always works.
     GetKeyboardState(KeyboardState); 
-    KeyboardState[0] = 0xff;   // so that keystate=0 always works.
+    //const int ext = (HIWORD (lParam) & 0x0100) >> 8;
 
     for ( int x = 0; keyup2msg[x].win32_key != -1; ++x )
     {
-        if (   (int)wParam == keyup2msg[x].win32_key
+        if (   wParam == keyup2msg[x].win32_key
             && (keyup2msg[x].ctx || !m_bHandledKey)
-            && keyup2msg[x].ext == ext
+            //&& keyup2msg[x].ext == ext
             && (KeyboardState[keyup2msg[x].keystate]&0x80))
         {
             QueueKey(keyup2msg[x].func_key);
+            bHandled = true;
             break;
         }
     }
+    m_bHandledKey = false;
     return 0;
 }
 
@@ -740,26 +760,30 @@ LRESULT CTerm5250::OnKeyDown(UINT /*uMsg*/, WPARAM wParam, LPARAM lParam, BOOL& 
         return 0;
 
     //FUNC_ENTER1(" %d", wParam);
-    //	const int ctx = HIWORD (lParam) & 0x2000;
-    //	const int ext = (HIWORD (lParam) & 0x0100) >> 8;
-    BYTE KeyboardState[256] = { 0 };
-    GetKeyboardState(KeyboardState); 
-    KeyboardState[0] = 0xff;   // so that keystate=0 always works.
+    // This is flawed for the sole reason that WM_xxKEYxx are synchronous
+    // and that GetKeyboardState is asynchronous. Should keep internal map
+    // instead?
+    BYTE KeyboardState[256];
+    GetKeyboardState(KeyboardState);
+    KeyboardState[0] = 0xff;    // so that keystate=0 always works.
+
+    //const int ctx = HIWORD (lParam) & 0x2000;
+    //const int ext = (HIWORD (lParam) & 0x0100) >> 8;
 
     m_bHandledKey = false;
     for ( int x = 0; keydown2msg[x].win32_key != -1; ++x )
     {
-        if (   (DWORD)wParam == keydown2msg[x].win32_key
-            //		&& keydown2msg[x].ctx == ctx		// otherwise the Virtual Keyboard doesn't work.
-            //		&& keydown2msg[x].ext == ext
+        if (  wParam == keydown2msg[x].win32_key
+            //	&& keydown2msg[x].ctx == ctx	// otherwise the Virtual Keyboard doesn't work.
+            //	&& keydown2msg[x].ext == ext
             && (KeyboardState[keydown2msg[x].keystate]&0x80))
         {
             for (int repeat = LOWORD(lParam); repeat>0; --repeat)
                 QueueKey(keydown2msg[x].func_key);
-
             TN5250_LOG(("WM_KEYDOWN: handling key\n"));
             m_bHandledKey = true;
-            return 1;
+            bHandled = true;
+            break;
         }
     }
 
@@ -768,7 +792,6 @@ LRESULT CTerm5250::OnKeyDown(UINT /*uMsg*/, WPARAM wParam, LPARAM lParam, BOOL& 
 
 LRESULT CTerm5250::OnChar(UINT /*uMsg*/, WPARAM wParam, LPARAM /*lParam*/, BOOL& bHandled)
 {
-    bHandled = false;
     if ( !m_bEnabled || !m_nReadyState )
         return 0;
 
@@ -782,8 +805,8 @@ LRESULT CTerm5250::OnChar(UINT /*uMsg*/, WPARAM wParam, LPARAM /*lParam*/, BOOL&
             break;
         }
     }
+    // Assuming that WM_KEYUP is sent after.
     m_bHandledKey = true;
-    TN5250_LOG(("WM_CHAR: handling key\n"));
     QueueKey((int)wParam);
     return 0;
 }
@@ -808,35 +831,104 @@ LRESULT CTerm5250::OnLButtonDown(UINT /*uMsg*/, WPARAM /*wParam*/, LPARAM lParam
 
     FUNC_ENTER();
 
-    // Retrieve focus
-    //m_spInPlaceSite->SetFocus(TRUE);	// It CRASHES!! !?!?
-    if ( m_hWndCD && GetFocus() != m_hWndCD )
+    // Resets selection.
+    m_bSelecting = false;
+    m_bSelected = false;
+
+    if ( (m_bHotSpots || m_bMouseMoveCursor) && m_nReadyState)
     {
-        SetFocus();
-    }
-    // We don't want to move the mouse on activation click...
-    else if ( m_bMouseMoveCursor && m_nReadyState )
-    {
-        // Determine the new cursor position and the needed VK to 
-        // move the cursor there
         const POINT P = { LOWORD(lParam), HIWORD(lParam) };
-        CPoint NewCaretPos;
-        PointToCursorPos(P, NewCaretPos);
-        CPoint Diff( NewCaretPos - GetCaretPos() );
+        CPoint CaretPos;
+        PointToCursorPos(P, CaretPos);
 
-        ASSERT( abs(Diff.x) < tn5250_display_width(display)
-            &&  abs(Diff.y) < tn5250_display_height(display) );
+        // If the user clicks on the status line, this must be skipped.
+        if (CaretPos.y < tn5250_display_height(display))
+        {
+            if ( tn5250_display_field_at(display, CaretPos.y, CaretPos.x) )
+            {
+                // If a field exist there, try to move the cursor there
+                if ( m_bMouseMoveCursor )
+                {
+                    // TBA We don't want to move the mouse on activation click...
+                    tn5250_display_set_cursor(display, CaretPos.y, CaretPos.x);
+                    tn5250_display_update(display);
+                }
+            }
+            else
+            {
+                // If there is NO field there, look for a F-key
+                if ( m_bHotSpots )
+                {
+                    // Look for a "F1"-"F24" under the spot which were hit
+                    // For now, doesn't accept "F09" or similars
 
-        for ( ; Diff.x < 0; ++Diff.x )
-            QueueKey(K_LEFT);
-        for ( ; Diff.x > 0; --Diff.x )
-            QueueKey(K_RIGHT);
-        for ( ; Diff.y < 0; ++Diff.y )
-            QueueKey(K_UP);
-        for ( ; Diff.y > 0; --Diff.y )
-            QueueKey(K_DOWN);
+                    char Buffer[5] = { 0 }; // In ASCII
+                    const int width = tn5250_display_width(display);
+                    if ( CaretPos.x-2 >= 0)
+                    {
+                        Buffer[0] = tn5250_char_map_to_local(tn5250_display_char_map(display),
+                            tn5250_display_char_at(display, CaretPos.y, CaretPos.x-2));
+                    }
+                    if ( CaretPos.x-1 >= 0)
+                    {
+                        Buffer[1] = tn5250_char_map_to_local(tn5250_display_char_map(display),
+                            tn5250_display_char_at(display, CaretPos.y, CaretPos.x-1));
+                    }
+                    Buffer[2] = tn5250_char_map_to_local(tn5250_display_char_map(display),
+                        tn5250_display_char_at(display, CaretPos.y, CaretPos.x));
+                    if ( CaretPos.x+1 < width )
+                    {
+                        Buffer[3] = tn5250_char_map_to_local(tn5250_display_char_map(display),
+                            tn5250_display_char_at(display, CaretPos.y, CaretPos.x+1));
+                    }
+                    if ( CaretPos.x+2 < width )
+                    {
+                        Buffer[4] = tn5250_char_map_to_local(tn5250_display_char_map(display),
+                            tn5250_display_char_at(display, CaretPos.y, CaretPos.x+2));
+                    }
+
+                    /// Scan for F
+                    /// \note assuming that K_F2 = K_F1+1 and so on; which is true :)
+                    if ( Buffer[0] == 'F' && (Buffer[1] == '1' || Buffer[1] == '2') && (Buffer[2] >= '0' && Buffer[2] <= '9') )
+                    {
+                        // Must be F10-F24
+                        const int Val = ((Buffer[1] - '0') * 10) + Buffer[2] - '0';
+                        if ( Val >= 10 && Val <= 24 )
+                        {
+                            QueueKey(K_F1 - 1 + Val);
+                            return 0;
+                        }
+                    }
+                    else if ( Buffer[1] == 'F' || Buffer[2] == 'F' )
+                    {
+                        const char * const Base = (Buffer[1] == 'F') ? (Buffer+2) : (Buffer+3);
+                        const int N0 = Base[0] - '0';
+                        if ( N0 >= 0 && N0 <= 9 )
+                        {
+                            // Check for F10-F24
+                            const int Val = (N0 * 10) + Base[1] - '0';
+                            if ( (N0 == 1 || N0 == 2) && (Val >= 10 && Val <= 24) )
+                            {
+                                // Must be F10-F24
+                                QueueKey(K_F1 - 1 + Val);
+                                return 0;
+                            }
+                            // Skip F0.  "F25" will leads to F2
+                            else if ( N0 )
+                            {
+                                // Must be F1-F9
+                                QueueKey(K_F1 - 1 + N0);
+                                return 0;
+                            }
+                        }
+                    }
+                }
+            }
+            
+        }
     }
-    else if ( m_bSelectionEnabled )
+
+    if ( m_bSelectionEnabled )
     {
         m_bSelecting = true;
         m_bSelected = true;
@@ -845,8 +937,11 @@ LRESULT CTerm5250::OnLButtonDown(UINT /*uMsg*/, WPARAM /*wParam*/, LPARAM lParam
         m_rctSelection.right = m_rctSelection.left;
         m_rctSelection.bottom = m_rctSelection.top;
 
-        if ( m_hWnd )
-            SetCapture();
+        if ( S_OK != m_spInPlaceSite->SetCapture(TRUE) )
+        {
+            if ( m_hWndCD )
+                SetCapture();
+        }
 
         SetCursor(LoadCursor(NULL, IDC_CROSS));
         FireViewChange();	// No need to refresh the screen buffer
@@ -880,7 +975,10 @@ LRESULT CTerm5250::OnLButtonUp(UINT /*uMsg*/, WPARAM /*wParam*/, LPARAM lParam, 
     FUNC_ENTER();
     if (m_bSelecting)
     {
-        ReleaseCapture();
+        if ( S_OK != m_spInPlaceSite->SetCapture(FALSE) )
+        {
+            ReleaseCapture();
+        }
         SetCursor(LoadCursor(NULL, IDC_ARROW));
 
         m_bSelecting = false;
@@ -905,13 +1003,6 @@ LRESULT CTerm5250::OnLButtonUp(UINT /*uMsg*/, WPARAM /*wParam*/, LPARAM lParam, 
 }
 
 
-LRESULT CTerm5250::ForwardMsg(UINT uMsg, WPARAM wParam, LPARAM lParam, BOOL& /*bHandled*/)
-{
-    FUNC_ENTER();
-    PostThreadMessage(m_ThreadId, uMsg, wParam, lParam);
-    return 0;
-}
-
 /*
 On WM_CREATE
 OnActivateInPlace() <- request activation
@@ -926,34 +1017,19 @@ return 0;
 
 LRESULT CTerm5250::OnMouseActivate(UINT, WPARAM, LPARAM, BOOL&)
 {
+    FUNC_ENTER();
     // Manually activate the control
     InPlaceActivate(OLEIVERB_UIACTIVATE);
-
     return 0;
 }
 
-// Controls which message to giveup to windows.
-BOOL CTerm5250::PreTranslateAccelerator(LPMSG /*pMsg*/, HRESULT & hRet) throw()
+
+LRESULT CTerm5250::ForwardMsg(UINT uMsg, WPARAM wParam, LPARAM lParam, BOOL& /*bHandled*/)
 {
-    /*	if ( pMsg->message == WM_KEYDOWN || pMsg->message == WM_KEYUP )
-    {
-    switch (pMsg->wParam)
-    {
-    case VK_F1 :		case VK_F2 :		case VK_F3 :		case VK_F4 :		case VK_F5 :		case VK_F6 :		case VK_F7 :		case VK_F8 :		case VK_F9 :		case VK_F10:		case VK_F11:		case VK_F12:		case VK_F13:		case VK_F14:		case VK_F15:		case VK_F16:		case VK_F17:		case VK_F18:		case VK_F19:		case VK_F20:		case VK_F21:		case VK_F22:		case VK_F23:		case VK_F24:
-    case VK_PRIOR:		case VK_NEXT :		case VK_END  :		case VK_HOME :		case VK_LEFT :		case VK_UP   :		case VK_RIGHT:		case VK_DOWN :		case VK_INSERT:		case VK_DELETE:
-    hRet = S_FALSE;	return TRUE;
-    default:
-    }
-    }
-    return FALSE;	*/
-
-    // NONE! :)
-    //FUNC_ENTER3(" %u %u %u", pMsg->message, pMsg->wParam, pMsg->lParam);
-    //hRet = S_FALSE;
-    hRet = E_FAIL;
-    return TRUE;
+    //FUNC_ENTER();
+    PostThreadMessage(m_ThreadId, uMsg, wParam, lParam);
+    return 0;
 }
-
 
 // Should be call in the worker thread
 void CTerm5250::PostBufferRefresh() const throw()
@@ -1002,26 +1078,6 @@ void CTerm5250::SetSize(int cx, int cy)
 }
 
 
-// Hide the caret, usually done when the window loses focus
-void CTerm5250::HideCaret()
-{
-    FUNC_ENTER();
-    if ( m_hWnd )
-        super::HideCaret();
-    DestroyCaret();
-}
-
-void CTerm5250::OnEnabledChanged()
-{
-    FUNC_ENTER();
-    if ( !m_bEnabled )
-    {
-        m_bSelecting = false;
-        m_bSelected = false;
-    }
-}
-
-
 STDMETHODIMP CTerm5250::SendVKey(DWORD VKey)
 {
     FUNC_ENTER1(" %d", VKey);
@@ -1064,19 +1120,14 @@ STDMETHODIMP CTerm5250::SendChar(USHORT Character)
         return S_FALSE;
 }
 
-
-void CTerm5250::OnCaptionChanged()
-{
-    FUNC_ENTER();
-    RefreshScreenBuffer(false);
-}
-
 // Almost same as CComControlBase::IOleObject_SetExtent
 HRESULT CTerm5250::IOleObject_SetExtent(DWORD dwDrawAspect, SIZEL *psizel)
 {
-    FUNC_ENTER3(" %d  %dx%d", dwDrawAspect, psizel->cx, psizel->cy);
     if (dwDrawAspect != DVASPECT_CONTENT)
+    {
+        FUNC_ENTER0("Bad aspect");
         return DV_E_DVASPECT;
+    }
     if (psizel == NULL)
         return E_POINTER;
 
@@ -1097,6 +1148,8 @@ HRESULT CTerm5250::IOleObject_SetExtent(DWORD dwDrawAspect, SIZEL *psizel)
         m_bResized = true;
     }
 
+    FUNC_ENTER4(" %d,%d  %dx%d", bSizeMatchesNatural, m_bResized,
+        psizel->cx, psizel->cy);
     if (m_bRecomposeOnResize && m_bResized)
     {
         // Try to adapt this size for our use
@@ -1146,41 +1199,12 @@ HRESULT CTerm5250::IOleInPlaceObject_SetObjectRects(LPCRECT prcPos, LPCRECT prcC
     return RetVal;
 }
 
-void CTerm5250::OnBorderVisibleChanged()
+COLORREF CTerm5250::GetColor(int iColor) const throw()
 {
-    FUNC_ENTER1(" %s", m_bBorderVisible?_T("TRUE"):_T("FALSE"));
-    // It affects the size of the object
-    RegenScreenBuffer();
-}
-
-void CTerm5250::OnAutoSizeChanged()
-{
-    FUNC_ENTER1(" %s", m_bAutoSize?_T("TRUE"):_T("FALSE"));
-    if ( m_bAutoSize )
-    {
-        // Try to resize the window
-        RegenScreenBuffer();
-    }
-}
-
-void CTerm5250::OnAppearanceChanged()
-{
-    FUNC_ENTER();
-    // For now until it gets fixed.
-    m_nAppearance = 0;
-
-    if (m_hWnd != NULL)
-    {
-        // toggle border style and force redraw of border
-        DWORD Val = GetExStyle();
-        if ( m_nAppearance && m_bBorderVisible )
-            Val |= WS_EX_CLIENTEDGE;
-        else
-            Val &= (~WS_EX_CLIENTEDGE);
-        SetWindowLong(GWL_EXSTYLE, Val );
-        SetWindowPos(NULL, 0, 0, 0, 0, SWP_DRAWFRAME|SWP_NOSIZE|SWP_NOMOVE|SWP_NOACTIVATE);
-    }
-    //DrawEdge(); <- here is my solution!!
+    COLORREF ColorRef = RGB(0,255,0);	// Defaults to green.
+    ASSERT( iColor >= 0 && iColor < A_5250_NB_COLORS );
+    OleTranslateColor(m_ColorList[iColor], NULL, &ColorRef);
+    return ColorRef;
 }
 
 bool CTerm5250::CanEdit(int Id) throw()
@@ -1197,11 +1221,6 @@ void CTerm5250::ValueChanged(int Id) throw()
     SendOnDataChange(NULL);
 }
 
-void CTerm5250::OnBorderColorChanged()
-{
-    FUNC_ENTER();
-    RefreshScreenBuffer(false);
-}
 
 // Returns the next key from the keyboard buffer.
 int CTerm5250::GetKey()
@@ -1360,7 +1379,8 @@ void CTerm5250::LoadTerminalFont()
 // Add a key to the terminal's keyboard buffer
 void CTerm5250::QueueKey(int key)
 {
-    FUNC_ENTER1(" '%c'", key);
+    FUNC_ENTER1(" %d", key);
+    //FUNC_ENTER2(" %d '%c'", key, key);
     switch (key)
     {
     case K_PASTE_TEXT:
@@ -1404,7 +1424,7 @@ void CTerm5250::QueueKey(int key)
 *****/
 void CTerm5250::MakeNewCaret()
 {
-    FUNC_ENTER();
+    //FUNC_ENTER();
     if (m_CaretStyle == CARETSTYLE_NOBLINK)
     {
         // We make the Windows Caret invisible, so we can maintain control
@@ -1447,6 +1467,7 @@ void CTerm5250::MakeNewCaret()
     }
 }
 
+
 // Move the caret to a position on the screen, to the coordinates in caretx, carety
 void CTerm5250::MoveCaret(HDC hdc)
 {
@@ -1472,6 +1493,17 @@ void CTerm5250::MoveCaret(HDC hdc)
         m_bCaretOK = true;
     }
 }
+
+
+// Hide the caret, usually done when the window loses focus
+void CTerm5250::HideCaret()
+{
+    //FUNC_ENTER();
+    if ( m_hWnd )
+        super::HideCaret();
+    DestroyCaret();
+}
+
 
 // This converts the mouse selection points (defined by selstr & selend)
 // to a rectangle of selected text (by aligning the points with the text
@@ -1641,6 +1673,25 @@ void CTerm5250::CopyTextSelection()
 }
 
 
+void CTerm5250::PointToCursorPos(const POINT & in_Pixels, POINT & out_CaretPos) const throw()
+{
+    // Calc the deltas
+    const int Delta = m_bBorderVisible?m_nBorderWidth:0;
+
+    // move selection start position to nearest character
+    out_CaretPos.x = (in_Pixels.x-Delta) / m_FontSize.cx;
+    out_CaretPos.y = (in_Pixels.y-Delta) / m_FontSize.cy;
+}
+
+
+CPoint CTerm5250::GetCaretPos() const throw()
+{
+    ASSERT(tn5250_display_cursor_x(display)>=0 && tn5250_display_cursor_x(display) < tn5250_display_width(display)
+        && tn5250_display_cursor_y(display)>=0 && tn5250_display_cursor_y(display) < tn5250_display_height(display) );
+    return CPoint(tn5250_display_cursor_x(display), tn5250_display_cursor_y(display));
+}
+
+
 // Convert data in the windows clipboard into keystrokes and paste them into the keyboard buffer.
 // \note Increasing the MAX_K_BUF_LEN will speed this routine up...
 void CTerm5250::PasteTextSelection()
@@ -1705,6 +1756,78 @@ void CTerm5250::PasteTextSelection()
     }
 }
 
+
+void CTerm5250::OnAutoSizeChanged()
+{
+    FUNC_ENTER1(" %s", m_bAutoSize?_T("TRUE"):_T("FALSE"));
+    if ( m_bAutoSize )
+    {
+        // Try to resize the window
+        RegenScreenBuffer();
+    }
+}
+
+void CTerm5250::OnAppearanceChanged()
+{
+    FUNC_ENTER();
+    // For now until it gets fixed.
+    m_nAppearance = 0;
+
+    if (m_hWnd != NULL)
+    {
+        // toggle border style and force redraw of border
+        DWORD Val = GetExStyle();
+        if ( m_nAppearance && m_bBorderVisible )
+            Val |= WS_EX_CLIENTEDGE;
+        else
+            Val &= (~WS_EX_CLIENTEDGE);
+        SetWindowLong(GWL_EXSTYLE, Val );
+        SetWindowPos(NULL, 0, 0, 0, 0, SWP_DRAWFRAME|SWP_NOSIZE|SWP_NOMOVE|SWP_NOACTIVATE);
+    }
+    //DrawEdge(); <- here is my solution!!
+}
+
+void CTerm5250::OnBackColorChanged()
+{
+    //	FUNC_ENTER();
+    m_ColorList[A_5250_BLACK] = m_clrBackColor;
+
+    ASSERT( m_hBackgroundBrush );
+    DeleteObject(m_hBackgroundBrush);
+    m_hBackgroundBrush = CreateSolidBrush(GetColor(A_5250_BLACK));
+    RefreshScreenBuffer(false);
+}
+
+void CTerm5250::OnBorderColorChanged()
+{
+    FUNC_ENTER();
+    RefreshScreenBuffer(false);
+}
+
+void CTerm5250::OnBorderVisibleChanged()
+{
+    FUNC_ENTER1(" %s", m_bBorderVisible?_T("TRUE"):_T("FALSE"));
+    // It affects the size of the object
+    RegenScreenBuffer();
+}
+
+
+void CTerm5250::OnCaptionChanged()
+{
+    FUNC_ENTER();
+    RefreshScreenBuffer(false);
+}
+
+void CTerm5250::OnEnabledChanged()
+{
+    FUNC_ENTER();
+    if ( !m_bEnabled )
+    {
+        m_bSelecting = false;
+        m_bSelected = false;
+    }
+}
+
 void CTerm5250::OnForeColorChanged()
 {
     //	FUNC_ENTER();
@@ -1724,15 +1847,40 @@ void CTerm5250::OnForeColorChanged()
     //m_ColorList[A_5250_BLACK] = RGB(0,0,0);
 }
 
-void CTerm5250::OnBackColorChanged()
+STDMETHODIMP CTerm5250::get_HostName(BSTR* pVal)
 {
     //	FUNC_ENTER();
-    m_ColorList[A_5250_BLACK] = m_clrBackColor;
+    m_HostName.CopyTo(pVal);
+    return S_OK;
+}
 
-    ASSERT( m_hBackgroundBrush );
-    DeleteObject(m_hBackgroundBrush);
-    m_hBackgroundBrush = CreateSolidBrush(GetColor(A_5250_BLACK));
-    RefreshScreenBuffer(false);
+
+STDMETHODIMP CTerm5250::put_HostName(BSTR newVal)
+{
+    FUNC_ENTER1(" \"%ls\"", newVal);
+
+    // Check validity, either IP or DNS.
+    // Valid caracters are [0-9] [a-z] [A-Z] . - _ and :
+    ATL::CStringW TmpVal(newVal);
+    TmpVal.Trim();
+    const WCHAR * Buffer = TmpVal.GetBuffer();
+    const int length = TmpVal.GetLength();
+    for ( int i = 0; i < length; i++ )
+    {
+        const WCHAR w = Buffer[i];
+        if (!(    (w >= '0' && w <= '9')
+            ||(w >= 'a' && w <= 'z')
+            ||(w >= 'A' && w <= 'Z')
+            || w == '.' || w == '-' || w == '_' || w == ':' ))
+        {
+            return E_INVALIDARG;
+        }
+    }
+    if ( !CanEdit(1) )
+        return S_FALSE;
+    m_HostName = TmpVal;
+    ValueChanged(1);
+    return S_OK;
 }
 
 
@@ -1827,29 +1975,46 @@ STDMETHODIMP CTerm5250::put_SelectionEnabled(VARIANT_BOOL newVal)
 }
 
 
-void CTerm5250::PointToCursorPos(const POINT & in_Pixels, POINT & out_CaretPos) const throw()
+STDMETHODIMP CTerm5250::get_HotSpot(VARIANT_BOOL* pVal)
 {
-    // Calc the deltas
-    const int Delta = m_bBorderVisible?m_nBorderWidth:0;
+    if ( !pVal )
+        return E_INVALIDARG;
 
-    // move selection start position to nearest character
-    out_CaretPos.x = (in_Pixels.x-Delta) / m_FontSize.cx;
-    out_CaretPos.y = (in_Pixels.y-Delta) / m_FontSize.cy;
+    *pVal = m_bHotSpots?-1:0;
+    return S_OK;
+}
+
+STDMETHODIMP CTerm5250::put_HotSpot(VARIANT_BOOL newVal)
+{
+    FUNC_ENTER1(" %d", newVal);
+    if ( !CanEdit(6) )
+        return S_FALSE;
+
+    m_bHotSpots = newVal?true:false;
+    ValueChanged(6);
+    return S_OK;
 }
 
 
-CPoint CTerm5250::GetCaretPos() const throw()
+STDMETHODIMP CTerm5250::get_About(BSTR* pVal)
 {
-    ASSERT(tn5250_display_cursor_x(display)>=0 && tn5250_display_cursor_x(display) < tn5250_display_width(display)
-        && tn5250_display_cursor_y(display)>=0 && tn5250_display_cursor_y(display) < tn5250_display_height(display) );
-    return CPoint(tn5250_display_cursor_x(display), tn5250_display_cursor_y(display));
+    //FUNC_ENTER();
+    if ( !pVal )
+        return E_INVALIDARG;
+
+    *pVal = ::SysAllocString(About);
+
+    if (pVal == NULL)
+        return E_OUTOFMEMORY;
+    
+    
+    return S_OK;
 }
 
 
 // ISupportsErrorInfo
 STDMETHODIMP CTerm5250::InterfaceSupportsErrorInfo(REFIID riid)
 {
-    // TBA If we support other interface
     static const IID* arr[] = { &IID_ITerm5250 };
     for (int i=0; i<sizeof(arr)/sizeof(arr[0]); i++)
         if (InlineIsEqualGUID(*arr[i], riid))

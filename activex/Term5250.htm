@@ -4,29 +4,68 @@
 		<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
 
 		<SCRIPT LANGUAGE="JScript">
-			<!-- Look into the IDL to know the methods and properties available. -->
 			var SizeBig = true;
-
+			
 			function MyOnLoadPage()
 			{
-				// Term5250.MouseMoveCursor = true;
+				Term5250.MouseMoveCursor=true;
 				Term5250.SelectionEnabled = false;
-				Term5250.Caption = "Won't connect";
 				window.defaultStatus = "Waiting to connect";
-
-				// Autoconnect code
-				// Connect();
+				<!--Term5250.Connect();-->
 				Term5250.focus();
 			}
 			function Connect()
 			{
-				Term5250.HostName = "127.0.0.1";
-	  			Term5250.Connect();
+				Term5250.HostName = IP.value;
+				Term5250.Connect();
+				Term5250.focus();
 			}
 	
 			function Disconnect()
 			{
-	  			Term5250.Disconnect();
+				Term5250.Disconnect();
+			}
+	
+			function SetBKColor()
+			{
+				// inverted...
+				var cR = eval(B.value);
+				var cG = eval(G.value);
+				var cB = eval(R.value);
+				Term5250.BackColor = ((cR*256*256) + (cG*256) + cB);
+			}
+	
+			function SetFGColor()
+			{
+				// inverted...
+				var cR = eval(B.value);
+				var cG = eval(G.value);
+				var cB = eval(R.value);
+				Term5250.ForeColor = ((cR*256*256) + (cG*256) + cB);
+			}
+			
+			function InvertColor()
+			{
+				var Fore = Term5250.BackColor;
+				Term5250.BackColor = Term5250.ForeColor;
+				Term5250.ForeColor = Fore;
+			}
+	
+			function SendVK()
+			{
+				var MyVK = eval(VK.value);
+				Term5250.SendVkey(MyVK);
+			}
+			function SendChar()
+			{
+				var MyVK = eval(VK.value);
+				Term5250.SendChar(MyVK);
+			}
+			
+			function SetMouseMove()
+			{
+	 			var MyVK = eval(VK.value);
+	 			Term5250.MouseMoveCursor = MyVK;
 			}
 			function ToggleSize()
 			{
@@ -40,6 +79,7 @@
 					ResizeBig();
 					SizeBig = true;
 				}
+				//Term5250.focus();
 			}
 
 			function ResizeSmall()
@@ -52,9 +92,17 @@
 	  			Term5250.style.width = 884;
 	  			Term5250.style.height = 579;
 			}
+			
+			function OnReset()
+			{
+				Term5250.SendChar(0x12);
+				Term5250.focus();
+			}
+			
 		</SCRIPT>
 		<SCRIPT FOR="Term5250" EVENT="Connected()" LANGUAGE="JScript">
 				window.defaultStatus = "Connected to " + Term5250.HostName;
+				<!--window.alert("Connected!");-->
 		</SCRIPT>
 		<SCRIPT FOR="Term5250" EVENT="Disconnected()" LANGUAGE="JScript">
 				window.defaultStatus = "Disconnected";
@@ -62,13 +110,25 @@
 
 	</HEAD>
 	<BODY OnLoad="MyOnLoadPage()">
-		<b>Note:</b> &nbsp;&nbsp; Use the button above to show the keyboard. &nbsp;&nbsp;&nbsp;&nbsp; Click on the button below to change the size of the terminal.
+		Custom AS/400 Terminal<p>
+		<OBJECT id="Term5250" style="width:564;height:352" classid="CLSID:4F051715-BD6B-4BEF-988A-6F70E7F149FC"></OBJECT>
 		<br>
-		<OBJECT id="Term5250" style="width:884;height:579" classid="CLSID:4F051715-BD6B-4BEF-988A-6F70E7F149FC"></OBJECT>
-		<p>
-		&nbsp;&nbsp;&nbsp;&nbsp;
-		<INPUT type="button" name="ResetConnectionBtn" value="Reset Connection" onclick="Connect()">
-		&nbsp;&nbsp;&nbsp;&nbsp;
-		<INPUT type="button" name="ToggleSizeBtn" value="Toggle Terminal Size" onclick="ToggleSize()">
+		<INPUT type="text" name="IP" value="timeshare.ediconsulting.com" size="20">
+		<INPUT type="button" value="Connect" onclick="Connect()">
+		<INPUT type="button" value="Disconnect" onclick="Disconnect()">
+		<br>
+		<INPUT type="text" maxlength="4" size="4" name="VK" value="0">
+		<INPUT type="button" value="SendVirtualKey" onclick="SendVK()">
+		<INPUT type="button" value="SendChar" onclick="SendChar()">
+		<INPUT type="button" value="SetMouseMove" onclick="SetMouseMove()">
+		<INPUT type="button" name="ToggleSizeBtn" value="Toggle Size" onclick="ToggleSize()">
+		<br>
+		<INPUT type="text" maxlength="3" size="3" name="R" value="255">
+		<INPUT type="text" maxlength="3" size="3" name="G" value="255">
+		<INPUT type="text" maxlength="3" size="3" name="B" value="255">
+		<INPUT type="button" value="SetBKColor" onclick="SetBKColor()">
+		<INPUT type="button" value="SetFGColor" onclick="SetFGColor()">
+		<INPUT type="button" value="InvertColor" onclick="InvertColor()">
+		<INPUT type="button" value="Reset" onclick="OnReset()">
 	</BODY>
 </HTML>

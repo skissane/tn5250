@@ -21,12 +21,21 @@
  */
 // Removes all references to conf.c  (For now)
 
+#include "stdafx.h"
+extern "C" {
 #include "tn5250-private.h"
-
+}
 
 /*** Tn5250Config ***/
+/* The intent of this file is to use the registry instead of a file.
+ * In the case of an ActiveX, it's much better to do this.
+ * But as you see it hasn't been implemented...
+ * If you want to use the old way, just include tn5250/src/conf.c 
+ * instead of this file.
+ */
 
-Tn5250Config *tn5250_config_new ()
+
+extern "C" Tn5250Config *tn5250_config_new ()
 {
     Tn5250Config *This = tn5250_new (Tn5250Config, 1);
     if (This == NULL)
@@ -37,7 +46,7 @@ Tn5250Config *tn5250_config_new ()
     return This;
 }
 
-Tn5250Config *tn5250_config_ref (Tn5250Config *This)
+extern "C" Tn5250Config *tn5250_config_ref (Tn5250Config *This)
 {
     // unsafe anyway...
     This->ref++;
@@ -45,7 +54,7 @@ Tn5250Config *tn5250_config_ref (Tn5250Config *This)
 }
 
 // auto-delete...
-void tn5250_config_unref (Tn5250Config *This)
+extern "C" void tn5250_config_unref (Tn5250Config *This)
 {
     if (-- This->ref == 0)
     {
@@ -53,40 +62,53 @@ void tn5250_config_unref (Tn5250Config *This)
     }
 }
 
-int tn5250_config_load (Tn5250Config *, const char *)
+extern "C" int tn5250_config_load (Tn5250Config *, const char *)
 {
     return 0;
 }
 
-int tn5250_config_load_default (Tn5250Config *)
+extern "C" int tn5250_config_load_default (Tn5250Config *)
 {
     return 0;
 }
 
-int tn5250_config_parse_argv (Tn5250Config *, int , char **)
+extern "C" int tn5250_config_parse_argv (Tn5250Config *, int , char **)
 {
     return 0;
 }
 
-const char *tn5250_config_get (Tn5250Config *, const char * name)
+extern "C" const char *tn5250_config_get (Tn5250Config *, const char * name)
 {
     // absolutely needed...
     if ( !strcmp(name, "env.TERM") )
         return "IBM-3179-2";
     else if ( !strcmp(name, "map") )
         return "37";
+    else if ( !strcmp(name, "enhanced") )
+        return "true";
     else
         return NULL;
 }
 
-int tn5250_config_get_bool (Tn5250Config *, const char *)
+extern "C" int tn5250_config_get_bool (Tn5250Config * This, const char * name)
 {
-    return 0;
+    const char *v = tn5250_config_get (This, name);
+    return (v == NULL ? 0 :
+    !(!strcmp (v,"off")
+        || !strcmp (v, "no")
+        || !strcmp (v,"0")
+        || !strcmp (v,"false")));
 }
 
-int tn5250_config_get_int (Tn5250Config *, const char *)
+extern "C" int tn5250_config_get_int (Tn5250Config * This, const char * name)
 {
-    return 0;
+    const char *v = tn5250_config_get (This, name);
+
+    if(v == NULL) {
+        return 0;
+    } else {
+        return(atoi(v));
+    }
 }
 
 extern "C" void tn5250_config_set(Tn5250Config *This,
@@ -101,7 +123,7 @@ extern "C" void tn5250_config_unset (Tn5250Config *, const char *)
 }
 
 // Copy variables prefixed with `prefix' to variables without `prefix'.
-void tn5250_config_promote (Tn5250Config *, const char *)
+extern "C" void tn5250_config_promote (Tn5250Config *, const char *)
 {
 }
 

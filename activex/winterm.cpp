@@ -46,26 +46,28 @@ void win32_terminal_beep(Tn5250Terminal *)
 int win32_terminal_getkey(Tn5250Terminal *This)
 {
     // Read the next key from the terminal, and do any required translations.
-    FUNC_ENTER();
-    return ((CTerm5250*)This->data)->GetKey();
+    int key = ((CTerm5250*)This->data)->GetKey();
+    //if ( key != -1 )
+    //    FUNC_ENTER1(" %d", key);
+    return key;
 }
 void win32_terminal_update(Tn5250Terminal * This, Tn5250Display * /*display*/)
 {
-    FUNC_ENTER();
+    //FUNC_ENTER();
     // Do not refresh directly since when queuing lots of keys, it overload the system uselessly
     ((CTerm5250*)This->data)->PostBufferRefresh();
 }
 
 void win32_terminal_update_indicators(Tn5250Terminal * This, Tn5250Display * /*display*/)
 {
-    FUNC_ENTER();
+    //FUNC_ENTER();
     // Do not refresh directly since when queuing lots of keys, it overload the system uselessly
     ((CTerm5250*)This->data)->PostBufferRefresh();
 }
 
 int win32_terminal_waitevent(Tn5250Terminal * This)
 {
-    FUNC_ENTER();
+    //FUNC_ENTER();
 
     if (This->conn_fd != -1)
     {
@@ -82,18 +84,18 @@ int win32_terminal_waitevent(Tn5250Terminal * This)
         HANDLE Event = ((CTerm5250*)This->data)->GetTimerHandle();
         for (;;)
         {
-            if (!((CTerm5250*)This->data)->m_nReadyState)
+            if ( !((CTerm5250*)This->data)->IsReady() )
                 return TN5250_TERMINAL_EVENT_QUIT;
 
             RetVal = MsgWaitForMultipleObjects(1, &Event, FALSE, INFINITE, QS_ALLINPUT);
 
-            if (!((CTerm5250*)This->data)->m_nReadyState)
+            if ( !((CTerm5250*)This->data)->IsReady() )
                 return TN5250_TERMINAL_EVENT_QUIT;
 
             if ( RetVal == WAIT_OBJECT_0 )
             {
                 // We got a refresh event!
-                FUNC_ENTER0(" got REFRESH");
+                //FUNC_ENTER0(" got REFRESH");
                 ((CTerm5250*)This->data)->RefreshScreenBuffer();
                 // continue to loop
                 continue;
@@ -108,18 +110,18 @@ int win32_terminal_waitevent(Tn5250Terminal * This)
                     // If it is a quit message, exit.
                     if (msg.message == WM_QUIT)
                     {
-                        FUNC_ENTER0(" got WM_QUIT");
+                        //FUNC_ENTER0(" got WM_QUIT");
                         return TN5250_TERMINAL_EVENT_QUIT;
                     }
                     // Otherwise, dispatch the message.
                     if ( msg.message == WM_TN5250_STREAM_DATA )
                     {
-                        FUNC_ENTER0(" got STREAM_DATA");
+                        //FUNC_ENTER0(" got STREAM_DATA");
                         return TN5250_TERMINAL_EVENT_DATA;
                     }
                     if ( msg.message == WM_TN5250_KEY_DATA )
                     {
-                        FUNC_ENTER0(" got KEY_DATA");
+                        //FUNC_ENTER0(" got KEY_DATA");
                         return TN5250_TERMINAL_EVENT_KEY;
                     }
                     FUNC_ENTER1(" got msg %d ??", msg.message);
@@ -153,6 +155,9 @@ DWORD WINAPI CTerm5250::ThreadFunc(LPVOID ObjectInstance)
     }
     __except(EXCEPTION_EXECUTE_HANDLER)
     {
+        int Error = GetExceptionCode();
+        //EXCEPTION_POINTERS * Infos = GetExceptionInformation();
+
         // we failed miserably...
         ASSERT( "Got an error" && 0 );
     }
@@ -190,33 +195,6 @@ ASSERT(((CTerm5250*)This->data)->m_hWnd);
 return tn5250_display_height(display);
 }
 */
-
-/* TBA or TBR
-//, class Object
-template< typename T, int Id, typename fnC, typename fnV, fnC CanChange, fnV Changed>
-class AutoFire
-{
-public:
-operator const T &() const { return m_Obj; }
-void operator = (const T & rhs) { if ( CanChange(Id) ) { m_Obj = rhs; Changed(Id); } }
-protected:
-T	m_Obj;
-};
-
-std::for_each(a, b, c);
-
-bool C1(int i)
-{
-return true;
-}
-void V1(int i)
-{
-}
-
-AutoFire<int, 3, bool (int), void (int), C1, V1  > Object;
-AutoFire<int, 3, bool (int), void (int), C1, V1 > Object;
-*/
-
 
 
 

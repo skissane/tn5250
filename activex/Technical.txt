@@ -1,0 +1,12 @@
+How is a packet formed:
+
+L1 L0 12 A0 00 00 04 00 00 03 CY CX F1 11 FY FX "FieldText" FF FE
+                                   Enter                    IAC
+                                       SBA                     EOR
+L1 = Length1 of the packet
+L0 = Length0 of the packet
+CX = Current cursor position X
+CY = Current cursor position Y
+FY = field pos y to know which field it is
+FX = field pos x to know which field it is
+FF  FE = end of packet in telnet mode.
