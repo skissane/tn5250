@@ -55,7 +55,7 @@ by Henri Gomez</a>.</li>
 
 <li><a href="http://www.debian.org/">Debian</a> users are luckier —
 tn5250 is part of the main distribution.  You should be able to install
-it by typing: <kbd>apt-get install tn5250</kbd> as root.</li>
+it by typing <kbd>apt-get install tn5250</kbd> as root.</li>
 </ul>
 
 <p>Finally, you can get the latest tn5250 sources from anonymous CVS,
@@ -79,7 +79,7 @@ the archives</a> of the tn5250 mailing list.</li>
 
 <h2 id="devel">Development</h2>
 
-<p>There’s also a page of <a href="resources.html">links to
+<p>There’s a page of <a href="resources.html">links to
 related documentation</a> on this site.</p>
 
 
