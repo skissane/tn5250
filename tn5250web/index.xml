@@ -35,7 +35,7 @@ to work with.</p>
 
 <p>James Rich has written a useful HOWTO for tn5250.
 <a href="http://www.chowhouse.com/~james/tn5250-HOWTO.pdf">Read it on
-his web site</a>.</p>
+his web site</a> (133kB PDF).</p>
 
 
 <h2 id="download">Getting tn5250</h2>
@@ -56,9 +56,7 @@ to the mailing list</a>), or use the older
 <a href="ftp://ftp.falsehope.com/home/gomez/tn5250/">RPMS provided
 by Henri Gomez</a>.</li>
 
-<li><a href="http://www.debian.org/">Debian</a> users have it a little easier—tn5250
-is part of the main distribution.  You should be able to install
-it by typing <kbd>apt-get install tn5250</kbd> as root.</li>
+<li><a href="http://www.debian.org/">Debian</a> users can install tn5250 by typing <kbd>apt-get install tn5250</kbd> as root.  Debian 3.0 users can also download a <a href="http://sourceforge.net/project/showfiles.php?group_id=27533">Debian package of tn5250 0.16.5</a> from our files area.</li>
 
 <li><a href="http://www.freebsd.org">FreeBSD</a> users can install
 it by typing <kbd>cd /usr/ports/net/tn5250 &amp;&amp; make install</kbd> as root.</li>
@@ -68,10 +66,7 @@ users can download the
 <a href="http://sourceforge.net/project/showfiles.php?group_id=27533">
 Win32 Installer from our files area</a>.</li>
 
-<li><a href="http://www.lindows.com/">Lindows</a> users can “Click-N-Run”
-tn5250 from <a href="http://www.lindows.com/xt5250">www.lindows.com/xt5250</a>
-or manually install the
-<a href="http://packages.debian.org/stable/net/tn5250.html">Debian package</a>.</li>
+<li><a href="http://www.lindows.com/">Lindows</a> users can “Click-N-Run” tn5250 from <a href="http://www.lindows.com/xt5250">www.lindows.com/xt5250</a> or download and install the <a href="http://sourceforge.net/project/showfiles.php?group_id=27533">latest Debian package</a>.</li>
 </ul>
 
 <p>Finally, you can get the latest tn5250 sources from anonymous CVS, or just
