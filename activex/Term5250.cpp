@@ -169,7 +169,7 @@ CTerm5250::CTerm5250() throw()
 , m_bUnixLikeCopy(false)
 , m_bHotSpots(true)
 , m_bDisplayRuler(false)
-, m_bMouseMoveCursor(false)
+, m_bMouseMoveCursor(true)
 , m_bEnhanced(false)
 , m_bContextualMenu(true)
 , m_bFirstClear(false)
@@ -1087,6 +1087,13 @@ LRESULT CTerm5250::OnRButtonDown(UINT, WPARAM, LPARAM lParam, BOOL&)
     return 0;
 }
 
+char CTerm5250::GetChar(int x, int y) const
+{
+    if (!display || x < 0 || x >= tn5250_display_width(display) || y < 0 || y >= tn5250_display_height(display))
+        return 0;
+
+    return tn5250_char_map_to_local(tn5250_display_char_map(display), tn5250_display_char_at(display, y, x));
+}
 
 LRESULT CTerm5250::OnLButtonDown(UINT /*uMsg*/, WPARAM /*wParam*/, LPARAM lParam, BOOL& /*bHandled*/)
 {
@@ -1126,65 +1133,43 @@ LRESULT CTerm5250::OnLButtonDown(UINT /*uMsg*/, WPARAM /*wParam*/, LPARAM lParam
                 // If there is NO field there, look for a F-key
                 if ( m_bHotSpots )
                 {
-                    // Look for a "F1"-"F24" under the spot which were hit
-                    // For now, doesn't accept "F09" or similars
-
-                    char Buffer[5] = { 0 }; // In ASCII
-                    const int width = tn5250_display_width(display);
-                    if ( CaretPos.x-2 >= 0)
-                    {
-                        Buffer[0] = tn5250_char_map_to_local(tn5250_display_char_map(display),
-                            tn5250_display_char_at(display, CaretPos.y, CaretPos.x-2));
-                    }
-                    if ( CaretPos.x-1 >= 0)
-                    {
-                        Buffer[1] = tn5250_char_map_to_local(tn5250_display_char_map(display),
-                            tn5250_display_char_at(display, CaretPos.y, CaretPos.x-1));
-                    }
-                    Buffer[2] = tn5250_char_map_to_local(tn5250_display_char_map(display),
-                        tn5250_display_char_at(display, CaretPos.y, CaretPos.x));
-                    if ( CaretPos.x+1 < width )
-                    {
-                        Buffer[3] = tn5250_char_map_to_local(tn5250_display_char_map(display),
-                            tn5250_display_char_at(display, CaretPos.y, CaretPos.x+1));
-                    }
-                    if ( CaretPos.x+2 < width )
-                    {
-                        Buffer[4] = tn5250_char_map_to_local(tn5250_display_char_map(display),
-                            tn5250_display_char_at(display, CaretPos.y, CaretPos.x+2));
-                    }
+                    // Look for a "F1=" to "F24=" under the spot which was hit
+                    char Buffer[8];
+                    Buffer[0] = GetChar(CaretPos.x-3, CaretPos.y);
+                    Buffer[1] = GetChar(CaretPos.x-2, CaretPos.y);
+                    Buffer[2] = GetChar(CaretPos.x-1, CaretPos.y);
+                    Buffer[3] = GetChar(CaretPos.x  , CaretPos.y);
+                    Buffer[4] = GetChar(CaretPos.x+1, CaretPos.y);
+                    Buffer[5] = GetChar(CaretPos.x+2, CaretPos.y);
+                    Buffer[6] = GetChar(CaretPos.x+3, CaretPos.y);
+                    Buffer[7] = GetChar(CaretPos.x+4, CaretPos.y);
 
                     /// Scan for F
-                    /// \note assuming that K_F2 = K_F1+1 and so on; which is true :)
-                    if ( Buffer[0] == 'F' && (Buffer[1] == '1' || Buffer[1] == '2') && (Buffer[2] >= '0' && Buffer[2] <= '9') )
+                    for (int i = 0; i < 5; ++i)
                     {
-                        // Must be F10-F24
-                        const int Val = ((Buffer[1] - '0') * 10) + Buffer[2] - '0';
-                        if ( Val >= 10 && Val <= 24 )
+                        /// \note assuming that K_F2 = K_F1+1 and so on; which is true :)
+                        if (Buffer[i] == 'F')
                         {
-                            QueueKey(K_F1 - 1 + Val);
-                            return 0;
-                        }
-                    }
-                    else if ( Buffer[1] == 'F' || Buffer[2] == 'F' )
-                    {
-                        const char * const Base = (Buffer[1] == 'F') ? (Buffer+2) : (Buffer+3);
-                        const int N0 = Base[0] - '0';
-                        if ( N0 >= 0 && N0 <= 9 )
-                        {
+                            const int N1 = Buffer[i+1]-'0';
+                            const int N2 = Buffer[i+2]-'0';
+
                             // Check for F10-F24
-                            const int Val = (N0 * 10) + Base[1] - '0';
-                            if ( (N0 == 1 || N0 == 2) && (Val >= 10 && Val <= 24) )
+                            if ((Buffer[i+3] == '=')
+                                && (N1 == 1 || N1 == 2) && (N2 >= 0 && N2 <= 9) )
                             {
-                                // Must be F10-F24
-                                QueueKey(K_F1 - 1 + Val);
-                                return 0;
+                                const int Val = (N1 * 10) + N2;
+                                if (Val >= 10 && Val <= 24)
+                                {
+                                    // Must be F10-F24
+                                    QueueKey(K_F1 - 1 + Val);
+                                    return 0;
+                                }
                             }
-                            // Skip F0.  "F25" will leads to F2
-                            else if ( N0 )
+
+                            // Check for F1-F9
+                            if (i > 0 && N1 >= 1 && N1 <= 9 && Buffer[i+2] == '=')
                             {
-                                // Must be F1-F9
-                                QueueKey(K_F1 - 1 + N0);
+                                QueueKey(K_F1 - 1 + N1);
                                 return 0;
                             }
                         }

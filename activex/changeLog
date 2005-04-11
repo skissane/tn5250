@@ -1,6 +1,8 @@
 2005-04-11 maruel@users.sf.net
     * Removed property binding since it was not correctly implemented.
-    
+    * Fixed the hotspot functionality
+    * Now defaults MouseMoveCursor to true
+
 2005-04-01 maruel@users.sf.net
     * Fixed a timing issue on quit that could make it crash.
     * Added dynamic key binding.

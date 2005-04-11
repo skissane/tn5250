@@ -379,6 +379,7 @@ protected:
     void CursorPosToPoint(const POINT & in_CaretPos, POINT & out_Pixels) const throw();
     // in characters
     CPoint GetCaretPos() const throw();
+    char GetChar(int x, int y) const;
     void InternalFlush();
     COLORREF GetColor(int iColor) const throw();
     /* TBM If you want to print, load the activex in a web page and print from there!
@@ -443,6 +444,11 @@ protected:
     typedef FunkyMap<Keystroke2MsgEx, int> VKey2Msg;
     VKey2Msg                m_Key2Msg;
 
+    // TBM 
+    /*Window*/int win;
+    /*Window*/int subwindows[10];
+    /*XFontStruct*/void * font_info;
+    unsigned int borderwidth;	/* four pixels */
 public:
     bool                    scrollbar;
 protected:
