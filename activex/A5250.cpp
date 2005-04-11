@@ -26,7 +26,9 @@
 #include "A5250.h"
 #include "Term5250.h"
 
-class CA5250Module : public CAtlDllModuleT< CA5250Module >
+using ATL::_ATL_REGMAP_ENTRY;
+
+class CA5250Module : public ATL::CAtlDllModuleT< CA5250Module >
 {
 public :
     DECLARE_LIBID(LIBID_Term5250Lib)
@@ -38,9 +40,8 @@ OBJECT_ENTRY_AUTO(__uuidof(Term5250), CTerm5250)
 
 
 // DLL Entry Point
-extern "C" BOOL WINAPI DllMain(HINSTANCE hInstance, DWORD dwReason, LPVOID lpReserved)
+extern "C" BOOL WINAPI DllMain(HINSTANCE /*hInstance*/, DWORD dwReason, LPVOID lpReserved)
 {
-    hInstance;
     return _AtlModule.DllMain(dwReason, lpReserved); 
 }
 
