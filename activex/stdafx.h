@@ -19,52 +19,54 @@
  * Boston, MA 02111-1307 USA
  *
  */
-// stdafx.h : include file for standard system include files,
-// or project specific include files that are used frequently,
-// but are changed infrequently
-
 #pragma once
 
-#ifndef STRICT
-#define STRICT
-#endif
-
-// Modify the following defines if you have to target a platform prior to the ones specified below.
-// Refer to MSDN for the latest info on corresponding values for different platforms.
-#ifndef WINVER              // Allow use of features specific to Windows 95 and Windows NT 4 or later.
-#define WINVER 0x0400       // Change this to the appropriate value to target Windows 98 and Windows 2000 or later.
-#endif
-
-#ifndef _WIN32_WINNT        // Allow use of features specific to Windows NT 4 or later.
-#define _WIN32_WINNT 0x0400 // Change this to the appropriate value to target Windows 2000 or later.
-#endif
-
-#ifndef _WIN32_WINDOWS          // Allow use of features specific to Windows 98 or later.
-#define _WIN32_WINDOWS 0x0410   // Change this to the appropriate value to target Windows Me or later.
-#endif
-
-#ifndef _WIN32_IE               // Allow use of features specific to IE 4.0 or later.
-#define _WIN32_IE 0x0400        // Change this to the appropriate value to target IE 5.0 or later.
-#endif
 
 #define _ATL_APARTMENT_THREADED
 #define _ATL_NO_AUTOMATIC_NAMESPACE
+#define _ATL_CSTRING_EXPLICIT_CONSTRUCTORS	// some CString constructors will be explicit
+#define _ATL_ALL_WARNINGS                   // turns off ATL's hiding of some common and often safely ignored warning messages
+#define _ATL_NO_PRAGMA_WARNINGS
+#define _ATL_NO_PERF_SUPPORT
+#define NOMINMAX
 
-#define _ATL_CSTRING_EXPLICIT_CONSTRUCTORS  // some CString constructors will be explicit
+#include "tn5250-config.h"
 
-// turns off ATL's hiding of some common and often safely ignored warning messages
-#define _ATL_ALL_WARNINGS
+#ifdef _MSC_VER
+    #pragma warning(push,1)
+    #pragma warning(disable:4217) // '' : member template functions cannot be used for copy-assignment or copy-construction
+    #pragma warning(disable:4505) // '' : unreferenced local function has been removed
+    #pragma warning(disable:4548) // expression before comma has no effect; expected expression with side-effect
+    #pragma warning(disable:4555) // expression has no effect; expected expression with side-effect
+    #pragma warning(disable:4619) // #pragma warning : there is no warning number 'N'
+    #pragma warning(disable:4946) // reinterpret_cast used between related classes: '' and ''
+#endif
 
 
-#include "resource.h"
 #include <atlbase.h>
-#include <atlcom.h>
+#include <atlhost.h>
+#include <atlctl.h>
 #include <atlstr.h>
 #include <atltypes.h>
-#include <Utils.h>
-using namespace ATL;
+#include <atlcoll.h>
 
+#include <commdlg.h>
+#include <algorithm>
+#include <map>
+#include <vector>
+#include <limits>
 
-#pragma warning(disable:4267) // '+=' : conversion from 'size_t' to 'int', possible loss of data
-#pragma warning(disable:4101) // '' : unreferenced local variable (There's TOO MANY!!)
+#ifdef _MSC_VER
+    #pragma warning(pop)
+    #ifdef NDEBUG
+    #pragma optimize("a", on)
+    #endif
+#endif
+
+//using namespace ATL;
+using ATL::CStringT;
+using ATL::CStringA;
+using ATL::CStringW;
+using ATL::CString;
+
 
