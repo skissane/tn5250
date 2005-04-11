@@ -4,44 +4,65 @@
 		<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
 
 		<SCRIPT LANGUAGE="JScript">
-			var SizeBig = true;
-			
 			function MyOnLoadPage()
 			{
-				Term5250.MouseMoveCursor=true;
+				Term5250.MouseMoveCursor = true;
+				Term5250.SelectionEnabled = true;
+				Term5250.Enhanced = true;
+				Term5250.HotSpot = true;
+				window.defaultStatus = "Waiting to connect. Please click on the ConnectDialog button.";
+
+				//Term5250.HostName = "as400";
+				Term5250.MouseMoveCursor = true;
 				Term5250.SelectionEnabled = false;
-				window.defaultStatus = "Waiting to connect";
-				<!--Term5250.Connect();-->
+				Term5250.HotSpot = true;
+				Term5250.Enhanced = true;
+				Term5250.ShowConnect = true;
+				Term5250.ContextualMenu = true;
+				Term5250.UseComputerName = true;
+				//Term5250.Connect();
+
 				Term5250.focus();
 			}
+
 			function Connect()
 			{
 				Term5250.HostName = IP.value;
 				Term5250.Connect();
 				Term5250.focus();
 			}
-	
-			function Disconnect()
+
+			function ConnectDialog()
 			{
-				Term5250.Disconnect();
+				Term5250.ConnectDialog();
+				Term5250.focus();
 			}
 	
 			function SetBKColor()
 			{
 				// inverted...
-				var cR = eval(B.value);
-				var cG = eval(G.value);
-				var cB = eval(R.value);
+				var cR = eval(A.value);
+				var cG = eval(B.value);
+				var cB = eval(C.value);
 				Term5250.BackColor = ((cR*256*256) + (cG*256) + cB);
 			}
 	
 			function SetFGColor()
 			{
 				// inverted...
-				var cR = eval(B.value);
-				var cG = eval(G.value);
-				var cB = eval(R.value);
+				var cR = eval(A.value);
+				var cG = eval(B.value);
+				var cB = eval(C.value);
 				Term5250.ForeColor = ((cR*256*256) + (cG*256) + cB);
+			}
+			
+			function SetBorderColor()
+			{
+				// inverted...
+				var cR = eval(A.value);
+				var cG = eval(B.value);
+				var cB = eval(C.value);
+				Term5250.BorderColor = ((cR*256*256) + (cG*256) + cB);
 			}
 			
 			function InvertColor()
@@ -50,52 +71,43 @@
 				Term5250.BackColor = Term5250.ForeColor;
 				Term5250.ForeColor = Fore;
 			}
-	
+
 			function SendVK()
 			{
-				var MyVK = eval(VK.value);
-				Term5250.SendVkey(MyVK);
-			}
-			function SendChar()
-			{
-				var MyVK = eval(VK.value);
-				Term5250.SendChar(MyVK);
-			}
-			
-			function SetMouseMove()
-			{
-	 			var MyVK = eval(VK.value);
-	 			Term5250.MouseMoveCursor = MyVK;
-			}
-			function ToggleSize()
-			{
-				if ( SizeBig )
-				{
-					ResizeSmall();
-					SizeBig = false;
-				}
-				else
-				{
-					ResizeBig();
-					SizeBig = true;
-				}
-				//Term5250.focus();
+				var MyVK = eval(A.value);
+				var Modifiers = eval(B.value);
+				Term5250.SendVkey(MyVK, Modifiers);
+				Term5250.focus();
 			}
 
-			function ResizeSmall()
+			function SendChar()
 			{
-	  			Term5250.style.width = 564;
-	  			Term5250.style.height = 352;
+				var MyVK = eval(A.value);
+				Term5250.SendChar(MyVK);
+				Term5250.focus();
 			}
-			function ResizeBig()
+
+			function BindVK()
 			{
-	  			Term5250.style.width = 884;
-	  			Term5250.style.height = 579;
+				var VirtualKeyCode = eval(A.value);
+				var Modifiers = eval(B.value);
+				var KValue = eval(C.value);
+				Term5250.BindKey(VirtualKeyCode, Modifiers, KValue);
+				Term5250.focus();
 			}
-			
-			function OnReset()
+
+			function resize()
 			{
-				Term5250.SendChar(0x12);
+				var X = eval(A.value);
+				var Y = eval(B.value);
+				Term5250.style.width = X;
+				Term5250.style.heigth = Y;
+				Term5250.focus();
+			}
+			function defaultsize()
+			{
+				Term5250.style.width = "100%";
+				Term5250.style.heigth = "100%";
 				Term5250.focus();
 			}
 			
@@ -109,26 +121,66 @@
 		</SCRIPT>
 
 	</HEAD>
-	<BODY OnLoad="MyOnLoadPage()">
-		Custom AS/400 Terminal<p>
-		<OBJECT id="Term5250" style="width:564;height:352" classid="CLSID:4F051715-BD6B-4BEF-988A-6F70E7F149FC"></OBJECT>
-		<br>
-		<INPUT type="text" name="IP" value="timeshare.ediconsulting.com" size="20">
-		<INPUT type="button" value="Connect" onclick="Connect()">
-		<INPUT type="button" value="Disconnect" onclick="Disconnect()">
-		<br>
-		<INPUT type="text" maxlength="4" size="4" name="VK" value="0">
-		<INPUT type="button" value="SendVirtualKey" onclick="SendVK()">
-		<INPUT type="button" value="SendChar" onclick="SendChar()">
-		<INPUT type="button" value="SetMouseMove" onclick="SetMouseMove()">
-		<INPUT type="button" name="ToggleSizeBtn" value="Toggle Size" onclick="ToggleSize()">
-		<br>
-		<INPUT type="text" maxlength="3" size="3" name="R" value="255">
-		<INPUT type="text" maxlength="3" size="3" name="G" value="255">
-		<INPUT type="text" maxlength="3" size="3" name="B" value="255">
-		<INPUT type="button" value="SetBKColor" onclick="SetBKColor()">
-		<INPUT type="button" value="SetFGColor" onclick="SetFGColor()">
-		<INPUT type="button" value="InvertColor" onclick="InvertColor()">
-		<INPUT type="button" value="Reset" onclick="OnReset()">
+	<BODY OnLoad="MyOnLoadPage()" scroll=no BOTTOMMARGIN=0 LEFTMARGIN=0 RIGHTMARGIN=0 TOPMARGIN=0>
+		<TABLE BORDER=0 HEIGHT=100% WIDTH=100% CELLPADDING="0" CELLSPACING="0">
+		<TBODY>
+		<TR>
+		<TD ALIGN="center">
+		<OBJECT id="Term5250" style="width:100%;height:100%"
+			classid="CLSID:4F051715-BD6B-4BEF-988A-6F70E7F149FC"
+			CODEBASE="a5250.cab#Version=1,17,0,2" VIEWASTEXT>
+		</object>
+		</TD>
+		</TR>
+		<TR>
+		<TD HEIGHT=1>
+		<INPUT type="text" name="IP" value="as400.holgerscherer.de" size="20" />
+		<INPUT type="button" value="Connect" onclick="Connect()" />
+		<INPUT type="button" value="ConnectDialog" onclick="ConnectDialog()" />
+		<INPUT type="button" value="Disconnect" onclick="Term5250.Disconnect()" />
+		<INPUT type="button" value="HostName" onclick="Term5250.HostName = IP.value; Term5250.focus()" />
+		<INPUT type="button" value="Caption" onclick="Term5250.Caption = IP.value; Term5250.focus()" />
+		<INPUT type="button" value="FontName" onclick="Term5250.FontName = IP.value; Term5250.focus()" />
+		<INPUT type="button" value="Device Name" onclick="Term5250.DeviceName = IP.value; Term5250.focus()" />
+		<INPUT type="button" value="CodePage" onclick="Term5250.CodePage = IP.value; Term5250.focus()" />
+		<INPUT type="button" value="Wide" onclick="Term5250.Wide = IP.value; Term5250.focus()" />
+		&nbsp;
+		<INPUT type="button" value="Reset" onclick="OnReset()" />
+		<p>
+		<INPUT type="text" maxlength="4" size="4" name="A" value="0" />
+		<INPUT type="text" maxlength="4" size="4" name="B" value="255" />
+		<INPUT type="text" maxlength="4" size="4" name="C" value="255" />
+		<INPUT type="button" value="SendVirtualKey" onclick="SendVK()" />
+		<INPUT type="button" value="SendChar" onclick="SendChar()" />
+		<INPUT type="button" value="BindVK" onclick="BindVK()" />
+		<INPUT type="button" value="Resize" onclick="resize()" />
+		<INPUT type="button" value="DefaultSize" onclick="defaultsize()" />
+		<INPUT type="button" value="SetBKColor" onclick="SetBKColor()" />
+		<INPUT type="button" value="SetFGColor" onclick="SetFGColor()" />
+		<!-- Borders don't work well <INPUT type="button" value="SetBorderColor" onclick="SetBorderColor()" />
+		<INPUT type="button" value="Toggle Border" onclick="Term5250.BorderVisible = !Term5250.BorderVisible; Term5250.focus()" />
+		<INPUT type="button" value="SetBorderWidth" onclick="Term5250.BorderWidth = eval(A.value); Term5250.focus()" /> -->
+		<INPUT type="button" value="InvertColor" onclick="InvertColor()" />
+		<INPUT type="button" value="Toggle Contextual" onclick="Term5250.ContextualMenu = !Term5250.ContextualMenu; Term5250.focus()" />
+		<INPUT type="button" value="Enhanced" onclick="Term5250.Enhanced = eval(A.value); Term5250.focus()" />
+		<INPUT type="button" value="Caret" onclick="Term5250.CaretStyle = eval(A.value); Term5250.focus()" />
+		<INPUT type="button" value="ShowConnect" onclick="Term5250.ShowConnect = eval(A.value); Term5250.focus()" />
+		<INPUT type="button" value="DisplayRuler" onclick="Term5250.DisplayRuler = !Term5250.DisplayRuler; Term5250.focus()" />
+
+
+		<INPUT type="button" value="Get UseComputerName" onclick="A.value = eval(Term5250.UseComputerName) ; Term5250.focus()" />
+		<INPUT type="button" value="Set UseComputerName" onclick="Term5250.UseComputerName = eval(A.value); Term5250.focus()" />
+		<INPUT type="button" value="Get CursorPositionX" onclick="A.value = eval(Term5250.CursorPositionX) ; Term5250.focus()" />
+		<INPUT type="button" value="Set CursorPositionX" onclick="Term5250.CursorPositionX = eval(A.value); Term5250.focus()" />
+		<INPUT type="button" value="Get CursorPositionY" onclick="A.value = eval(Term5250.CursorPositionY) ; Term5250.focus()" />
+		<INPUT type="button" value="Set CursorPositionY" onclick="Term5250.CursorPositionY = eval(A.value); Term5250.focus()" />
+		<INPUT type="button" value="Get ScreenWidth" onclick="A.value = Term5250.ScreenWidth ; Term5250.focus()" />
+		<INPUT type="button" value="Get ScreenHeight" onclick="A.value = eval(Term5250.ScreenHeight) ; Term5250.focus()" />
+		<INPUT type="button" value="ScreenScrape" onclick="IP.value = Term5250.ScreenScrape(eval(A.value), eval(B.value), eval(C.value)) ; Term5250.focus()" />
+
+		</TD>
+		</TR>
+		</TBODY>
+		</TABLE>
 	</BODY>
 </HTML>
