@@ -1,0 +1,15 @@
+*.vspscc
+*.scc
+*.vssscc
+*.ncb
+*.suo
+*.bak
+A5250.h
+A5250_i.c
+A5250_p.c
+dlldata.c
+test.*
+Doc
+release
+debug
+m-a.txt
