@@ -1,3 +1,5 @@
+For *my* information :)
+ 
 How is a packet formed:
 
 L1 L0 12 A0 00 00 04 00 00 03 CY CX F1 11 FY FX "FieldText" FF FE
