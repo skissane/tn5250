@@ -20,20 +20,14 @@
  *
  */
 // Some structures and defines
-
+// Should have been named Tables.h...
 #pragma once
-
+#include <utility.h>
 
 #define TN5250_WNDCLASS "tn5250-win32-terminal"
-#define WM_TN5250_STREAM_DATA (WM_USER+2000)
-#define WM_TN5250_KEY_DATA (WM_USER+2001)
+#define WM_TN5250_STREAM_DATA (WM_USER+1)
+#define WM_TN5250_KEY_DATA (WM_USER+2)
 
-enum EColSepStyle
-{
-    COLSEPSTYLE_NONE,
-    COLSEPSTYLE_FULL,
-    COLSEPSTYLE_DOTS
-};
 
 enum ECopyMode
 {
@@ -43,18 +37,20 @@ enum ECopyMode
 };
 
 // Colors
-#define A_5250_GREEN		0
-#define A_5250_WHITE		1
-#define A_5250_RED		2
-#define A_5250_TURQ		3
-#define A_5250_YELLOW		4
-#define A_5250_PINK		5
-#define A_5250_BLUE		6
-#define A_5250_BLACK		7
-#define A_5250_RULER_COLOR	8
-#define A_5250_STATUS_COLOR	9
-#define A_5250_NB_COLORS	10
-
+enum
+{
+    A_5250_GREEN	,
+    A_5250_WHITE	,
+    A_5250_RED		,
+    A_5250_TURQ		,
+    A_5250_YELLOW	,
+    A_5250_PINK		,
+    A_5250_BLUE		,
+    A_5250_BLACK	,
+    A_5250_RULER_COLOR	,
+    A_5250_STATUS_COLOR	,
+    A_5250_NB_COLORS	
+};
 
 // Styles
 #define A_UNDERLINE  0x01
@@ -72,15 +68,27 @@ struct Tn5250Win32Attribute
 
 struct keystroke_to_msg
 {
-    SHORT keystate;
-    DWORD win32_key;
-    DWORD func_key;
-    BYTE   ctx;
-    BYTE   ext;
+    int   Modifiers;
+    int   win32_key;
+    int   tn5250_key;
 };
 
-struct win32_key_map
-{
-    DWORD win32_key;
-    DWORD tn5250_key;
+struct win32_modifier_map {
+    int Modifier;
+    int VirtualKey;
 };
+
+struct SimilarKey {
+    int key1;
+    int key2;
+};
+
+// externs
+extern const Tn5250Win32Attribute attribute_map[];
+extern const keystroke_to_msg key2msg[];
+extern const SimilarKey k_SimilarKeys[];
+extern Tn5250CharMap IdentityMap;
+extern const size_t attribute_map_size;
+extern const size_t key2msg_size;
+extern const size_t k_ModifierToVK_size;
+extern const size_t k_SimilarKeys_size;

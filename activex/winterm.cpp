@@ -19,6 +19,8 @@
 * Boston, MA 02111-1307 USA
 *
 */
+// Cardinal Health AIS Canada (c) 2003-2005
+// (c) 2003 Marc-Antoine Ruel
 
 #include "stdafx.h"
 #include "Term5250.h"
@@ -26,12 +28,16 @@
 
 // Glue
 #ifndef NDEBUG
-extern "C" int tn5250_debug_stream_init (Tn5250Stream *This)
+extern "C" int tn5250_debug_stream_init (Tn5250Stream * /*This*/)
 {
     return 0;
 }
 #endif
 
+ITerminal * GetTerm5250(const Tn5250Terminal * This)
+{
+    return static_cast<ITerminal *>(reinterpret_cast<CTerm5250 *>(This->data));
+}
 
 int win32_terminal_flags(Tn5250Terminal *)
 {
@@ -46,120 +52,90 @@ void win32_terminal_beep(Tn5250Terminal *)
 int win32_terminal_getkey(Tn5250Terminal *This)
 {
     // Read the next key from the terminal, and do any required translations.
-    int key = ((CTerm5250*)This->data)->GetKey();
-    //if ( key != -1 )
-    //    FUNC_ENTER1(" %d", key);
+    int key = GetTerm5250(This)->GetKey();
     return key;
 }
 void win32_terminal_update(Tn5250Terminal * This, Tn5250Display * /*display*/)
 {
     //FUNC_ENTER();
     // Do not refresh directly since when queuing lots of keys, it overload the system uselessly
-    ((CTerm5250*)This->data)->PostBufferRefresh();
+    GetTerm5250(This)->PostBufferRefresh();
 }
 
 void win32_terminal_update_indicators(Tn5250Terminal * This, Tn5250Display * /*display*/)
 {
     //FUNC_ENTER();
     // Do not refresh directly since when queuing lots of keys, it overload the system uselessly
-    ((CTerm5250*)This->data)->PostBufferRefresh();
+    GetTerm5250(This)->PostBufferRefresh();
 }
 
 int win32_terminal_waitevent(Tn5250Terminal * This)
 {
-    //FUNC_ENTER();
-
     if (This->conn_fd != -1)
     {
-        if (WSAAsyncSelect(This->conn_fd, ((CTerm5250*)This->data)->m_hWnd, WM_TN5250_STREAM_DATA, FD_READ) == SOCKET_ERROR)
+        if (WSAAsyncSelect(This->conn_fd, GetTerm5250(This)->GetHwnd(), WM_TN5250_STREAM_DATA, FD_READ) == SOCKET_ERROR)
         {
             FUNC_ENTER1(" WSAASyncSelect failed, reason: %d", WSAGetLastError());
             return TN5250_TERMINAL_EVENT_QUIT;
         }
     }
 
-    __try
+    DWORD RetVal = TN5250_TERMINAL_EVENT_QUIT;
+    if (GetTerm5250(This)->IsReady())
     {
-        DWORD RetVal;
-        HANDLE Event = ((CTerm5250*)This->data)->GetTimerHandle();
-        for (;;)
+        // Read all of the messages in this next loop, removing each message as we read it.
+        MSG msg;
+        while (GetMessage(&msg, NULL, 0, 0) > 0)
         {
-            if ( !((CTerm5250*)This->data)->IsReady() )
-                return TN5250_TERMINAL_EVENT_QUIT;
-
-            RetVal = MsgWaitForMultipleObjects(1, &Event, FALSE, INFINITE, QS_ALLINPUT);
-
-            if ( !((CTerm5250*)This->data)->IsReady() )
-                return TN5250_TERMINAL_EVENT_QUIT;
-
-            if ( RetVal == WAIT_OBJECT_0 )
+            if ( msg.message == WM_TN5250_STREAM_DATA )
             {
-                // We got a refresh event!
-                //FUNC_ENTER0(" got REFRESH");
-                ((CTerm5250*)This->data)->RefreshScreenBuffer();
-                // continue to loop
-                continue;
+                //FUNC_ENTER0(" got STREAM_DATA");
+                RetVal = TN5250_TERMINAL_EVENT_DATA;
+                break;
             }
-            else if ( RetVal == (WAIT_OBJECT_0+1) )
+            else if ( msg.message == WM_TN5250_KEY_DATA )
             {
-                // Read all of the messages in this next loop,
-                // removing each message as we read it.
-                MSG msg;
-                while (PeekMessage(&msg, NULL, 0, 0, PM_REMOVE))
-                {
-                    // If it is a quit message, exit.
-                    if (msg.message == WM_QUIT)
-                    {
-                        //FUNC_ENTER0(" got WM_QUIT");
-                        return TN5250_TERMINAL_EVENT_QUIT;
-                    }
-                    // Otherwise, dispatch the message.
-                    if ( msg.message == WM_TN5250_STREAM_DATA )
-                    {
-                        //FUNC_ENTER0(" got STREAM_DATA");
-                        return TN5250_TERMINAL_EVENT_DATA;
-                    }
-                    if ( msg.message == WM_TN5250_KEY_DATA )
-                    {
-                        //FUNC_ENTER0(" got KEY_DATA");
-                        return TN5250_TERMINAL_EVENT_KEY;
-                    }
-                    FUNC_ENTER1(" got msg %d ??", msg.message);
-                } // End of PeekMessage while loop.
-                continue;
+                //FUNC_ENTER0(" got KEY_DATA");
+                RetVal = TN5250_TERMINAL_EVENT_KEY;
+                break;
             }
-            // Got an error, just quit.
-            break;
+            FUNC_ENTER1(" got msg %d ??", msg.message);
+            Break();
         }
+    }
 
-        // if abandoned or error
-        FUNC_ENTER1(" ERROR: got %d", RetVal);
-        return TN5250_TERMINAL_EVENT_QUIT;
-    }
-    __finally
-    {
-        if (This->conn_fd != -1) 
-            WSAAsyncSelect(This->conn_fd, ((CTerm5250*)This->data)->m_hWnd, 0, 0);
-    }
+    if (This->conn_fd != -1) 
+        WSAAsyncSelect(This->conn_fd, GetTerm5250(This)->GetHwnd(), 0, 0);
+
+    return RetVal;
 }
 
+int filter(unsigned int code, struct _EXCEPTION_POINTERS * /*ep*/, const TCHAR * Function, const TCHAR * File, int Line)
+{
+    FUNC_ENTER4("(%d, , %s, %s, %d)", code, Function, File, Line);
+    UNREFERENCED_PARAMETER(code);
+    UNREFERENCED_PARAMETER(Function);
+    UNREFERENCED_PARAMETER(File);
+    UNREFERENCED_PARAMETER(Line);
+    ASSERT("Got an exception" && 0);
+    //return EXCEPTION_EXECUTE_HANDLER;
+    return EXCEPTION_CONTINUE_SEARCH;
+}
+
+#define FILTER filter(GetExceptionCode(), GetExceptionInformation(), __TFUNCTION__, __TFILE__, __LINE__)
 
 // The worker thread
 DWORD WINAPI CTerm5250::ThreadFunc(LPVOID ObjectInstance)
 {
     dbgSetThreadName("CTerm5250 Worker Thread");
-    CTerm5250 & Me = *reinterpret_cast<CTerm5250*const>(ObjectInstance);
+    CTerm5250 & Me = *reinterpret_cast<CTerm5250 * const>(ObjectInstance);
     __try
     {
         tn5250_session_main_loop(Me.sess);
     }
-    __except(EXCEPTION_EXECUTE_HANDLER)
+    __except(FILTER)
     {
-        int Error = GetExceptionCode();
-        //EXCEPTION_POINTERS * Infos = GetExceptionInformation();
-
         // we failed miserably...
-        ASSERT( "Got an error" && 0 );
     }
 
     // Don't forget to get disconnected here!
@@ -169,33 +145,13 @@ DWORD WINAPI CTerm5250::ThreadFunc(LPVOID ObjectInstance)
         Me.InternalFlush();
     }
     // else we quit because Disconnect() has been called before so the flush is done in the other thread.
-
     return 0;
 }
 
-
-/*
-// Returns the current width (in chars) of the terminal.
-int win32_terminal_width(Tn5250Terminal *This)
+void win32_terminal_destroy(Tn5250Terminal *)
 {
-FUNC_ENTER();
-ASSERT(((CTerm5250*)This->data)->m_hWnd);
-// TBM Bugged
-//return ( ((CTerm5250*)This->data)->GetRect().Width() / ((CTerm5250*)This->data)->GetFontSize().cx ) + 1;	// Why + 1 ??
-return tn5250_display_width(display);
+    FUNC_ENTER0(" duh!");
 }
-
-// Returns the current height of the terminal.
-int win32_terminal_height(Tn5250Terminal *This)
-{
-FUNC_ENTER();
-ASSERT(((CTerm5250*)This->data)->m_hWnd);
-// TBM Bugged
-//return ( ((CTerm5250*)This->data)->GetRect().Height() / (((CTerm5250*)This->data)->GetFontSize().cy) ) + 1;	// Why + 1 ??
-return tn5250_display_height(display);
-}
-*/
-
 
 
 
@@ -216,15 +172,15 @@ return tn5250_display_height(display);
 *    win32_destroy_printer_info function, no dialog is displayed, 
 *    and the same pointer is returned. 
 *****/
+#if 0
 PRINTDLG * win32_get_printer_info(Tn5250Terminal *This) {
 
-#if 0
     PRINTDLG *l_pd; 
 
     if (This->data->pd != NULL) 
         return This->data->pd;
 
-    This->data->pd = (PRINTDLG *) g_malloc(sizeof(PRINTDLG));
+    This->data->pd = (PRINTDLG *) malloc(sizeof(PRINTDLG));
 
     l_pd = This->data->pd;  /* save a little typing */
 
@@ -241,7 +197,7 @@ PRINTDLG * win32_get_printer_info(Tn5250Terminal *This) {
 
     if (PrintDlg(This->data->pd) == 0) {
         TN5250_LOG (("PrintDlg() error %d\n", CommDlgExtendedError()));
-        g_free(This->data->pd);
+        free(This->data->pd);
         This->data->pd = NULL;
         return NULL;
     }
@@ -254,7 +210,6 @@ PRINTDLG * win32_get_printer_info(Tn5250Terminal *This) {
     }
 
     return This->data->pd;
-#endif
     return NULL;
 }
 
@@ -272,19 +227,16 @@ PRINTDLG * win32_get_printer_info(Tn5250Terminal *This) {
 *****/
 void win32_destroy_printer_info(Tn5250Terminal *This) {
 
-#if 0
     if (This->data->pd->hDC != NULL)
         DeleteDC(This->data->pd->hDC);
     if (This->data->pd->hDevMode != NULL)
-        g_free(This->data->pd->hDevMode);
+        free(This->data->pd->hDevMode);
     if (This->data->pd->hDevNames != NULL)
-        g_free(This->data->pd->hDevNames);
-    g_free(This->data->pd);
+        free(This->data->pd->hDevNames);
+    free(This->data->pd);
     This->data->pd = NULL;
-#endif
     return;
 }
-
 
 
 /****i* lib5250/win32_print_screen
@@ -301,7 +253,6 @@ void win32_destroy_printer_info(Tn5250Terminal *This) {
 *****/
 void win32_print_screen(Tn5250Terminal *This, Tn5250Display *display) {
 
-#if 0
     PRINTDLG *pd;
     DOCINFO di;
     HBITMAP bmap;
@@ -368,7 +319,7 @@ void win32_print_screen(Tn5250Terminal *This, Tn5250Display *display) {
     while (attribute_map[i].colorindex != -1)
         i++;
     size = (i+1) * sizeof(Tn5250Win32Attribute);
-    mymap = (Tn5250Win32Attribute *) g_malloc(size);
+    mymap = (Tn5250Win32Attribute *) malloc(size);
     memcpy(mymap, attribute_map, size);
     for (i=0; mymap[i].colorindex != -1; i++) {
         if ( mymap[i].colorindex == A_5250_BLACK )
@@ -452,5 +403,37 @@ void win32_print_screen(Tn5250Terminal *This, Tn5250Display *display) {
 
     MessageBox(This->data->hwndMain, "Print screen successful!",  "TN5250",
         MB_OK|MB_ICONINFORMATION);
+}
 #endif
+
+int win32_terminal_enhanced(Tn5250Terminal *)
+{
+    FUNC_ENTER();
+    return 1;
+}
+
+void ForceRedraw(Tn5250Terminal * This)
+{
+    GetTerm5250(This)->PostBufferRefresh();
+}
+
+void win32_terminal_create_window (Tn5250Terminal * This, Tn5250Display * /*d*/, Tn5250Window * window)
+{
+    FUNC_ENTER4(" window width, height : x, y: %d, %d : %d, %d", window->width, window->height, window->column, window->row);
+}
+
+void win32_terminal_destroy_window (Tn5250Terminal * This, Tn5250Display * /*d*/)
+{
+    FUNC_ENTER();
+    ForceRedraw(This);
+}
+
+void win32_terminal_create_scrollbar (Tn5250Terminal * This, Tn5250Display * /*d*/, Tn5250Scrollbar * /*scrollbar*/)
+{
+    reinterpret_cast<CTerm5250 *>(This->data)->scrollbar = true;
+}
+
+void win32_terminal_destroy_scrollbar (Tn5250Terminal * This, Tn5250Display * /*d*/)
+{
+    reinterpret_cast<CTerm5250 *>(This->data)->scrollbar = false;
 }

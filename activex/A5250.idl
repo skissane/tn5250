@@ -38,45 +38,71 @@ import "ocidl.idl";
 interface ITerm5250 : IDispatch
 {
     //properties:
-    [propput, bindable, displaybind, requestedit, id(DISPID_APPEARANCE)]	HRESULT Appearance([in]short nAppearance);
-    [propget, bindable, displaybind, requestedit, id(DISPID_APPEARANCE)]	HRESULT Appearance([out, retval]short* pnAppearance);
-    [propput, bindable, displaybind, requestedit, id(DISPID_AUTOSIZE)]		HRESULT AutoSize([in]VARIANT_BOOL vbool);
-    [propget, bindable, displaybind, requestedit, id(DISPID_AUTOSIZE)]		HRESULT AutoSize([out,retval]VARIANT_BOOL* pbool);
-    [propput, bindable, displaybind, requestedit, id(DISPID_BACKCOLOR)]		HRESULT BackColor([in]OLE_COLOR clr);
-    [propget, bindable, displaybind, requestedit, id(DISPID_BACKCOLOR)]		HRESULT BackColor([out,retval]OLE_COLOR* pclr);
-    [propput, bindable, displaybind, requestedit, id(DISPID_BORDERCOLOR)]	HRESULT BorderColor([in]OLE_COLOR clr);
-    [propget, bindable, displaybind, requestedit, id(DISPID_BORDERCOLOR)]	HRESULT BorderColor([out, retval]OLE_COLOR* pclr);
-    [propput, bindable, displaybind, requestedit, id(DISPID_BORDERVISIBLE)]	HRESULT BorderVisible([in]VARIANT_BOOL vbool);
-    [propget, bindable, displaybind, requestedit, id(DISPID_BORDERVISIBLE)]	HRESULT BorderVisible([out, retval]VARIANT_BOOL* pbool);
-    [propput, bindable, displaybind, requestedit, id(DISPID_BORDERWIDTH)]	HRESULT BorderWidth([in]long width);
-    [propget, bindable, displaybind, requestedit, id(DISPID_BORDERWIDTH)]	HRESULT BorderWidth([out, retval]long* width);
-    [propput, bindable, displaybind, requestedit, id(DISPID_CAPTION), helpstring("Change the bottom caption")]	HRESULT Caption([in]BSTR strCaption);
-    [propget, bindable, displaybind, requestedit, id(DISPID_CAPTION)]		HRESULT Caption([out,retval]BSTR* pstrCaption);
-    [propput, bindable, displaybind, requestedit, id(DISPID_ENABLED)]		HRESULT Enabled([in]VARIANT_BOOL vbool);
-    [propget, bindable, displaybind, requestedit, id(DISPID_ENABLED)]		HRESULT Enabled([out,retval]VARIANT_BOOL* pbool);
-    [propput, bindable, displaybind, requestedit, id(DISPID_FORECOLOR)]		HRESULT ForeColor([in]OLE_COLOR clr);
-    [propget, bindable, displaybind, requestedit, id(DISPID_FORECOLOR)]		HRESULT ForeColor([out,retval]OLE_COLOR* pclr);
-    [propget, bindable, displaybind, requestedit, id(DISPID_HWND)]		HRESULT HWND([out, retval]LONG_PTR* pHWND);
-    [propget, bindable, displaybind, id(DISPID_READYSTATE), helpstring("Whether it is connected")]		HRESULT ReadyState([out, retval]long* pstate);
-    [propget, bindable, displaybind, requestedit, id(1), helpstring("server address")]	HRESULT HostName([out, retval] BSTR* pVal);
-    [propput, bindable, displaybind, requestedit, id(1), helpstring("server address")]	HRESULT HostName([in] BSTR newVal);
-    [propget, bindable, displaybind, requestedit, id(2), helpstring("Moves the cursor with mouse clicks")] HRESULT MouseMoveCursor([out, retval] VARIANT_BOOL* pVal);
-    [propput, bindable, displaybind, requestedit, id(2), helpstring("Moves the cursor with mouse clicks")] HRESULT MouseMoveCursor([in] VARIANT_BOOL newVal);
-    [propget, bindable, displaybind, requestedit, id(3)] HRESULT CaretStyle([out, retval] enum ECaretStyle* pVal);
-    [propput, bindable, displaybind, requestedit, id(3)] HRESULT CaretStyle([in] enum ECaretStyle newVal);
-    //	[propget, bindable, displaybind, requestedit, id(4)] HRESULT Colors([out, retval] OLE_COLOR * Arr[10]);
-    //	[propput, bindable, displaybind, requestedit, id(4)] HRESULT Colors([in] const OLE_COLOR Arr[10]);
-    [propget, bindable, displaybind, requestedit, id(5), helpstring("Activate the Selection with the mouse")] HRESULT SelectionEnabled([out, retval] VARIANT_BOOL* pVal);
-    [propput, bindable, displaybind, requestedit, id(5), helpstring("Activate the Selection with the mouse")] HRESULT SelectionEnabled([in] VARIANT_BOOL newVal);
-    [propget, bindable, displaybind, requestedit, id(6), helpstring("Make F-keys clickable")] HRESULT HotSpot([out, retval] VARIANT_BOOL* pVal);
-    [propput, bindable, displaybind, requestedit, id(6), helpstring("Make F-keys clickable")] HRESULT HotSpot([in] VARIANT_BOOL newVal);
+    [propput, /*bindable, displaybind, requestedit,*/ id(DISPID_APPEARANCE)]	HRESULT Appearance([in]short nAppearance);
+    [propget, /*bindable, displaybind, requestedit,*/ id(DISPID_APPEARANCE)]	HRESULT Appearance([out, retval]short* pnAppearance);
+    [propput, /*bindable, displaybind, requestedit,*/ id(DISPID_BACKCOLOR)]		HRESULT BackColor([in]OLE_COLOR clr);
+    [propget, /*bindable, displaybind, requestedit,*/ id(DISPID_BACKCOLOR)]		HRESULT BackColor([out,retval]OLE_COLOR* pclr);
+    [propput, /*bindable, displaybind, requestedit,*/ id(DISPID_BORDERCOLOR)]	HRESULT BorderColor([in]OLE_COLOR clr);
+    [propget, /*bindable, displaybind, requestedit,*/ id(DISPID_BORDERCOLOR)]	HRESULT BorderColor([out, retval]OLE_COLOR* pclr);
+    [propput, /*bindable, displaybind, requestedit,*/ id(DISPID_BORDERVISIBLE)]	HRESULT BorderVisible([in]VARIANT_BOOL vbool);
+    [propget, /*bindable, displaybind, requestedit,*/ id(DISPID_BORDERVISIBLE)]	HRESULT BorderVisible([out, retval]VARIANT_BOOL* pbool);
+    [propput, /*bindable, displaybind, requestedit,*/ id(DISPID_BORDERWIDTH)]	HRESULT BorderWidth([in]long width);
+    [propget, /*bindable, displaybind, requestedit,*/ id(DISPID_BORDERWIDTH)]	HRESULT BorderWidth([out, retval]long* width);
+    [propput, /*bindable, displaybind, requestedit,*/ id(DISPID_CAPTION), helpstring("Change the bottom caption")]	HRESULT Caption([in]BSTR strCaption);
+    [propget, /*bindable, displaybind, requestedit,*/ id(DISPID_CAPTION)]		HRESULT Caption([out,retval]BSTR* pstrCaption);
+    [propput, /*bindable, displaybind, requestedit,*/ id(DISPID_ENABLED)]		HRESULT Enabled([in]VARIANT_BOOL vbool);
+    [propget, /*bindable, displaybind, requestedit,*/ id(DISPID_ENABLED)]		HRESULT Enabled([out,retval]VARIANT_BOOL* pbool);
+    [propput, /*bindable, displaybind, requestedit,*/ id(DISPID_FORECOLOR)]		HRESULT ForeColor([in]OLE_COLOR clr);
+    [propget, /*bindable, displaybind, requestedit,*/ id(DISPID_FORECOLOR)]		HRESULT ForeColor([out,retval]OLE_COLOR* pclr);
+    [propget, /*bindable, displaybind, requestedit,*/ id(DISPID_HWND)]		HRESULT HWND([out, retval]LONG_PTR* pHWND);
+    [propget, /*bindable, displaybind,*/ id(DISPID_READYSTATE), helpstring("Whether it is connected")]		HRESULT ReadyState([out, retval]long* pstate);
+    [propget, /*bindable, displaybind, requestedit,*/ id(1), helpstring("server address")]	HRESULT HostName([out, retval] BSTR* pVal);
+    [propput, /*bindable, displaybind, requestedit,*/ id(1), helpstring("server address")]	HRESULT HostName([in] BSTR newVal);
+    [propget, /*bindable, displaybind, requestedit,*/ id(2), helpstring("Moves the cursor with mouse clicks")] HRESULT MouseMoveCursor([out, retval] VARIANT_BOOL* pVal);
+    [propput, /*bindable, displaybind, requestedit,*/ id(2), helpstring("Moves the cursor with mouse clicks")] HRESULT MouseMoveCursor([in] VARIANT_BOOL newVal);
+    [propget, /*bindable, displaybind, requestedit,*/ id(3)] HRESULT CaretStyle([out, retval] enum ECaretStyle* pVal);
+    [propput, /*bindable, displaybind, requestedit,*/ id(3)] HRESULT CaretStyle([in] enum ECaretStyle newVal);
+    //	[propget, bindable, displaybind, requestedit,*/ id(4)] HRESULT Colors([out, retval] OLE_COLOR * Arr[10]);
+    //	[propput, bindable, displaybind, requestedit,*/ id(4)] HRESULT Colors([in] const OLE_COLOR Arr[10]);
+    [propget, /*bindable, displaybind, requestedit,*/ id(5), helpstring("Activate the Selection with the mouse")] HRESULT SelectionEnabled([out, retval] VARIANT_BOOL* pVal);
+    [propput, /*bindable, displaybind, requestedit,*/ id(5), helpstring("Activate the Selection with the mouse")] HRESULT SelectionEnabled([in] VARIANT_BOOL newVal);
+    [propget, /*bindable, displaybind, requestedit,*/ id(6), helpstring("Make F-keys clickable")] HRESULT HotSpot([out, retval] VARIANT_BOOL* pVal);
+    [propput, /*bindable, displaybind, requestedit,*/ id(6), helpstring("Make F-keys clickable")] HRESULT HotSpot([in] VARIANT_BOOL newVal);
     [propget, id(7)] HRESULT About([out, retval] BSTR* pVal);
+    [propget, /*bindable, displaybind, requestedit,*/ id(8), helpstring("Enable TN5250E")] HRESULT Enhanced([out, retval] VARIANT_BOOL* pVal);
+    [propput, /*bindable, displaybind, requestedit,*/ id(8), helpstring("Enable TN5250E")] HRESULT Enhanced([in] VARIANT_BOOL newVal);
+    [propget, /*bindable, displaybind, requestedit,*/ id(9), helpstring("Enable Contextual Menu")] HRESULT ContextualMenu([out, retval] VARIANT_BOOL* pVal);
+    [propput, /*bindable, displaybind, requestedit,*/ id(9), helpstring("Enable Contextual Menu")] HRESULT ContextualMenu([in] VARIANT_BOOL newVal);
+    [propget, /*bindable, displaybind, requestedit,*/ id(10), helpstring("Shows \"Connect...\" in the Contextual Menu")] HRESULT ShowConnect([out, retval] VARIANT_BOOL* pVal);
+    [propput, /*bindable, displaybind, requestedit,*/ id(10), helpstring("Shows \"Connect...\" in the Contextual Menu")] HRESULT ShowConnect([in] VARIANT_BOOL newVal);
+    [propget, /*bindable, displaybind, requestedit,*/ id(11), helpstring("Shows a ruler")] HRESULT DisplayRuler([out, retval] VARIANT_BOOL* pVal);
+    [propput, /*bindable, displaybind, requestedit,*/ id(11), helpstring("Shows a ruler")] HRESULT DisplayRuler([in] VARIANT_BOOL newVal);
+    [propget, /*bindable, displaybind, requestedit,*/ id(12), helpstring("Returns the font name")]	HRESULT FontName([out, retval] BSTR* pVal);
+    [propput, /*bindable, displaybind, requestedit,*/ id(12), helpstring("Choose a font")]	HRESULT FontName([in] BSTR newVal);
+    [propget, /*bindable, displaybind, requestedit,*/ id(13), helpstring("Device Name")]	HRESULT DeviceName([out, retval] BSTR* pVal);
+    [propput, /*bindable, displaybind, requestedit,*/ id(13), helpstring("Device Name")]	HRESULT DeviceName([in] BSTR newVal);
+    [propget, /*bindable, displaybind, requestedit,*/ id(14), helpstring("Character map")]	HRESULT CodePage([out, retval] long * pVal);
+    [propput, /*bindable, displaybind, requestedit,*/ id(14), helpstring("Character map")]	HRESULT CodePage([in] long newVal);
+    [propget, /*bindable, displaybind, requestedit,*/ id(15), helpstring("False = 24x80, True = 27x132")]	HRESULT Wide([out, retval] VARIANT_BOOL * pVal);
+    [propput, /*bindable, displaybind, requestedit,*/ id(15), helpstring("False = 24x80, True = 27x132")]	HRESULT Wide([in] VARIANT_BOOL newVal);
+    [propget, /*bindable, displaybind, requestedit,*/ id(16), helpstring("Use the computer name as device name")]	HRESULT UseComputerName([out, retval] VARIANT_BOOL * pVal);
+    [propput, /*bindable, displaybind, requestedit,*/ id(16), helpstring("Use the computer name as device name")]	HRESULT UseComputerName([in] VARIANT_BOOL newVal);
+    // Could implement bindable properties but it would be quite hard...
+    [propget, id(17), helpstring("Get the cursor position (column)")]   HRESULT CursorPositionX([out, retval] long * pVal);
+    [propput, id(17), helpstring("Set the cursor position (column)")]   HRESULT CursorPositionX([in] long newVal);
+    [propget, id(18), helpstring("Get the cursor position (row)")]      HRESULT CursorPositionY([out, retval] long * pVal);
+    [propput, id(18), helpstring("Set the cursor position (row)")]      HRESULT CursorPositionY([in] long newVal);
+    [propget, id(19), helpstring("Get the width of the screen")]        HRESULT ScreenWidth([out, retval] long * pVal);
+    [propget, id(20), helpstring("Get the height of the screen")]       HRESULT ScreenHeight([out, retval] long * pVal);
 
     //methods:
-    [id(100), helpstring("Connect to the host")]		HRESULT Connect();
-    [id(101), helpstring("Disconnect from the host")]		HRESULT Disconnect();
-    [id(102), helpstring("Send a key to the server")]		HRESULT SendVKey([in] DWORD VKey);
-    [id(103), helpstring("method SendChar")]			HRESULT SendChar([in] USHORT Character);
+    [id(100), helpstring("Connect to the host")]            HRESULT Connect();
+    [id(101), helpstring("Disconnect from the host")]       HRESULT Disconnect();
+    [id(102), helpstring("Send a key to the server")]       HRESULT SendVKey([in] enum EVirtualKeyCodes VirtualKeyCode, [in] long Modifiers);
+    [id(103), helpstring("method SendChar")]                HRESULT SendChar([in] USHORT Character);
+    [id(104), helpstring("Get some text from the buffer")]  HRESULT ScreenScrape([in] long Y, [in] long X, [in] long Length, [out, retval] BSTR * pString);
+    [id(105), helpstring("Bind a key")]                     HRESULT BindKey([in] enum EVirtualKeyCodes VirtualKeyCode, [in] long Modifiers, [in] long KValue);
+    [id(106), helpstring("Show the Connect dialog box")]    HRESULT ConnectDialog();
 };
 
 
@@ -117,5 +143,305 @@ methods:
         CARETSTYLE_BLINK,
         CARETSTYLE_LINE,
         CARETSTYLE_NOBLINK
+    };
+
+    enum EColSepStyle
+    {
+        COLSEPSTYLE_NONE,
+        COLSEPSTYLE_FULL,
+        COLSEPSTYLE_DOTS
+    };
+
+    enum EIBMKey
+    {
+        K_NONE      =0,
+        K_ENTER		=0x0d,
+        K_NEWLINE	=0x200,
+        K_TAB		=0x09,
+        K_BACKTAB	=0541,
+        K_F1		=(0410+1),
+        K_F2		=(0410+2),
+        K_F3		=(0410+3),
+        K_F4		=(0410+4),
+        K_F5		=(0410+5),
+        K_F6		=(0410+6),
+        K_F7		=(0410+7),
+        K_F8		=(0410+8),
+        K_F9		=(0410+9),
+        K_F10		=(0410+10),
+        K_F11		=(0410+11),
+        K_F12		=(0410+12),
+        K_F13		=(0410+13),
+        K_F14		=(0410+14),
+        K_F15		=(0410+15),
+        K_F16		=(0410+16),
+        K_F17		=(0410+17),
+        K_F18		=(0410+18),
+        K_F19		=(0410+19),
+        K_F20		=(0410+20),
+        K_F21		=(0410+21),
+        K_F22		=(0410+22),
+        K_F23		=(0410+23),
+        K_F24		=(0410+24),
+        K_LEFT		=0404,
+        K_RIGHT		=0405,
+        K_UP		=0403,
+        K_DOWN		=0402,
+        K_ROLLDN	=0523,
+        K_ROLLUP	=0522,
+        K_BACKSPACE	=0407,
+        K_HOME		=0406,
+        K_END		=0550,
+        K_INSERT	=0513,
+        K_DELETE	=0512,
+        K_RESET		=0531,
+        K_PRINT		=0532,
+        K_HELP		=0553,
+        K_SYSREQ	=0401,	/* curses KEY_BREAK */
+        K_CLEAR		=0515,	/* curses KEY_CLEAR */
+        K_REFRESH	=0564,	/* curses KEY_REFRESH */
+        K_FIELDEXIT	=0517,	/* curses KEY_EOL (clear to EOL) */
+        K_TESTREQ	=0516,	/* curses KEY_EOS (as good as any) */
+        K_TOGGLE	=0533,	/* curses KEY_LL (as good as any) */
+        K_ERASE		=0514,	/* curses KEY_EIC (as good as any) */
+        K_ATTENTION	=0511,	/* curses KEY_IL (as good as any) */
+        K_DUPLICATE	=0524,	/* curses KEY_STAB (set tab - good as any) */
+        K_FIELDMINUS=	0526,	/* curses KEY_CATAB (clear all tabs - g.a.a.) */
+        K_FIELDPLUS =    0520,	/* curses KEY_SF */
+        K_PREVWORD	=0611,	/* curses KEY_SLEFT (as good as any) */
+        K_NEXTWORD	=0622,	/* curses KEY_SRIGHT (as good as any) */
+        K_PREVFLD	=0xfffb,	/* no similar curses key */
+        K_NEXTFLD	=0xfffc,	/* no similar curses key */
+        K_FIELDHOME	=0607,	/* curses KEY_SHOME (as good as any) */
+        K_EXEC		=0507,	/* macro execution */
+        K_MEMO		=0510,	/* macro record */
+        K_COPY_TEXT =    0xfffd,	/* no similar curses key */
+        K_PASTE_TEXT=    0xfffe,	/* no similar curses key */
+        K_UNKNOW	=0xffff
+    };
+
+    enum EModifiers
+    {
+        M_LShift = 0x01,
+        M_RShift = 0x02,
+        M_Shift  = 0x03,
+        M_LCtrl  = 0x04,
+        M_RCtrl  = 0x08,
+        M_Ctrl   = 0x0C,
+        M_LAlt   = 0x10,
+        M_RAlt   = 0x20,
+        M_Alt    = 0x30,
+    };
+
+    enum EVirtualKeyCodes
+    {
+        VK_LBUTTON         =0x01,
+        VK_RBUTTON         =0x02,
+        VK_CANCEL          =0x03,
+        VK_MBUTTON         =0x04,    /* NOT contiguous with L & RBUTTON */
+        VK_XBUTTON1        =0x05,    /* NOT contiguous with L & RBUTTON */
+        VK_XBUTTON2        =0x06,    /* NOT contiguous with L & RBUTTON */
+        VK_BACK            =0x08,
+        VK_TAB             =0x09,
+        VK_CLEAR           =0x0C,
+        VK_RETURN          =0x0D,
+        VK_SHIFT           =0x10,
+        VK_CONTROL         =0x11,
+        VK_MENU            =0x12,
+        VK_PAUSE           =0x13,
+        VK_CAPITAL         =0x14,
+        VK_KANA            =0x15,
+        VK_HANGEUL         =0x15,  /* old name - should be here for compatibility */
+        VK_HANGUL          =0x15,
+        VK_JUNJA           =0x17,
+        VK_FINAL           =0x18,
+        VK_HANJA           =0x19,
+        VK_KANJI           =0x19,
+        VK_ESCAPE          =0x1B,
+        VK_CONVERT         =0x1C,
+        VK_NONCONVERT      =0x1D,
+        VK_ACCEPT          =0x1E,
+        VK_MODECHANGE      =0x1F,
+        VK_SPACE           =0x20,
+        VK_PRIOR           =0x21,
+        VK_NEXT            =0x22,
+        VK_END             =0x23,
+        VK_HOME            =0x24,
+        VK_LEFT            =0x25,
+        VK_UP              =0x26,
+        VK_RIGHT           =0x27,
+        VK_DOWN            =0x28,
+        VK_SELECT          =0x29,
+        VK_PRINT           =0x2A,
+        VK_EXECUTE         =0x2B,
+        VK_SNAPSHOT        =0x2C,
+        VK_INSERT          =0x2D,
+        VK_DELETE          =0x2E,
+        VK_HELP            =0x2F,
+        VK_0               ='0' ,
+        VK_1               ='1' ,
+        VK_2               ='2' ,
+        VK_3               ='3' ,
+        VK_4               ='4' ,
+        VK_5               ='5' ,
+        VK_6               ='6' ,
+        VK_7               ='7' ,
+        VK_8               ='8' ,
+        VK_9               ='9' ,
+        VK_A               ='A' ,
+        VK_B               ='B' ,
+        VK_C               ='C' ,
+        VK_D               ='D' ,
+        VK_E               ='E' ,
+        VK_F               ='F' ,
+        VK_G               ='G' ,
+        VK_H               ='H' ,
+        VK_I               ='I' ,
+        VK_J               ='J' ,
+        VK_K               ='K' ,
+        VK_L               ='L' ,
+        VK_M               ='M' ,
+        VK_N               ='N' ,
+        VK_O               ='O' ,
+        VK_P               ='P' ,
+        VK_Q               ='Q' ,
+        VK_R               ='R' ,
+        VK_S               ='S' ,
+        VK_T               ='T' ,
+        VK_U               ='U' ,
+        VK_V               ='V' ,
+        VK_W               ='W' ,
+        VK_X               ='X' ,
+        VK_Y               ='Y' ,
+        VK_Z               ='Z' ,
+        VK_LWIN            =0x5B,
+        VK_RWIN            =0x5C,
+        VK_APPS            =0x5D,
+        VK_SLEEP           =0x5F,
+        VK_NUMPAD0         =0x60,
+        VK_NUMPAD1         =0x61,
+        VK_NUMPAD2         =0x62,
+        VK_NUMPAD3         =0x63,
+        VK_NUMPAD4         =0x64,
+        VK_NUMPAD5         =0x65,
+        VK_NUMPAD6         =0x66,
+        VK_NUMPAD7         =0x67,
+        VK_NUMPAD8         =0x68,
+        VK_NUMPAD9         =0x69,
+        VK_MULTIPLY        =0x6A,
+        VK_ADD             =0x6B,
+        VK_SEPARATOR       =0x6C,
+        VK_SUBTRACT        =0x6D,
+        VK_DECIMAL         =0x6E,
+        VK_DIVIDE          =0x6F,
+        VK_F1              =0x70,
+        VK_F2              =0x71,
+        VK_F3              =0x72,
+        VK_F4              =0x73,
+        VK_F5              =0x74,
+        VK_F6              =0x75,
+        VK_F7              =0x76,
+        VK_F8              =0x77,
+        VK_F9              =0x78,
+        VK_F10             =0x79,
+        VK_F11             =0x7A,
+        VK_F12             =0x7B,
+        VK_F13             =0x7C,
+        VK_F14             =0x7D,
+        VK_F15             =0x7E,
+        VK_F16             =0x7F,
+        VK_F17             =0x80,
+        VK_F18             =0x81,
+        VK_F19             =0x82,
+        VK_F20             =0x83,
+        VK_F21             =0x84,
+        VK_F22             =0x85,
+        VK_F23             =0x86,
+        VK_F24             =0x87,
+        VK_NUMLOCK         =0x90,
+        VK_SCROLL          =0x91,
+        VK_OEM_NEC_EQUAL   =0x92,   // '=' key on numpad
+        VK_OEM_FJ_JISHO    =0x92,   // 'Dictionary' key
+        VK_OEM_FJ_MASSHOU  =0x93,   // 'Unregister word' key
+        VK_OEM_FJ_TOUROKU  =0x94,   // 'Register word' key
+        VK_OEM_FJ_LOYA     =0x95,   // 'Left OYAYUBI' key
+        VK_OEM_FJ_ROYA     =0x96,   // 'Right OYAYUBI' key
+        VK_LSHIFT          =0xA0,
+        VK_RSHIFT          =0xA1,
+        VK_LCONTROL        =0xA2,
+        VK_RCONTROL        =0xA3,
+        VK_LMENU           =0xA4,
+        VK_RMENU           =0xA5,
+        VK_BROWSER_BACK        =0xA6,
+        VK_BROWSER_FORWARD     =0xA7,
+        VK_BROWSER_REFRESH     =0xA8,
+        VK_BROWSER_STOP        =0xA9,
+        VK_BROWSER_SEARCH      =0xAA,
+        VK_BROWSER_FAVORITES   =0xAB,
+        VK_BROWSER_HOME        =0xAC,
+        VK_VOLUME_MUTE         =0xAD,
+        VK_VOLUME_DOWN         =0xAE,
+        VK_VOLUME_UP           =0xAF,
+        VK_MEDIA_NEXT_TRACK    =0xB0,
+        VK_MEDIA_PREV_TRACK    =0xB1,
+        VK_MEDIA_STOP          =0xB2,
+        VK_MEDIA_PLAY_PAUSE    =0xB3,
+        VK_LAUNCH_MAIL         =0xB4,
+        VK_LAUNCH_MEDIA_SELECT =0xB5,
+        VK_LAUNCH_APP1         =0xB6,
+        VK_LAUNCH_APP2         =0xB7,
+        VK_OEM_1           =0xBA,   // ';:' for US
+        VK_OEM_PLUS        =0xBB,   // '+' any country
+        VK_OEM_COMMA       =0xBC,   // ',' any country
+        VK_OEM_MINUS       =0xBD,   // '-' any country
+        VK_OEM_PERIOD      =0xBE,   // '.' any country
+        VK_OEM_2           =0xBF,   // '/?' for US
+        VK_OEM_3           =0xC0,   // '`~' for US
+        VK_OEM_4           =0xDB,  //  '[{' for US
+        VK_OEM_5           =0xDC,  //  '\|' for US
+        VK_OEM_6           =0xDD,  //  ']}' for US
+        VK_OEM_7           =0xDE,  //  ''"' for US
+        VK_OEM_8           =0xDF,
+        VK_OEM_AX          =0xE1,  //  'AX' key on Japanese AX kbd
+        VK_OEM_102         =0xE2,  //  "<>" or "\|" on RT 102-key kbd.
+        VK_ICO_HELP        =0xE3,  //  Help key on ICO
+        VK_ICO_00          =0xE4,  //  00 key on ICO
+        VK_PROCESSKEY      =0xE5,
+        VK_ICO_CLEAR       =0xE6,
+        VK_PACKET          =0xE7,
+        VK_OEM_RESET       =0xE9,
+        VK_OEM_JUMP        =0xEA,
+        VK_OEM_PA1         =0xEB,
+        VK_OEM_PA2         =0xEC,
+        VK_OEM_PA3         =0xED,
+        VK_OEM_WSCTRL      =0xEE,
+        VK_OEM_CUSEL       =0xEF,
+        VK_OEM_ATTN        =0xF0,
+        VK_OEM_FINISH      =0xF1,
+        VK_OEM_COPY        =0xF2,
+        VK_OEM_AUTO        =0xF3,
+        VK_OEM_ENLW        =0xF4,
+        VK_OEM_BACKTAB     =0xF5,
+        VK_ATTN            =0xF6,
+        VK_CRSEL           =0xF7,
+        VK_EXSEL           =0xF8,
+        VK_EREOF           =0xF9,
+        VK_PLAY            =0xFA,
+        VK_ZOOM            =0xFB,
+        VK_NONAME          =0xFC,
+        VK_PA1             =0xFD,
+        VK_OEM_CLEAR       =0xFE,
+        // Home made
+        VK_NUMPAD_RETURN   =0x10D,
+        VK_NUMPAD_PRIOR    =0x121,
+        VK_NUMPAD_NEXT     =0x122,
+        VK_NUMPAD_END      =0x123,
+        VK_NUMPAD_HOME     =0x124,
+        VK_NUMPAD_LEFT     =0x125,
+        VK_NUMPAD_UP       =0x126,
+        VK_NUMPAD_RIGHT    =0x127,
+        VK_NUMPAD_DOWN     =0x128,
+        VK_NUMPAD_INSERT   =0x12D,
+        VK_NUMPAD_DELETE   =0x12E,
     };
 };

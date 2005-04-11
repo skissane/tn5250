@@ -4,6 +4,11 @@
 	Version="7.10"
 	Name="A5250"
 	ProjectGUID="{A3E0B12E-F7C1-4B55-8C20-F9BA9EE35342}"
+	RootNamespace="A5250"
+	SccProjectName="&quot;$/Deployment/tn5250&quot;, WUHAAAAA"
+	SccAuxPath=""
+	SccLocalPath=".."
+	SccProvider="MSSCCI:Microsoft Visual SourceSafe"
 	Keyword="AtlProj">
 	<Platforms>
 		<Platform
@@ -20,48 +25,47 @@
 			CharacterSet="2">
 			<Tool
 				Name="VCCLCompilerTool"
+				AdditionalOptions="/Wall"
 				Optimization="0"
-				AdditionalIncludeDirectories="..\tn5250\src;.;..\glib\include\glib-2.0;..\glib\lib\glib-2.0\include;..\..\openssl-0.9.7b\inc32"
+				AdditionalIncludeDirectories=".;..\tn5250\src;..\..\openssl\include"
 				PreprocessorDefinitions="WIN32;_WINDOWS;_DEBUG;_USRDLL"
-				MinimalRebuild="TRUE"
+				StringPooling="TRUE"
 				BasicRuntimeChecks="3"
-				RuntimeLibrary="1"
+				RuntimeLibrary="3"
+				BufferSecurityCheck="TRUE"
 				EnableFunctionLevelLinking="TRUE"
 				DefaultCharIsUnsigned="TRUE"
 				TreatWChar_tAsBuiltInType="TRUE"
 				UsePrecompiledHeader="3"
 				PrecompiledHeaderThrough="tn5250-private.h"
 				PrecompiledHeaderFile="$(IntDir)/tn5250-private.pch"
-				WarningLevel="3"
-				DebugInformationFormat="4"/>
+				WarningLevel="4"
+				DebugInformationFormat="3"/>
 			<Tool
 				Name="VCCustomBuildTool"/>
 			<Tool
 				Name="VCLinkerTool"
-				IgnoreImportLibrary="TRUE"
-				AdditionalDependencies="winmm.lib Ws2_32.lib ..\glib\lib\glib-2.0.lib"
-				OutputFile="$(OutDir)/A5250.dll"
-				LinkIncremental="2"
+				RegisterOutput="TRUE"
+				AdditionalDependencies="winmm.lib Ws2_32.lib"
+				LinkIncremental="1"
+				AdditionalLibraryDirectories="..\..\openssl\dll"
 				ModuleDefinitionFile=".\A5250.def"
+				DelayLoadDLLs="libeay32.dll;ssleay32.dll"
 				GenerateDebugInformation="TRUE"
-				SubSystem="2"
-				ImportLibrary="$(OutDir)/A5250.lib"
-				TargetMachine="1"/>
+				SubSystem="2"/>
 			<Tool
 				Name="VCMIDLTool"
 				PreprocessorDefinitions="_DEBUG"
 				MkTypLibCompatible="FALSE"
 				TargetEnvironment="1"
 				GenerateStublessProxies="TRUE"
-				TypeLibraryName="$(IntDir)/A5250.tlb"
 				HeaderFileName="A5250.h"
 				DLLDataFileName=""
 				InterfaceIdentifierFileName="A5250_i.c"
 				ProxyFileName="A5250_p.c"/>
 			<Tool
 				Name="VCPostBuildEventTool"
-				Description="Performing registration"
-				CommandLine="regsvr32 /s /c &quot;$(TargetPath)&quot;"/>
+				CommandLine="gencab.bat $(OutDir) dll"/>
 			<Tool
 				Name="VCPreBuildEventTool"/>
 			<Tool
@@ -69,7 +73,7 @@
 			<Tool
 				Name="VCResourceCompilerTool"
 				PreprocessorDefinitions="_DEBUG"
-				Culture="1033"
+				Culture="4105"
 				AdditionalIncludeDirectories="$(IntDir)"/>
 			<Tool
 				Name="VCWebServiceProxyGeneratorTool"/>
@@ -93,20 +97,21 @@
 			WholeProgramOptimization="TRUE">
 			<Tool
 				Name="VCCLCompilerTool"
+				AdditionalOptions="/Wall"
 				Optimization="3"
 				GlobalOptimizations="TRUE"
 				InlineFunctionExpansion="2"
 				EnableIntrinsicFunctions="TRUE"
-				FavorSizeOrSpeed="1"
+				FavorSizeOrSpeed="2"
 				OmitFramePointers="TRUE"
 				EnableFiberSafeOptimizations="TRUE"
-				OptimizeForProcessor="0"
 				OptimizeForWindowsApplication="TRUE"
-				AdditionalIncludeDirectories="..\tn5250\src;.;..\glib\include\glib-2.0;..\glib\lib\glib-2.0\include;..\..\openssl-0.9.7b\inc32"
+				AdditionalIncludeDirectories=".;..\tn5250\src;..\..\openssl\include"
 				PreprocessorDefinitions="WIN32;_WINDOWS;NDEBUG;_USRDLL"
 				StringPooling="TRUE"
 				RuntimeLibrary="0"
 				BufferSecurityCheck="FALSE"
+				EnableFunctionLevelLinking="TRUE"
 				DefaultCharIsUnsigned="TRUE"
 				TreatWChar_tAsBuiltInType="TRUE"
 				UsePrecompiledHeader="3"
@@ -118,34 +123,32 @@
 				Name="VCCustomBuildTool"/>
 			<Tool
 				Name="VCLinkerTool"
-				IgnoreImportLibrary="TRUE"
-				AdditionalDependencies="winmm.lib Ws2_32.lib ..\glib\lib\glib-2.0.lib"
-				OutputFile="$(OutDir)/A5250.dll"
-				LinkIncremental="1"
+				RegisterOutput="TRUE"
+				AdditionalDependencies="winmm.lib Ws2_32.lib"
+				Version=""
+				AdditionalLibraryDirectories="..\..\openssl\lib-mt"
 				ModuleDefinitionFile=".\A5250.def"
+				DelayLoadDLLs="libeay32.dll;ssleay32.dll"
 				GenerateDebugInformation="TRUE"
 				GenerateMapFile="TRUE"
 				SubSystem="2"
 				OptimizeReferences="2"
 				EnableCOMDATFolding="2"
 				OptimizeForWindows98="1"
-				ImportLibrary="$(OutDir)/A5250.lib"
-				TargetMachine="1"/>
+				SetChecksum="TRUE"/>
 			<Tool
 				Name="VCMIDLTool"
 				PreprocessorDefinitions="NDEBUG"
 				MkTypLibCompatible="FALSE"
 				TargetEnvironment="1"
 				GenerateStublessProxies="TRUE"
-				TypeLibraryName="$(IntDir)/A5250.tlb"
 				HeaderFileName="A5250.h"
 				DLLDataFileName=""
 				InterfaceIdentifierFileName="A5250_i.c"
 				ProxyFileName="A5250_p.c"/>
 			<Tool
 				Name="VCPostBuildEventTool"
-				Description="Performing registration"
-				CommandLine="regsvr32 /s /c &quot;$(TargetPath)&quot;"/>
+				CommandLine="gencab.bat $(OutDir)"/>
 			<Tool
 				Name="VCPreBuildEventTool"/>
 			<Tool
@@ -153,7 +156,90 @@
 			<Tool
 				Name="VCResourceCompilerTool"
 				PreprocessorDefinitions="NDEBUG"
-				Culture="1033"
+				Culture="4105"
+				AdditionalIncludeDirectories="$(IntDir)"/>
+			<Tool
+				Name="VCWebServiceProxyGeneratorTool"/>
+			<Tool
+				Name="VCXMLDataGeneratorTool"/>
+			<Tool
+				Name="VCWebDeploymentTool"/>
+			<Tool
+				Name="VCManagedWrapperGeneratorTool"/>
+			<Tool
+				Name="VCAuxiliaryManagedWrapperGeneratorTool"/>
+		</Configuration>
+		<Configuration
+			Name="Release-DLL|Win32"
+			OutputDirectory="$(ConfigurationName)"
+			IntermediateDirectory="$(ConfigurationName)"
+			ConfigurationType="2"
+			UseOfATL="1"
+			ATLMinimizesCRunTimeLibraryUsage="FALSE"
+			CharacterSet="2"
+			WholeProgramOptimization="TRUE">
+			<Tool
+				Name="VCCLCompilerTool"
+				AdditionalOptions="/Wall"
+				Optimization="3"
+				GlobalOptimizations="TRUE"
+				InlineFunctionExpansion="2"
+				EnableIntrinsicFunctions="TRUE"
+				FavorSizeOrSpeed="2"
+				OmitFramePointers="TRUE"
+				EnableFiberSafeOptimizations="TRUE"
+				OptimizeForWindowsApplication="TRUE"
+				AdditionalIncludeDirectories=".;..\tn5250\src;..\..\openssl\include"
+				PreprocessorDefinitions="WIN32;_WINDOWS;NDEBUG;_USRDLL"
+				StringPooling="TRUE"
+				RuntimeLibrary="2"
+				BufferSecurityCheck="FALSE"
+				EnableFunctionLevelLinking="TRUE"
+				DefaultCharIsUnsigned="TRUE"
+				TreatWChar_tAsBuiltInType="TRUE"
+				UsePrecompiledHeader="3"
+				PrecompiledHeaderThrough="tn5250-private.h"
+				PrecompiledHeaderFile="$(IntDir)/tn5250-private.pch"
+				WarningLevel="4"
+				DebugInformationFormat="3"/>
+			<Tool
+				Name="VCCustomBuildTool"/>
+			<Tool
+				Name="VCLinkerTool"
+				RegisterOutput="TRUE"
+				AdditionalDependencies="winmm.lib Ws2_32.lib"
+				Version=""
+				AdditionalLibraryDirectories="..\..\openssl\lib"
+				ModuleDefinitionFile=".\A5250.def"
+				DelayLoadDLLs="libeay32.dll;ssleay32.dll"
+				GenerateDebugInformation="TRUE"
+				GenerateMapFile="TRUE"
+				SubSystem="2"
+				OptimizeReferences="2"
+				EnableCOMDATFolding="2"
+				OptimizeForWindows98="1"
+				SetChecksum="TRUE"/>
+			<Tool
+				Name="VCMIDLTool"
+				PreprocessorDefinitions="NDEBUG"
+				MkTypLibCompatible="FALSE"
+				TargetEnvironment="1"
+				GenerateStublessProxies="TRUE"
+				HeaderFileName="A5250.h"
+				DLLDataFileName=""
+				InterfaceIdentifierFileName="A5250_i.c"
+				ProxyFileName="A5250_p.c"/>
+			<Tool
+				Name="VCPostBuildEventTool"
+				CommandLine="gencab.bat $(OutDir) crt"/>
+			<Tool
+				Name="VCPreBuildEventTool"/>
+			<Tool
+				Name="VCPreLinkEventTool"/>
+			<Tool
+				Name="VCResourceCompilerTool"
+				PreprocessorDefinitions="NDEBUG"
+				Culture="4105"
 				AdditionalIncludeDirectories="$(IntDir)"/>
 			<Tool
 				Name="VCWebServiceProxyGeneratorTool"/>
@@ -190,6 +276,13 @@
 						PrecompiledHeaderThrough="stdafx.h"
 						PrecompiledHeaderFile="$(IntDir)/$(TargetName).pch"/>
 				</FileConfiguration>
+				<FileConfiguration
+					Name="Release-DLL|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						PrecompiledHeaderThrough="stdafx.h"
+						PrecompiledHeaderFile="$(IntDir)/$(TargetName).pch"/>
+				</FileConfiguration>
 			</File>
 			<File
 				RelativePath=".\A5250.def">
@@ -198,22 +291,27 @@
 				RelativePath=".\A5250.idl">
 			</File>
 			<File
-				RelativePath=".\conf.cpp">
+				RelativePath=".\MsgLog.cpp">
 				<FileConfiguration
 					Name="Debug|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
 						PrecompiledHeaderThrough="stdafx.h"
-						PrecompiledHeaderFile="$(IntDir)/$(TargetName).pch"
-						ObjectFile="$(IntDir)/$(InputName).obj"/>
+						PrecompiledHeaderFile="$(IntDir)/$(TargetName).pch"/>
 				</FileConfiguration>
 				<FileConfiguration
 					Name="Release|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
 						PrecompiledHeaderThrough="stdafx.h"
-						PrecompiledHeaderFile="$(IntDir)/$(TargetName).pch"
-						ObjectFile="$(IntDir)/$(InputName).obj"/>
+						PrecompiledHeaderFile="$(IntDir)/$(TargetName).pch"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release-DLL|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						PrecompiledHeaderThrough="stdafx.h"
+						PrecompiledHeaderFile="$(IntDir)/$(TargetName).pch"/>
 				</FileConfiguration>
 			</File>
 			<File
@@ -228,6 +326,14 @@
 				</FileConfiguration>
 				<FileConfiguration
 					Name="Release|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						UsePrecompiledHeader="1"
+						PrecompiledHeaderThrough="stdafx.h"
+						PrecompiledHeaderFile="$(IntDir)/$(TargetName).pch"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release-DLL|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
 						UsePrecompiledHeader="1"
@@ -251,6 +357,13 @@
 						PrecompiledHeaderThrough="stdafx.h"
 						PrecompiledHeaderFile="$(IntDir)/$(TargetName).pch"/>
 				</FileConfiguration>
+				<FileConfiguration
+					Name="Release-DLL|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						PrecompiledHeaderThrough="stdafx.h"
+						PrecompiledHeaderFile="$(IntDir)/$(TargetName).pch"/>
+				</FileConfiguration>
 			</File>
 			<File
 				RelativePath=".\Term5250.cpp">
@@ -263,6 +376,13 @@
 				</FileConfiguration>
 				<FileConfiguration
 					Name="Release|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						PrecompiledHeaderThrough="stdafx.h"
+						PrecompiledHeaderFile="$(IntDir)/$(TargetName).pch"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release-DLL|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
 						PrecompiledHeaderThrough="stdafx.h"
@@ -287,22 +407,13 @@
 						PrecompiledHeaderThrough="tn5250-private.h"
 						PrecompiledHeaderFile="$(IntDir)/tn5250-private.pch"/>
 				</FileConfiguration>
-			</File>
-			<File
-				RelativePath=".\Utils.cpp">
 				<FileConfiguration
-					Name="Debug|Win32">
+					Name="Release-DLL|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
-						PrecompiledHeaderThrough="stdafx.h"
-						PrecompiledHeaderFile="$(IntDir)/$(TargetName).pch"/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Release|Win32">
-					<Tool
-						Name="VCCLCompilerTool"
-						PrecompiledHeaderThrough="stdafx.h"
-						PrecompiledHeaderFile="$(IntDir)/$(TargetName).pch"/>
+						UsePrecompiledHeader="1"
+						PrecompiledHeaderThrough="tn5250-private.h"
+						PrecompiledHeaderFile="$(IntDir)/tn5250-private.pch"/>
 				</FileConfiguration>
 			</File>
 			<File
@@ -321,12 +432,31 @@
 						PrecompiledHeaderThrough="stdafx.h"
 						PrecompiledHeaderFile="$(IntDir)/$(TargetName).pch"/>
 				</FileConfiguration>
+				<FileConfiguration
+					Name="Release-DLL|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						PrecompiledHeaderThrough="stdafx.h"
+						PrecompiledHeaderFile="$(IntDir)/$(TargetName).pch"/>
+				</FileConfiguration>
 			</File>
 		</Filter>
 		<Filter
 			Name="Header Files"
 			Filter="h;hpp;hxx;hm;inl;inc;xsd"
 			UniqueIdentifier="{93995380-89BD-4b04-88EB-625FBE52EBFB}">
+			<File
+				RelativePath=".\DlgConnect.h">
+			</File>
+			<File
+				RelativePath=".\FunkyMap.h">
+			</File>
+			<File
+				RelativePath=".\KeysHandling.h">
+			</File>
+			<File
+				RelativePath=".\MsgLog.h">
+			</File>
 			<File
 				RelativePath=".\stdafx.h">
 			</File>
@@ -343,6 +473,9 @@
 				RelativePath=".\tn5250-config.h">
 			</File>
 			<File
+				RelativePath=".\TypeLib.h">
+			</File>
+			<File
 				RelativePath=".\Utils.h">
 			</File>
 		</Filter>
@@ -350,6 +483,25 @@
 			Name="Resource Files"
 			Filter="rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx"
 			UniqueIdentifier="{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}">
+			<File
+				RelativePath=".\a5250.inf">
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCustomBuildTool"
+						CommandLine=""
+						AdditionalDependencies=""
+						Outputs=""/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release-DLL|Win32">
+					<Tool
+						Name="VCCustomBuildTool"
+						CommandLine=""
+						AdditionalDependencies=""
+						Outputs=""/>
+				</FileConfiguration>
+			</File>
 			<File
 				RelativePath=".\A5250.rc">
 			</File>
@@ -378,13 +530,25 @@
 					Name="Debug|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
-						UsePrecompiledHeader="0"/>
+						AdditionalOptions="/wd4255 /wd4668 /wd4820"
+						UsePrecompiledHeader="0"
+						WarningLevel="0"/>
 				</FileConfiguration>
 				<FileConfiguration
 					Name="Release|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
-						UsePrecompiledHeader="0"/>
+						AdditionalOptions="/wd4255 /wd4668 /wd4820"
+						UsePrecompiledHeader="0"
+						WarningLevel="0"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release-DLL|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						AdditionalOptions="/wd4255 /wd4668 /wd4820"
+						UsePrecompiledHeader="0"
+						WarningLevel="0"/>
 				</FileConfiguration>
 			</File>
 		</Filter>
@@ -396,6 +560,9 @@
 				Filter="cpp;c">
 				<File
 					RelativePath="..\tn5250\src\buffer.c">
+				</File>
+				<File
+					RelativePath="..\tn5250\src\conf.c">
 				</File>
 				<File
 					RelativePath="..\tn5250\src\dbuffer.c">
@@ -410,7 +577,13 @@
 					RelativePath="..\tn5250\src\macro.c">
 				</File>
 				<File
+					RelativePath="..\tn5250\src\menu.c">
+				</File>
+				<File
 					RelativePath="..\tn5250\src\record.c">
+				</File>
+				<File
+					RelativePath="..\tn5250\src\scrollbar.c">
 				</File>
 				<File
 					RelativePath="..\tn5250\src\session.c">
@@ -429,6 +602,9 @@
 				</File>
 				<File
 					RelativePath="..\tn5250\src\utility.c">
+				</File>
+				<File
+					RelativePath="..\tn5250\src\window.c">
 				</File>
 				<File
 					RelativePath="..\tn5250\src\wtd.c">
@@ -459,7 +635,13 @@
 					RelativePath="..\tn5250\src\macro.h">
 				</File>
 				<File
+					RelativePath="..\tn5250\src\menu.h">
+				</File>
+				<File
 					RelativePath="..\tn5250\src\record.h">
+				</File>
+				<File
+					RelativePath="..\tn5250\src\scrollbar.h">
 				</File>
 				<File
 					RelativePath="..\tn5250\src\session.h">
@@ -480,10 +662,29 @@
 					RelativePath="..\tn5250\src\utility.h">
 				</File>
 				<File
+					RelativePath="..\tn5250\src\window.h">
+				</File>
+				<File
 					RelativePath="..\tn5250\src\wtd.h">
 				</File>
 			</Filter>
 		</Filter>
+		<Filter
+			Name="Other"
+			Filter="">
+			<File
+				RelativePath=".\.cvsignore">
+			</File>
+			<File
+				RelativePath=".\GenCab.bat">
+			</File>
+		</Filter>
+		<File
+			RelativePath=".\ChangeLog">
+		</File>
+		<File
+			RelativePath=".\KeyMapping.txt">
+		</File>
 		<File
 			RelativePath=".\ReadMe.txt">
 		</File>
