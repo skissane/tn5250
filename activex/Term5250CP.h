@@ -22,12 +22,17 @@
 
 #pragma once
 
+#pragma warning(push)
+#pragma warning(disable:4946) // reinterpret_cast used between related classes: '' and ''
+
 template <class T>
-//class CProxy_ITerm5250Events : public IConnectionPointImpl<T, &DIID__ITerm5250Events, CComDynamicUnkArray>
-class CProxy_ITerm5250Events : public IConnectionPointImpl<T, &__uuidof(_ITerm5250Events), CComDynamicUnkArray>
+class CProxy_ITerm5250Events : public ATL::IConnectionPointImpl<T, &__uuidof(_ITerm5250Events), ATL::CComDynamicUnkArray>
 {
     //Warning this class may be recreated by the wizard.
 public:
+    virtual ~CProxy_ITerm5250Events() {
+    }
+
     VOID Fire_Connected()
     {
         FUNC_ENTER1(" %d", m_vec.GetSize());
@@ -50,7 +55,7 @@ protected:
         for (int nConnectionIndex = 0; nConnectionIndex < nConnections; ++nConnectionIndex)
         {
             pT->Lock();
-            CComPtr<IDispatch> pDispatch(reinterpret_cast<IDispatch*>(m_vec.GetAt(nConnectionIndex)));
+            ATL::CComPtr<IDispatch> pDispatch(reinterpret_cast<IDispatch*>(m_vec.GetAt(nConnectionIndex)));
             pT->Unlock();
             if (pDispatch != NULL)
             {
@@ -65,4 +70,4 @@ protected:
         }
     }
 };
-
+#pragma warning(pop)
