@@ -6,38 +6,33 @@
 		<SCRIPT LANGUAGE="JScript">
 			function MyOnLoadPage()
 			{
-				Term5250.MouseMoveCursor = true;
-				Term5250.SelectionEnabled = true;
-				Term5250.Enhanced = true;
-				Term5250.HotSpot = true;
 				window.defaultStatus = "Waiting to connect. Please click on the ConnectDialog button.";
-
-				//Term5250.HostName = "as400";
-				Term5250.MouseMoveCursor = true;
-				Term5250.SelectionEnabled = false;
-				Term5250.HotSpot = true;
-				Term5250.Enhanced = true;
-				Term5250.ShowConnect = true;
-				Term5250.ContextualMenu = true;
-				Term5250.UseComputerName = true;
-				//Term5250.Connect();
-
+				Term5250.HostName = "as400";
+				//Term5250.MouseMoveCursor = true;
+				
+				// Initialize fields
+				HostName.value         = Term5250.HostName;
+				DeviceName.value       = Term5250.DeviceName;
+				CodePage.value         = Term5250.CodePage;
+				FontName.value         = Term5250.FontName;
+				Caption.value          = Term5250.Caption;
+				Wide.value             = Term5250.Wide;
+				ContextualMenu.value   = Term5250.ContextualMenu;
+				Enhanced.value         = Term5250.Enhanced;
+				CaretStyle.value       = Term5250.CaretStyle;
+				ShowConnect.value      = Term5250.ShowConnect;
+				DisplayRuler.value     = Term5250.DisplayRuler;
+				UseComputerName.value  = Term5250.UseComputerName;
+				MouseMoveCursor.value  = Term5250.MouseMoveCursor;
+				SelectionEnabled.value = Term5250.SelectionEnabled;
+				HotSpot.value          = Term5250.HotSpot;
+				//CursorPositionX.value = Term5250.CursorPositionX;	// doesn't work until the terminal is connected
+				//CursorPositionY.value = Term5250.CursorPositionY;
+				CursorPositionX.value = 0;
+				CursorPositionY.value = 0;
 				Term5250.focus();
 			}
 
-			function Connect()
-			{
-				Term5250.HostName = IP.value;
-				Term5250.Connect();
-				Term5250.focus();
-			}
-
-			function ConnectDialog()
-			{
-				Term5250.ConnectDialog();
-				Term5250.focus();
-			}
-	
 			function SetBKColor()
 			{
 				// inverted...
@@ -77,14 +72,6 @@
 				var MyVK = eval(A.value);
 				var Modifiers = eval(B.value);
 				Term5250.SendVkey(MyVK, Modifiers);
-				Term5250.focus();
-			}
-
-			function SendChar()
-			{
-				var MyVK = eval(A.value);
-				Term5250.SendChar(MyVK);
-				Term5250.focus();
 			}
 
 			function BindVK()
@@ -93,9 +80,9 @@
 				var Modifiers = eval(B.value);
 				var KValue = eval(C.value);
 				Term5250.BindKey(VirtualKeyCode, Modifiers, KValue);
-				Term5250.focus();
 			}
 
+			// Once you resize it, it's too late to get back the original size
 			function resize()
 			{
 				var X = eval(A.value);
@@ -104,16 +91,12 @@
 				Term5250.style.heigth = Y;
 				Term5250.focus();
 			}
-			function defaultsize()
-			{
-				Term5250.style.width = "100%";
-				Term5250.style.heigth = "100%";
-				Term5250.focus();
-			}
 			
 		</SCRIPT>
 		<SCRIPT FOR="Term5250" EVENT="Connected()" LANGUAGE="JScript">
 				window.defaultStatus = "Connected to " + Term5250.HostName;
+				CursorPositionX.value = Term5250.CursorPositionX;
+				CursorPositionY.value = Term5250.CursorPositionY;
 				<!--window.alert("Connected!");-->
 		</SCRIPT>
 		<SCRIPT FOR="Term5250" EVENT="Disconnected()" LANGUAGE="JScript">
@@ -134,50 +117,53 @@
 		</TR>
 		<TR>
 		<TD HEIGHT=1>
-		<INPUT type="text" name="IP" value="as400.holgerscherer.de" size="20" />
-		<INPUT type="button" value="Connect" onclick="Connect()" />
-		<INPUT type="button" value="ConnectDialog" onclick="ConnectDialog()" />
-		<INPUT type="button" value="Disconnect" onclick="Term5250.Disconnect()" />
-		<INPUT type="button" value="HostName" onclick="Term5250.HostName = IP.value; Term5250.focus()" />
-		<INPUT type="button" value="Caption" onclick="Term5250.Caption = IP.value; Term5250.focus()" />
-		<INPUT type="button" value="FontName" onclick="Term5250.FontName = IP.value; Term5250.focus()" />
-		<INPUT type="button" value="Device Name" onclick="Term5250.DeviceName = IP.value; Term5250.focus()" />
-		<INPUT type="button" value="CodePage" onclick="Term5250.CodePage = IP.value; Term5250.focus()" />
-		<INPUT type="button" value="Wide" onclick="Term5250.Wide = IP.value; Term5250.focus()" />
+		<INPUT type="button" value="Connect"       onclick="Term5250.Connect(); Term5250.focus()" />
+		<INPUT type="button" value="ConnectDialog" onclick="Term5250.ConnectDialog(); Term5250.focus()" />
+		<INPUT type="button" value="Disconnect"    onclick="Term5250.Disconnect()" />
+		 Hover the mouse over the text boxes to see their corresponding property.
+		<br>
+		Properties: 
+		<INPUT type="text" size="20" name="HostName"         title="HostName"         onfocusin="value = Term5250.HostName"         onfocusout="Term5250.HostName = value" />
+		<INPUT type="text" size="6"  name="DeviceName"       title="Device Name"      onfocusin="value = Term5250.DeviceName"       onfocusout="Term5250.DeviceName = value" />
+		<INPUT type="text" size="3"  name="CodePage"         title="CodePage"         onfocusin="value = Term5250.CodePage"         onfocusout="Term5250.CodePage = value" />
+		<INPUT type="text" size="4"  name="Caption"          title="Caption"          onfocusin="value = Term5250.Caption"          onfocusout="Term5250.Caption  = value" />
+		<INPUT type="text" size="15" name="FontName"         title="FontName"         onfocusin="value = Term5250.FontName"         onfocusout="Term5250.FontName = value" />
+		<INPUT type="text" size="2"  name="Wide"             title="Wide"             onfocusin="value = Term5250.Wide"             onfocusout="Term5250.Wide = value" />
+		<INPUT type="text" size="2"  name="ContextualMenu"   title="Contextual Menu"  onfocusin="value = Term5250.ContextualMenu"   onfocusout="Term5250.ContextualMenu = value" />
+		<INPUT type="text" size="2"  name="Enhanced"         title="Enhanced"         onfocusin="value = Term5250.Enhanced"         onfocusout="Term5250.Enhanced = value" />
+		<INPUT type="text" size="2"  name="CaretStyle"       title="Caret Style"      onfocusin="value = Term5250.CaretStyle"       onfocusout="Term5250.CaretStyle = value" />
+		<INPUT type="text" size="2"  name="ShowConnect"      title="ShowConnect"      onfocusin="value = Term5250.ShowConnect"      onfocusout="Term5250.ShowConnect = value" />
+		<INPUT type="text" size="2"  name="DisplayRuler"     title="DisplayRuler"     onfocusin="value = Term5250.DisplayRuler"     onfocusout="Term5250.DisplayRuler = value" />
+		<INPUT type="text" size="2"  name="UseComputerName"  title="UseComputerName"  onfocusin="value = Term5250.UseComputerName"  onfocusout="Term5250.UseComputerName = value" />
+		<INPUT type="text" size="2"  name="MouseMoveCursor"  title="MouseMoveCursor"  onfocusin="value = Term5250.MouseMoveCursor"  onfocusout="Term5250.MouseMoveCursor = value" />
+		<INPUT type="text" size="2"  name="SelectionEnabled" title="SelectionEnabled" onfocusin="value = Term5250.SelectionEnabled" onfocusout="Term5250.SelectionEnabled = value" />
+		<INPUT type="text" size="2"  name="HotSpot"          title="HotSpot"          onfocusin="value = Term5250.HotSpot"          onfocusout="Term5250.HotSpot = value" />
+		<INPUT type="text" size="2"  name="CursorPositionX"  title="CursorPositionX"  onfocusin="value = Term5250.CursorPositionX"  onfocusout="Term5250.CursorPositionX = value" />
+		<INPUT type="text" size="2"  name="CursorPositionY"  title="CursorPositionY"  onfocusin="value = Term5250.CursorPositionY"  onfocusout="Term5250.CursorPositionY = value" />
+
+		<INPUT type="text" size="2"  title="Screen Width"  onfocusin="value = Term5250.ScreenWidth" />
+		<INPUT type="text" size="2"  title="Screen Height" onfocusin="value = Term5250.ScreenHeight" />
+		<br>
+		Tools: 
+		<INPUT type="text" size="4" name="A" title="A" value="0" />
+		<INPUT type="text" size="4" name="B" title="B" value="255" />
+		<INPUT type="text" size="4" name="C" title="C" value="255" />
 		&nbsp;
-		<INPUT type="button" value="Reset" onclick="OnReset()" />
-		<p>
-		<INPUT type="text" maxlength="4" size="4" name="A" value="0" />
-		<INPUT type="text" maxlength="4" size="4" name="B" value="255" />
-		<INPUT type="text" maxlength="4" size="4" name="C" value="255" />
+		<INPUT type="text" size="20" name="Scratch" title="Scratch" />
+
 		<INPUT type="button" value="SendVirtualKey" onclick="SendVK()" />
-		<INPUT type="button" value="SendChar" onclick="SendChar()" />
-		<INPUT type="button" value="BindVK" onclick="BindVK()" />
-		<INPUT type="button" value="Resize" onclick="resize()" />
-		<INPUT type="button" value="DefaultSize" onclick="defaultsize()" />
-		<INPUT type="button" value="SetBKColor" onclick="SetBKColor()" />
-		<INPUT type="button" value="SetFGColor" onclick="SetFGColor()" />
+		<INPUT type="button" value="SendChar"       onclick="Term5250.SendChar( eval(A.value) )" />
+		<INPUT type="button" value="BindVK"         onclick="BindVK()" />
+		<INPUT type="button" value="ScreenScrape"   onclick="Scratch.value = Term5250.ScreenScrape(eval(A.value), eval(B.value), eval(C.value)) ; Term5250.focus()" />
+		&nbsp;
+		<INPUT type="button" value="Resize"         onclick="resize()" />
+		&nbsp;
+		<INPUT type="button" value="SetBKColor"     onclick="SetBKColor()" />
+		<INPUT type="button" value="SetFGColor"     onclick="SetFGColor()" />
 		<!-- Borders don't work well <INPUT type="button" value="SetBorderColor" onclick="SetBorderColor()" />
 		<INPUT type="button" value="Toggle Border" onclick="Term5250.BorderVisible = !Term5250.BorderVisible; Term5250.focus()" />
 		<INPUT type="button" value="SetBorderWidth" onclick="Term5250.BorderWidth = eval(A.value); Term5250.focus()" /> -->
-		<INPUT type="button" value="InvertColor" onclick="InvertColor()" />
-		<INPUT type="button" value="Toggle Contextual" onclick="Term5250.ContextualMenu = !Term5250.ContextualMenu; Term5250.focus()" />
-		<INPUT type="button" value="Enhanced" onclick="Term5250.Enhanced = eval(A.value); Term5250.focus()" />
-		<INPUT type="button" value="Caret" onclick="Term5250.CaretStyle = eval(A.value); Term5250.focus()" />
-		<INPUT type="button" value="ShowConnect" onclick="Term5250.ShowConnect = eval(A.value); Term5250.focus()" />
-		<INPUT type="button" value="DisplayRuler" onclick="Term5250.DisplayRuler = !Term5250.DisplayRuler; Term5250.focus()" />
-
-
-		<INPUT type="button" value="Get UseComputerName" onclick="A.value = eval(Term5250.UseComputerName) ; Term5250.focus()" />
-		<INPUT type="button" value="Set UseComputerName" onclick="Term5250.UseComputerName = eval(A.value); Term5250.focus()" />
-		<INPUT type="button" value="Get CursorPositionX" onclick="A.value = eval(Term5250.CursorPositionX) ; Term5250.focus()" />
-		<INPUT type="button" value="Set CursorPositionX" onclick="Term5250.CursorPositionX = eval(A.value); Term5250.focus()" />
-		<INPUT type="button" value="Get CursorPositionY" onclick="A.value = eval(Term5250.CursorPositionY) ; Term5250.focus()" />
-		<INPUT type="button" value="Set CursorPositionY" onclick="Term5250.CursorPositionY = eval(A.value); Term5250.focus()" />
-		<INPUT type="button" value="Get ScreenWidth" onclick="A.value = Term5250.ScreenWidth ; Term5250.focus()" />
-		<INPUT type="button" value="Get ScreenHeight" onclick="A.value = eval(Term5250.ScreenHeight) ; Term5250.focus()" />
-		<INPUT type="button" value="ScreenScrape" onclick="IP.value = Term5250.ScreenScrape(eval(A.value), eval(B.value), eval(C.value)) ; Term5250.focus()" />
-
+		<INPUT type="button" value="InvertColor"    onclick="InvertColor()" />
 		</TD>
 		</TR>
 		</TBODY>
