@@ -189,33 +189,65 @@
 #define HAVE_LIBSSL 1
 
 /* Version number of package */
-#define TN5250_LIB_VERSION "0.17.x"
+#define TN5250_LIB_VERSION "0.17.0.2"
 #define VERSION TN5250_LIB_VERSION
-#define PACKAGE "EON"
+#define PACKAGE "Cardinal Health"
 #define SYSCONFDIR 
 #define __WIN32__ 1
-
+#define NOVIRTUALKEYCODES 1
 
 #ifdef _MSC_VER
 #define strcasecmp strcmpi
 // Pragmas for Warning level 4 for MSVC
-#pragma warning(disable:4100) // '' : unreferenced formal parameter
-#pragma warning(disable:4101) // '' : unreferenced local variable
-#pragma warning(disable:4189) // '' : local variable is initialized but not referenced
 #pragma warning(disable:4244) // 'function' : conversion from 'int' to 'unsigned char', possible loss of data
+//#pragma warning(disable:4245) // 'initializing' : conversion from '' to '', signed/unsigned mismatch
+#pragma warning(disable:4344) // behavior change: use of explicit template arguments results in call to ''
+#pragma warning(disable:4347) // behavior change: '' is called instead of ''
+#pragma warning(disable:4505) // BAD; ATL.. '' : unreferenced local function has been removed
+#pragma warning(disable:4510) // '' : default constructor could not be generated
+#pragma warning(disable:4511) // '' : copy constructor could not be generated
+#pragma warning(disable:4512) // '' : assignment operator could not be generated
+#pragma warning(disable:4514) // '' : unreferenced inline function has been removed
+#pragma warning(disable:4610) // struct '' can never be instantiated - user defined constructor required
+#pragma warning(disable:4625) // '' : copy constructor could not be generated because a base class copy constructor is inaccessible
+#pragma warning(disable:4626) // '' : assignment operator could not be generated because a base class assignment operator is inaccessible
+#pragma warning(disable:4668) // '' is not defined as a preprocessor macro, replacing with '0' for '#if/#elif'
+#pragma warning(disable:4710) // '' : function not inlined
+#pragma warning(disable:4711) // function '' selected for automatic inline expansion
+#pragma warning(disable:4820) // '' : 'N' bytes padding added after member ''
+
+#ifndef __cplusplus
+// Compiling tn5250
+#pragma warning(disable:4100) // '' : unreferenced formal parameter
+//#pragma warning(disable:4101) // '' : unreferenced local variable
+#pragma warning(disable:4018) // '<' : signed/unsigned mismatch
 #pragma warning(disable:4127) // conditional expression is constant
+#pragma warning(disable:4131) // '' : uses old-style declarator
+//#pragma warning(disable:4189) // '' : local variable is initialized but not referenced
 #pragma warning(disable:4206) // nonstandard extension used : translation unit is empty
+#pragma warning(disable:4242) // '=' : conversion from '' to '', possible loss of data
+#pragma warning(disable:4255) // '' : no function prototype given: converting '()' to '(void)'
+#pragma warning(disable:4389) // '==' : signed/unsigned mismatch
+//#pragma warning(disable:4700) // BAD!! local variable '' used without having been initialized
 #pragma warning(disable:4701) // local variable '' may be used without having been initialized
-#pragma warning(disable:4245) // 'initializing' : conversion from 'int' to 'COLORREF', signed/unsigned mismatch
-__declspec(noreturn) void clean_up_and_exit(int error);
+//#pragma warning(disable:4706) // BAD!! assignment within conditional expression
+#endif
 
 #ifdef HAVE_LIBSSL
 // Replace with you own path or modify your make file.
-#pragma comment(linker, "/defaultlib:../../openssl-0.9.7b/out32dll/libeay32.lib")
-#pragma comment(linker, "/defaultlib:../../openssl-0.9.7b/out32dll/ssleay32.lib")
+#pragma comment(linker, "/defaultlib:libeay32.lib")
+#pragma comment(linker, "/defaultlib:ssleay32.lib")
 #endif
 
 #endif // _MSC_VER
 
+// it's better to include windows.h before util.h...
+#define WIN32_LEAN_AND_MEAN
+#define STRICT
+#define WINVER 0x0500
+#define _WIN32_WINNT 0x0501
+#define _WIN32_WINDOWS 0x0410
+#define _WIN32_IE 0x0400
+#include <windows.h>
 #include "Utils.h"
-
+#define _A5250_ 1
