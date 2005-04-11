@@ -53,8 +53,8 @@ END
 //
 
 VS_VERSION_INFO VERSIONINFO
- FILEVERSION 1,0,0,1
- PRODUCTVERSION 1,0,0,1
+ FILEVERSION 1,17,0,2
+ PRODUCTVERSION 0,0,0,0
  FILEFLAGSMASK 0x3fL
 #ifdef _DEBUG
  FILEFLAGS 0x1L
@@ -69,13 +69,13 @@ BEGIN
     BEGIN
         BLOCK "100904e4"
         BEGIN
-            VALUE "CompanyName", "Cardinal Health AIS"
+            VALUE "Comments", "Keybinding support"
+            VALUE "CompanyName", "Cardinal Health"
             VALUE "FileDescription", "ActiveX Terminal 5250"
-            VALUE "FileVersion", "1.0.0.1"
-            VALUE "InternalName", "A5250.dll"
-            VALUE "LegalCopyright", "(c) 2003 Cardinal Health AIS.  All rights reserved."
+            VALUE "FileVersion", "1, 17, 0, 2"
+            VALUE "LegalCopyright", "(c) 2003-2005 Cardinal Health.  All rights reserved."
             VALUE "OriginalFilename", "A5250.dll"
-            VALUE "ProductVersion", "1.0.0.1"
+            VALUE "ProductVersion", "0, 0, 0, 0"
         END
     END
     BLOCK "VarFileInfo"
@@ -123,14 +123,26 @@ IDB_TERM5250            BITMAP                  "Term5250.bmp"
 // Dialog
 //
 
-IDD_DIALOG1 DIALOGEX 0, 0, 186, 95
-STYLE DS_SETFONT | DS_MODALFRAME | DS_FIXEDSYS | WS_POPUP | WS_CAPTION | 
-    WS_SYSMENU
-CAPTION "Dialog"
+IDD_DIALOG_CONNECT DIALOGEX 0, 0, 230, 102
+STYLE DS_SETFONT | DS_MODALFRAME | DS_NOIDLEMSG | DS_FIXEDSYS | WS_POPUP | 
+    WS_CAPTION | WS_SYSMENU
+CAPTION "Connect ..."
 FONT 8, "MS Shell Dlg", 400, 0, 0x1
 BEGIN
-    DEFPUSHBUTTON   "OK",IDOK,129,7,50,14
-    PUSHBUTTON      "Cancel",IDCANCEL,129,24,50,14
+    DEFPUSHBUTTON   "&Connect",IDOK,173,7,50,14
+    PUSHBUTTON      "Cancel",IDCANCEL,173,24,50,14
+    EDITTEXT        IDC_EDIT_IP,56,7,113,13,ES_AUTOHSCROLL
+    LTEXT           "Server or IP",IDC_STATIC,7,7,40,8
+    LTEXT           "Device Name",IDC_STATIC,7,28,42,8
+    LTEXT           "Code page",IDC_STATIC,7,45,40,8
+    EDITTEXT        IDC_EDIT_DEVICE,56,25,78,13,ES_AUTOHSCROLL
+    EDITTEXT        IDC_EDIT_CODE_PAGE,56,41,34,13,ES_AUTOHSCROLL | 
+                    ES_NUMBER
+    GROUPBOX        "Terminal Size",IDC_STATIC,164,52,59,43
+    CONTROL         "24 x 80",IDC_RADIO_24,"Button",BS_AUTORADIOBUTTON,172,
+                    65,40,10
+    CONTROL         "27 x 132",IDC_RADIO_27,"Button",BS_AUTORADIOBUTTON,172,
+                    78,44,10
 END
 
 
@@ -142,12 +154,13 @@ END
 #ifdef APSTUDIO_INVOKED
 GUIDELINES DESIGNINFO 
 BEGIN
-    IDD_DIALOG1, DIALOG
+    IDD_DIALOG_CONNECT, DIALOG
     BEGIN
         LEFTMARGIN, 7
-        RIGHTMARGIN, 179
+        RIGHTMARGIN, 223
+        VERTGUIDE, 56
         TOPMARGIN, 7
-        BOTTOMMARGIN, 88
+        BOTTOMMARGIN, 95
     END
 END
 #endif    // APSTUDIO_INVOKED
