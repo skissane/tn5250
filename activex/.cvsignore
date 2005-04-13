@@ -4,6 +4,7 @@
 *.ncb
 *.suo
 *.bak
+*.APS
 A5250.h
 A5250_i.c
 A5250_p.c
