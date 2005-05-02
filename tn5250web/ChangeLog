@@ -1,3 +1,13 @@
+2005-05-02  Carey Evans  <carey.evans@gmail.com>
+
+	* index.xml: Fix iSeries, iSeries Access, and WinCVS links.
+	Add link to GMANE archives of mailing list.
+	Change CVS command to use the MAIN branch again.
+
+	* resources.xml: Change tn3270e WG reference to past tense.
+	Mention that ftp.networking.ibm.com is no more, and provide a link
+	to contact me.
+
 2005-03-02  Carey Evans  <careye@spamcop.net>
 
 	* resources.xml: Fix link to IETF tn3270e working group.

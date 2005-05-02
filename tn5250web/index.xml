@@ -14,17 +14,21 @@
 
 <p>This is the homepage for the free “Linux tn5250” emulator.
 That’s a bit of a misnomer though, since it works on FreeBSD
-and any other modern Unix, and starting with the 0.16.4 release, it also runs on 32-bit versions of Windows.</p>
+and any other modern Unix, and starting with the 0.16.4 release,
+it also runs on 32-bit versions of Windows.</p>
 
 <p>tn5250 is a telnet client for the
-<a href="http://www.iseries.ibm.com/">IBM AS/400</a> that emulates
-5250 terminals and printers.  This function is the same as that
-provided by the 5250 emulator in IBM Client Access.  There’s even a
+<a href="http://www-1.ibm.com/servers/eserver/iseries/">IBM iSeries</a>
+and AS/400 that emulates 5250 terminals and printers.  This function
+is the same as that provided by the 5250 emulator in
+<a href="http://www-1.ibm.com/servers/eserver/iseries/access/">IBM
+iSeries Access</a>.  Have a look at a
 <a href="shot1.png" title="Screenshot of AS/400 main menu">screenshot</a>
-here to prove it!</p>
+for an example.</p>
 
-<p>Please report any bugs in tn5250, preferably to the <a href="#list">mailing list</a>,
-or to the <a href="http://sourceforge.net/tracker/?group_id=27533&amp;atid=390791">tn5250
+<p>Please report any bugs in tn5250, preferably to the
+<a href="#list">mailing list</a>, or to the
+<a href="http://sourceforge.net/tracker/?group_id=27533&amp;atid=390791">tn5250
 SourceForge bug tracker</a>.</p>
 
 <p>The tn5250 project is kindly hosted by
@@ -73,12 +77,12 @@ Win32 Installer from our files area</a>.</li>
 <a href="http://cvs.sourceforge.net/cgi-bin/viewcvs.cgi/tn5250/tn5250/">browse
 them online</a>.</p>
 
-<p>To check out the stable branch of tn5250 via anonymous CVS,
+<p>To check out the main branch of tn5250 via anonymous CVS,
 enter the following commands.
 When asked for a password for ‘anonymous’, just press Enter.</p>
 
 <pre>cvs -d:pserver:anonymous@cvs.sourceforge.net:/cvsroot/tn5250 login
-cvs -z3 -d:pserver:anonymous@cvs.sourceforge.net:/cvsroot/tn5250 co -r b0-16 tn5250</pre>
+cvs -z3 -d:pserver:anonymous@cvs.sourceforge.net:/cvsroot/tn5250 co tn5250</pre>
 
 <p>To build the Unix version of tn5250 from CVS, you’ll need automake,
 autoconf, libtool and ncurses.  Run <kbd>./autogen.sh</kbd>, 
@@ -86,7 +90,7 @@ autoconf, libtool and ncurses.  Run <kbd>./autogen.sh</kbd>,
 the checked out directory.</p>
 
 <p>To build the Windows version of tn5250 from CVS, you’ll need
-a CVS client (maybe <a href="http://www.wincvs.com">WinCVS</a> or <a href="http://www.tortoisecvs.org/">TortoiseCVS</a>).  Once you’ve
+a CVS client (maybe <a href="http://www.wincvs.org/">WinCVS</a> or <a href="http://www.tortoisecvs.org/">TortoiseCVS</a>).  Once you’ve
 downloaded the sources, detailed build instructions can be found in the
 README.txt file in the win32 subdirectory.</p>
 
@@ -94,7 +98,7 @@ README.txt file in the win32 subdirectory.</p>
 <h2 id="list">Mailing list</h2>
 
 <p>tn5250 development and discussion all happens on the mailing list,
-provided by <a href="http://www.midrange.com">MIDRANGE dot COM</a>.
+provided by <a href="http://www.midrange.com/">MIDRANGE dot COM</a>.
 You <em>must</em> subscribe to the mailing before you will be able to
 send email to it, but it’s very low traffic.</p>
 
@@ -103,6 +107,8 @@ send email to it, but it’s very low traffic.</p>
 linux5250 mailing list.</li>
 <li><a href="http://archive.midrange.com/linux5250/index.htm">Read
 the archives</a> of the tn5250 mailing list.</li>
+<li>Read the <a href="http://dir.gmane.org/gmane.comp.emulators.tn5250">GMANE
+archives</a> of the tn5250 mailing list.</li>
 </ul>
 
 

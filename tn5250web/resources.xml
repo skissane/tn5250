@@ -17,7 +17,7 @@
 
     <p>The
       <a href="http://www.ietf.org/html.charters/OLD/tn3270e-charter.html">IETF
-        tn3270e Working Group</a> defines standards for 3270 and
+        tn3270e Working Group</a> defined standards for 3270 and
       5250 over TCP/IP.  These standards make use of the existing
       Telnet standards.</p>
 
@@ -85,15 +85,8 @@
         for automatic signon, which is currently unimplemented in tn5250.</dd>
     </dl>
 
-    <p>The final document above is Postscript, and almost follows the
-      <a href="http://partners.adobe.com/asn/developer/technotes/postscript.html">Document
-	Structuring Conventions</a> which allow programs like
-      <a href="http://wwwthep.physik.uni-mainz.de/~plass/gv/">gv</a>
-      to go forwards and <em>backwards</em> through the document.  A
-      small Perl script <a href="splitpwsfont.pl">splitpwsfont.pl</a>
-      extracts the fonts and document into separate files.  You can
-      then set <var>GS_FONTPATH</var> to point at these files while
-      running gv: <kbd>env GS_FONTPATH=$PWD gv pwsubs.ps</kbd>.
-    </p>
+    <p>The final document above is unfortunately no longer available,
+although <a href="http://carey.geek.nz/contact/">Carey Evans</a> has
+saved a copy of it.</p>
   </body>
 </webpage>
