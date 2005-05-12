@@ -486,7 +486,7 @@ void win32_terminal_beep(Tn5250Terminal * This);
 void win32_terminal_destroy(Tn5250Terminal *);
 int win32_terminal_enhanced(Tn5250Terminal *);
 void win32_terminal_create_window(Tn5250Terminal * This, Tn5250Display * d, Tn5250Window * w);
-void win32_terminal_destroy_window(Tn5250Terminal * This, Tn5250Display * d);
+void win32_terminal_destroy_window(Tn5250Terminal * This, Tn5250Display * d, Tn5250Window *);
 void win32_terminal_create_scrollbar (Tn5250Terminal * This, Tn5250Display * d, Tn5250Scrollbar * s);
 void win32_terminal_destroy_scrollbar (Tn5250Terminal * This, Tn5250Display * d);
 

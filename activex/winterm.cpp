@@ -153,259 +153,6 @@ void win32_terminal_destroy(Tn5250Terminal *)
     FUNC_ENTER0(" duh!");
 }
 
-
-
-/****i* lib5250/win32_get_printer_info
-* NAME
-*    win32_get_printer_info
-* SYNOPSIS
-*    win32_get_printer_info (globTerm);
-* INPUTS
-*    Tn5250Terminal  *          This    -
-* DESCRIPTION
-*    This displays a standard Windows printer dialog allowing
-*    the user to choose which printer he would like to print to
-*    and stores a pointer to the resulting PRINTDLG structure 
-*    in This->data->pd.
-*
-*    If you call this again without first calling the
-*    win32_destroy_printer_info function, no dialog is displayed, 
-*    and the same pointer is returned. 
-*****/
-#if 0
-PRINTDLG * win32_get_printer_info(Tn5250Terminal *This) {
-
-    PRINTDLG *l_pd; 
-
-    if (This->data->pd != NULL) 
-        return This->data->pd;
-
-    This->data->pd = (PRINTDLG *) malloc(sizeof(PRINTDLG));
-
-    l_pd = This->data->pd;  /* save a little typing */
-
-    memset(l_pd, 0, sizeof(PRINTDLG));
-    l_pd->lStructSize = sizeof(PRINTDLG);
-    l_pd->hwndOwner   = This->data->hwndMain;
-    l_pd->hDevMode    = NULL;   /* windows will make one. */
-    l_pd->hDevNames   = NULL;   /* windows will make one. */
-    l_pd->Flags       = PD_USEDEVMODECOPIESANDCOLLATE | PD_RETURNDC
-        | PD_NOPAGENUMS | PD_NOSELECTION | PD_ALLPAGES;
-    l_pd->nCopies     = 1;
-    l_pd->nMinPage    = 1;
-    l_pd->nMaxPage    = 1;
-
-    if (PrintDlg(This->data->pd) == 0) {
-        TN5250_LOG (("PrintDlg() error %d\n", CommDlgExtendedError()));
-        free(This->data->pd);
-        This->data->pd = NULL;
-        return NULL;
-    }
-
-    if (!(GetDeviceCaps(l_pd->hDC, RASTERCAPS) & RC_STRETCHBLT)) {
-        win32_destroy_printer_info(This);
-        TN5250_LOG (("WIN32: StretchBlt not available for this printer.\n"));
-        msgboxf("This printer does not support the StretchBlt function.\r\n"
-            "Printing cancelled.");
-    }
-
-    return This->data->pd;
-    return NULL;
-}
-
-
-/****i* lib5250/win32_destroy_printer_info
-* NAME
-*    win32_destroy_printer_info
-* SYNOPSIS
-*    win32_destroy_printer_info (globTerm);
-* INPUTS
-*    Tn5250Terminal  *          This    -
-* DESCRIPTION 
-*    This frees up the data allocated by the function 
-*    win32_get_printer_info()
-*****/
-void win32_destroy_printer_info(Tn5250Terminal *This) {
-
-    if (This->data->pd->hDC != NULL)
-        DeleteDC(This->data->pd->hDC);
-    if (This->data->pd->hDevMode != NULL)
-        free(This->data->pd->hDevMode);
-    if (This->data->pd->hDevNames != NULL)
-        free(This->data->pd->hDevNames);
-    free(This->data->pd);
-    This->data->pd = NULL;
-    return;
-}
-
-
-/****i* lib5250/win32_print_screen
-* NAME
-*    win32_print_screen
-* SYNOPSIS
-*    win32_print_screen(globTerm, globDisplay);
-* INPUTS
-*    Tn5250Display   *          This    -  TN5250 terminal object
-*    Tn5250Display   *          display -  TN5250 display object
-* DESCRIPTION
-*    This builds a B&W bitmap of our current display buffer, and
-*    sends it to the printer.
-*****/
-void win32_print_screen(Tn5250Terminal *This, Tn5250Display *display) {
-
-    PRINTDLG *pd;
-    DOCINFO di;
-    HBITMAP bmap;
-    HDC screenDC, hdc;
-    float pelsX1, pelsX2;
-    float scaleX, pixMax;
-    int rc;
-    int x, y, h, w, h2, w2;
-    int i, size;
-    RECT rect;
-    LOGBRUSH lb;
-    HBRUSH oldbrush;
-    HPEN oldpen;
-    Tn5250Win32Attribute *mymap;
-
-    /* get info about the printer.   The GDI device context will
-    be in pd->hDC.  We need this to print.  */
-
-    if ((pd = win32_get_printer_info(This)) == NULL) {
-        return;
-    }
-    TN5250_ASSERT ( pd->hDC != NULL );
-
-
-    /* Get screen size & horizontal resolution.   We need this to
-    scale the screen output so that it looks good on the printer. */
-
-    GetClientRect(m_hWnd, &rect);
-    x = rect.left;
-    y = rect.top;
-    h = (rect.bottom - rect.top) + 7;
-    w = (rect.right - rect.left) + 7;
-    screenDC = GetDC(This->data->hwndMain);
-    pelsX1 = (float) GetDeviceCaps(screenDC, LOGPIXELSX);
-
-
-    /* create a bitmap to draw the screen into.   We want to redraw the
-    screen in black & white and put a border around it */
-
-    bmap = CreateCompatibleBitmap(screenDC, w+6, h+6);
-    hdc  = CreateCompatibleDC(NULL);
-    SelectObject(hdc, bmap);
-
-
-    /* fill the bitmap by making a white rectangle with a black border */
-
-    lb.lbStyle = BS_SOLID;
-    lb.lbColor = RGB(255,255,255);
-    lb.lbHatch = 0;
-
-    oldbrush = SelectObject(hdc, CreateBrushIndirect(&lb));
-    oldpen = SelectObject(hdc, CreatePen(PS_SOLID, 0, RGB(0,0,0)));
-    Rectangle(hdc, 0, 0, w, h);
-    SelectObject(hdc, oldbrush);
-    oldpen = SelectObject(hdc, oldpen);
-    DeleteObject(oldpen);
-    oldbrush = SelectObject(hdc, oldbrush);
-    DeleteObject(oldbrush);
-
-    /* create a black on white attribute map, so that win32_do_terminal_update
-    will paint the screen in our colors. */
-
-    i = 0;
-    while (attribute_map[i].colorindex != -1)
-        i++;
-    size = (i+1) * sizeof(Tn5250Win32Attribute);
-    mymap = (Tn5250Win32Attribute *) malloc(size);
-    memcpy(mymap, attribute_map, size);
-    for (i=0; mymap[i].colorindex != -1; i++) {
-        if ( mymap[i].colorindex == A_5250_BLACK )
-            mymap[i].fg = RGB(255,255,255);
-        else
-            mymap[i].fg = RGB(0,0,0);
-    }
-
-    /* re-draw the screen into our new bitmap */
-
-    win32_do_terminal_update(hdc, This, display, mymap, 3, 3);
-
-
-    /* start a new printer document */
-
-    memset(&di, 0, sizeof(DOCINFO));
-    di.cbSize = sizeof(DOCINFO);
-    di.lpszDocName = "TN5250 Print Screen";
-    di.lpszOutput  = (LPTSTR) NULL;
-    di.lpszDatatype= (LPTSTR) NULL;
-    di.fwType = 0;
-
-    rc = StartDoc(pd->hDC, &di);
-    if (rc == SP_ERROR) {
-        msgboxf("StartDoc() ended in error.\r\n");
-        win32_destroy_printer_info(This);       
-        return;
-    }
-
-    rc = StartPage(pd->hDC);
-    if (rc <= 0) {
-        msgboxf("StartPage() ended in error.\r\n");
-        win32_destroy_printer_info(This);       
-        return;
-    }
-
-
-    /* calculate the scaling factor:
-    a) If possible, scale the screen image so that it uses the same
-    number of logical inches on the printout as it did on the screen.
-    (we do this by dividing the printer's logical pixels per inch
-    by the screen's logical pixels per inch)
-    b) If that doesn't fit on the page, then just scale it to the width
-    of the page.
-    */
-
-    pelsX2 = (float) GetDeviceCaps(pd->hDC, LOGPIXELSX);
-    pixMax = (float) GetDeviceCaps(pd->hDC, HORZRES);
-
-    TN5250_LOG (("WIN32: PrintKey: Screen is %f pix/in, Printer is %f pix/in"
-        " and %f pix wide\n", pelsX1, pelsX2, pixMax));
-
-    if (pelsX1 > pelsX2)
-        scaleX = (pelsX1 / pelsX2);
-    else
-        scaleX = (pelsX2 / pelsX1);   
-
-    w2 = w * scaleX;
-    if (w2 > pixMax) 
-        scaleX = pixMax / w;
-    w2 = w * scaleX;
-    h2 = h * scaleX;
-
-    TN5250_LOG (("WIN32: PrintKey: Since Window is %d pixels wide, we'll "
-        "make the printer image %d by %d\n", w, w2, h2));
-
-    /* This will stretch the bitmap to the new height & width while (at the
-    same time) copying it to the printer */
-
-    if (StretchBlt(pd->hDC, 0, 0, w2, h2, hdc, x, y, w, h, SRCCOPY)==0) {
-        TN5250_LOG (("StretchBlt error %d\n", GetLastError ));
-        TN5250_ASSERT( FALSE );
-    }
-
-    /* close printer document */
-
-    EndPage(pd->hDC);
-    EndDoc(pd->hDC);
-
-    /* notify user */
-
-    MessageBox(This->data->hwndMain, "Print screen successful!",  "TN5250",
-        MB_OK|MB_ICONINFORMATION);
-}
-#endif
-
 int win32_terminal_enhanced(Tn5250Terminal *)
 {
     FUNC_ENTER();
@@ -417,15 +164,140 @@ void ForceRedraw(Tn5250Terminal * This)
     GetTerm5250(This)->PostBufferRefresh();
 }
 
+/* The 5250 screen buffer.  This contains an entry for every character
+ * on the screen.  Each element consists of the character that should
+ * be displayed, the color to draw in, and the font to use.  Each of
+ * these attributes can be found be applying the appropriate mask (e.g
+ * A_X5250_COLORMASK and A_X5250_BOLDMASK).
+ */
+unsigned int ***buf5250;
+
+/* This struct contains all the elements necessary to define a 5250
+ * field.  The contents member uses the same masks as buf5250 to
+ * define color and font attributes.
+ */
+typedef struct _field5250
+{
+  unsigned int fieldid;		/* Numeric ID of this field */
+  short inputcapable;		/* Boolean input capable */
+  short continuous;		/* Boolean is a continuous field */
+  short wordwrap;		/* Boolean is a word wrap field */
+  unsigned int attributes;	/* Field attributes (same as the
+				 * attributes of buf5250).  These are
+				 * for the whole field, but may be
+				 * overridden by the contents member */
+  unsigned int row;		/* Row field starts on */
+  unsigned int column;		/* Column field starts on */
+  unsigned int length;		/* length (in characters) of field */
+  unsigned int nextfieldprogressionid;	/* Field ID of next field cursor
+					 * should move to */
+  unsigned int contents[3564];	/* Contents of field (same as the
+				 * contents of buf5250 for the
+				 * same row and column) */
+} field5250;
+
+
+/* This struct contains all the elements necessary to define a 5250
+ * window.
+ */
+typedef struct _window5250
+{
+  unsigned int windowid;	/* Numeric ID of this window */
+  unsigned int row;		/* Row window starts on */
+  unsigned int column;		/* Column window starts on */
+  unsigned int height;		/* height (in characters) of window */
+  unsigned int width;		/* width (in characters) of window */
+  unsigned int border[4];	/* Characters used to create borders
+				 * Uses the masks as buf5250 */
+} window5250;
+
+/* This struct contains all the fields that appear (either on top or
+ * obscured by windows) on a screen.
+ *
+ * According to the docs the maximum number of input fields that can
+ * exist on a screen is 256.
+ */
+typedef struct _screenfields
+{
+  unsigned int totalfields;
+  field5250 fields[256];
+} screenfields;
+
+/* The 5250 field buffer.  This contains an entry for every screen and
+ * window.
+ */
+screenfields *fields5250 = NULL;
+
+int subwindowcount;
+
+/* This is used to define 5250 windows.  We use actual subwindows for these.
+* That is cool because we could change these to be independant windows that
+* could be moved around the desktop.  But we don't use the borders that the
+* iSeries instructs us to use.  Too bad, those borders suck anyway ;)
+*/
+window5250 *win5250 = NULL;
+
 void win32_terminal_create_window (Tn5250Terminal * This, Tn5250Display * /*d*/, Tn5250Window * window)
 {
     FUNC_ENTER4(" window width, height : x, y: %d, %d : %d, %d", window->width, window->height, window->column, window->row);
+    static int depth = 0;
+    // destroy_screen (subwindowcount);
+    ForceRedraw(This);
+
+    if (subwindowcount > (depth - 1))
+        win5250 = (window5250 *) realloc ((void *) win5250, (depth + 1) * sizeof (window5250));
+
+    win5250[subwindowcount].windowid = window->id;
+    win5250[subwindowcount].row = window->row;
+    win5250[subwindowcount].column = window->column;
+    win5250[subwindowcount].height = window->height;
+    win5250[subwindowcount].width = window->width;
+    win5250[subwindowcount].border[0] = ' ' | A_5250_BLUE | A_REVERSE;
+    win5250[subwindowcount].border[1] = ' ' | A_5250_BLUE | A_REVERSE;
+    win5250[subwindowcount].border[2] = ' ' | A_5250_BLUE | A_REVERSE;
+    win5250[subwindowcount].border[3] = ' ' | A_5250_BLUE | A_REVERSE;
+
+    /*newsubwindow(reinterpret_cast<CTerm5250 *>(This->data)->win,
+        reinterpret_cast<CTerm5250 *>(This->data)->subwindows,
+        reinterpret_cast<CTerm5250 *>(This->data)->font_info,
+        reinterpret_cast<CTerm5250 *>(This->data)->borderwidth);*/
+    ++subwindowcount;
+
+    if (subwindowcount > depth)
+    {
+        depth = subwindowcount;
+        buf5250 = (unsigned int ***)realloc (buf5250, (depth + 1) * sizeof (unsigned int **));
+        buf5250[depth] = (unsigned int **)malloc (27 * sizeof (unsigned int *));
+        for (int i = 0; i < 27; i++)
+        {
+            buf5250[depth][i] = (unsigned int *)malloc (133 * sizeof (unsigned int));
+            memset (buf5250[depth][i], 0, 133 * sizeof (unsigned int));
+        }
+        fields5250 = (screenfields *) realloc ((void *) fields5250, (depth + 1) * sizeof (screenfields));
+    }
 }
 
-void win32_terminal_destroy_window (Tn5250Terminal * This, Tn5250Display * /*d*/)
+void win32_terminal_destroy_window (Tn5250Terminal * This, Tn5250Display * /*d*/, Tn5250Window *)
 {
     FUNC_ENTER();
     ForceRedraw(This);
+    if (subwindowcount > 0)
+    {
+        for (int i = (subwindowcount - 1); i >= 0; i--)
+        {
+            //XDestroyWindow(display, reinterpret_cast<CTerm5250 *>(This->data)->subwindows[i]);
+            win5250[i].windowid = 0;
+            win5250[i].row = 0;
+            win5250[i].column = 0;
+            win5250[i].height = 0;
+            win5250[i].width = 0;
+            win5250[i].border[0] = 0;
+            win5250[i].border[1] = 0;
+            win5250[i].border[2] = 0;
+            win5250[i].border[3] = 0;
+        }
+        subwindowcount = 0;
+    }
 }
 
 void win32_terminal_create_scrollbar (Tn5250Terminal * This, Tn5250Display * /*d*/, Tn5250Scrollbar * /*scrollbar*/)
