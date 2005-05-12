@@ -29,4 +29,18 @@ if not exist test.pvk makecert -n CN=%EmailAddress% -sv test.PVK test.cer
 if not exist test.spc cert2spc test.cer test.spc
 signcode /spc test.spc /v test.pvk %TargetP%\a5250.cab
 
+:: Create the ZIP file if in Release
+if not "%TargetP%"=="Release" goto :END
+if not exist "c:\Program Files\7-Zip\7z.exe" goto CANTZIP
+:: Do this in two pass so the directory name isn't preserved
+"c:\Program Files\7-Zip\7z.exe" a -tzip %TargetP%\A5250.zip ReadMe.txt Term5250.htm
+cd %TargetP%
+"c:\Program Files\7-Zip\7z.exe" a -tzip A5250.zip A5250.Cab
+cd ..
+goto :END
+
+:CANTZIP
+echo Can't create a zip if 7-Zip isn't installed in it's default directory.
+
+:END
 endlocal
