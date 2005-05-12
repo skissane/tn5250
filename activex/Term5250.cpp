@@ -186,6 +186,7 @@ CTerm5250::CTerm5250() throw()
 {
     FUNC_ENTER();
     dbgSetThreadName("CTerm5250 Thread");
+    memset(&term, 0, sizeof(term));
     term.data = (_Tn5250TerminalPrivate *)this;     // Should be fixed one day...
     term.conn_fd = (SOCKET)-1;
     // They are never called anyway!
