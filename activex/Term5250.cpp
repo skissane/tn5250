@@ -697,8 +697,9 @@ STDMETHODIMP CTerm5250::Connect()
     if ( !m_HostName.m_str || !m_HostName.Length() )
         return E_INVALIDARG;
 
-    // Saves settings
-    tn5250_config_set(config, "enhanced", m_bEnhanced?"true":"false");
+    // Temporarilly disable enhanced protocol because it is unstable.
+    //tn5250_config_set(config, "enhanced", m_bEnhanced?"true":"false");
+    tn5250_config_set(config, "enhanced", "false");
     {
         ATL::CW2A szHost(m_HostName);
         tn5250_config_set(config, "host", szHost);
