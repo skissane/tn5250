@@ -189,7 +189,7 @@
 #define HAVE_LIBSSL 1
 
 /* Version number of package */
-#define TN5250_LIB_VERSION "0.17.0.2"
+#define TN5250_LIB_VERSION "0.17.0.3"
 #define VERSION TN5250_LIB_VERSION
 #define PACKAGE "Cardinal Health"
 #define SYSCONFDIR 
