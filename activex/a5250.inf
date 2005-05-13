@@ -4,9 +4,9 @@ AdvancedINF=2.0
 
 [Add.Code]
 a5250.dll=a5250.dll
-libeay32.dll=libeay32.dll
-ssleay32.dll=ssleay32.dll
-msvcr71.dll=msvcr71.dll
+; libeay32.dll=libeay32.dll
+; ssleay32.dll=ssleay32.dll
+; msvcr71.dll=msvcr71.dll
 
 ; My file
 [a5250.dll]
@@ -16,17 +16,17 @@ FileVersion=1,17,0,3
 RegisterServer=yes 
 
 ; Should be got from MS site...
-[msvcr71.dll]
-file-win32-x86=thiscab
+; [msvcr71.dll]
+; file-win32-x86=thiscab
 ; Put this one in system32
-DestDir=11
-
-; Only for SSL support
-[libeay32.dll]
-file-win32-x86=thiscab
 ; DestDir=11
 
 ; Only for SSL support
-[ssleay32.dll]
-file-win32-x86=thiscab
+; [libeay32.dll]
+; file-win32-x86=thiscab
+; DestDir=11
+
+; Only for SSL support
+; [ssleay32.dll]
+; file-win32-x86=thiscab
 ; DestDir=11
