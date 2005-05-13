@@ -10,12 +10,12 @@ REM The OpenSSL Path to include the DLLs in the CAB file
 set OPENSSL=..\..\openssl\dll
 REM If NOT using SSL, set this empty (saves some kb)
 set OPENSSLFILES=
-if "%2"=="dll" set OPENSSLFILES=%OPENSSL%\libeay32.dll %OPENSSL%\ssleay32.dll
+if /I "%2"=="dll" set OPENSSLFILES=%OPENSSL%\libeay32.dll %OPENSSL%\ssleay32.dll
 REM ELSE Specify which of them.
 
 REM If using MSVCRT.DLL
 set MSVCRTDLL=
-if "%2"=="crt" set MSVCRTDLL=%systemroot%\system32\msvcr71.dll %systemroot%\system32\msvcp71.dll
+if /I "%2"=="crt" set MSVCRTDLL=%systemroot%\system32\msvcr71.dll %systemroot%\system32\msvcp71.dll
 
 set TargetP=%1
 if "%TargetP%" == "" set TargetP=Release
@@ -30,7 +30,7 @@ if not exist test.spc cert2spc test.cer test.spc
 signcode /spc test.spc /v test.pvk %TargetP%\a5250.cab
 
 :: Create the ZIP file if in Release
-if not "%TargetP%"=="Release" goto :END
+if not /I "%TargetP%"=="Release" goto :END
 if not exist "c:\Program Files\7-Zip\7z.exe" goto CANTZIP
 :: Do this in two pass so the directory name isn't preserved
 "c:\Program Files\7-Zip\7z.exe" a -tzip %TargetP%\A5250.zip ReadMe.txt Term5250.htm
