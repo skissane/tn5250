@@ -1,3 +1,10 @@
+2005-08-20  Carey Evans  <carey.evans@gmail.com>
+
+	* index.xml: Change Lindows to Linspire.
+
+	* resources.xml: Add 5494 User's Guide.  Link to pwsubciw.zip
+	directly on the web server.
+
 2005-05-02  Carey Evans  <carey.evans@gmail.com>
 
 	* index.xml: Fix iSeries, iSeries Access, and WinCVS links.
