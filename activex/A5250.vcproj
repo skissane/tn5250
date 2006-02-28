@@ -23,7 +23,7 @@
 				Name="VCCLCompilerTool"
 				AdditionalOptions="/Wall"
 				Optimization="0"
-				AdditionalIncludeDirectories=".;..\tn5250\src;..\..\openssl\include"
+				AdditionalIncludeDirectories=".;..\tn5250\lib5250;..\..\openssl\include"
 				PreprocessorDefinitions="WIN32;_WINDOWS;_DEBUG;_USRDLL"
 				StringPooling="TRUE"
 				BasicRuntimeChecks="3"
@@ -102,7 +102,7 @@
 				OmitFramePointers="TRUE"
 				EnableFiberSafeOptimizations="TRUE"
 				OptimizeForWindowsApplication="TRUE"
-				AdditionalIncludeDirectories=".;..\tn5250\src;..\..\openssl\include"
+				AdditionalIncludeDirectories=".;..\tn5250\lib5250;..\..\openssl\include"
 				PreprocessorDefinitions="WIN32;_WINDOWS;NDEBUG;_USRDLL"
 				StringPooling="TRUE"
 				RuntimeLibrary="0"
@@ -185,7 +185,7 @@
 				OmitFramePointers="TRUE"
 				EnableFiberSafeOptimizations="TRUE"
 				OptimizeForWindowsApplication="TRUE"
-				AdditionalIncludeDirectories=".;..\tn5250\src;..\..\openssl\include"
+				AdditionalIncludeDirectories=".;..\tn5250\lib5250;..\..\openssl\include"
 				PreprocessorDefinitions="WIN32;_WINDOWS;NDEBUG;_USRDLL"
 				StringPooling="TRUE"
 				RuntimeLibrary="2"
@@ -441,6 +441,9 @@
 			Name="Header Files"
 			Filter="h;hpp;hxx;hm;inl;inc;xsd"
 			UniqueIdentifier="{93995380-89BD-4b04-88EB-625FBE52EBFB}">
+			<File
+				RelativePath=".\config.h">
+			</File>
 			<File
 				RelativePath=".\DlgConnect.h">
 			</File>
