@@ -5,10 +5,6 @@
 	Name="A5250"
 	ProjectGUID="{A3E0B12E-F7C1-4B55-8C20-F9BA9EE35342}"
 	RootNamespace="A5250"
-	SccProjectName="&quot;$/Deployment/tn5250&quot;, WUHAAAAA"
-	SccAuxPath=""
-	SccLocalPath=".."
-	SccProvider="MSSCCI:Microsoft Visual SourceSafe"
 	Keyword="AtlProj">
 	<Platforms>
 		<Platform
@@ -473,6 +469,9 @@
 				RelativePath=".\tn5250-config.h">
 			</File>
 			<File
+				RelativePath=".\tn5250-private.h">
+			</File>
+			<File
 				RelativePath=".\TypeLib.h">
 			</File>
 			<File
@@ -559,113 +558,113 @@
 				Name="C"
 				Filter="cpp;c">
 				<File
-					RelativePath="..\tn5250\src\buffer.c">
+					RelativePath="..\tn5250\lib5250\buffer.c">
 				</File>
 				<File
-					RelativePath="..\tn5250\src\conf.c">
+					RelativePath="..\tn5250\lib5250\conf.c">
 				</File>
 				<File
-					RelativePath="..\tn5250\src\dbuffer.c">
+					RelativePath="..\tn5250\lib5250\dbuffer.c">
 				</File>
 				<File
-					RelativePath="..\tn5250\src\display.c">
+					RelativePath="..\tn5250\lib5250\display.c">
 				</File>
 				<File
-					RelativePath="..\tn5250\src\field.c">
+					RelativePath="..\tn5250\lib5250\field.c">
 				</File>
 				<File
-					RelativePath="..\tn5250\src\macro.c">
+					RelativePath="..\tn5250\lib5250\macro.c">
 				</File>
 				<File
-					RelativePath="..\tn5250\src\menu.c">
+					RelativePath="..\tn5250\lib5250\menu.c">
 				</File>
 				<File
-					RelativePath="..\tn5250\src\record.c">
+					RelativePath="..\tn5250\lib5250\record.c">
 				</File>
 				<File
-					RelativePath="..\tn5250\src\scrollbar.c">
+					RelativePath="..\tn5250\lib5250\scrollbar.c">
 				</File>
 				<File
-					RelativePath="..\tn5250\src\session.c">
+					RelativePath="..\tn5250\lib5250\session.c">
 				</File>
 				<File
-					RelativePath="..\tn5250\src\sslstream.c">
+					RelativePath="..\tn5250\lib5250\sslstream.c">
 				</File>
 				<File
-					RelativePath="..\tn5250\src\stream.c">
+					RelativePath="..\tn5250\lib5250\stream.c">
 				</File>
 				<File
-					RelativePath="..\tn5250\src\telnetstr.c">
+					RelativePath="..\tn5250\lib5250\telnetstr.c">
 				</File>
 				<File
-					RelativePath="..\tn5250\src\terminal.c">
+					RelativePath="..\tn5250\lib5250\terminal.c">
 				</File>
 				<File
-					RelativePath="..\tn5250\src\utility.c">
+					RelativePath="..\tn5250\lib5250\utility.c">
 				</File>
 				<File
-					RelativePath="..\tn5250\src\window.c">
+					RelativePath="..\tn5250\lib5250\window.c">
 				</File>
 				<File
-					RelativePath="..\tn5250\src\wtd.c">
+					RelativePath="..\tn5250\lib5250\wtd.c">
 				</File>
 			</Filter>
 			<Filter
 				Name="H"
 				Filter="h">
 				<File
-					RelativePath="..\tn5250\src\buffer.h">
+					RelativePath="..\tn5250\lib5250\buffer.h">
 				</File>
 				<File
-					RelativePath="..\tn5250\src\codes5250.h">
+					RelativePath="..\tn5250\lib5250\codes5250.h">
 				</File>
 				<File
-					RelativePath="..\tn5250\src\conf.h">
+					RelativePath="..\tn5250\lib5250\conf.h">
 				</File>
 				<File
-					RelativePath="..\tn5250\src\dbuffer.h">
+					RelativePath="..\tn5250\lib5250\dbuffer.h">
 				</File>
 				<File
-					RelativePath="..\tn5250\src\display.h">
+					RelativePath="..\tn5250\lib5250\display.h">
 				</File>
 				<File
-					RelativePath="..\tn5250\src\field.h">
+					RelativePath="..\tn5250\lib5250\field.h">
 				</File>
 				<File
-					RelativePath="..\tn5250\src\macro.h">
+					RelativePath="..\tn5250\lib5250\macro.h">
 				</File>
 				<File
-					RelativePath="..\tn5250\src\menu.h">
+					RelativePath="..\tn5250\lib5250\menu.h">
 				</File>
 				<File
-					RelativePath="..\tn5250\src\record.h">
+					RelativePath="..\tn5250\lib5250\record.h">
 				</File>
 				<File
-					RelativePath="..\tn5250\src\scrollbar.h">
+					RelativePath="..\tn5250\lib5250\scrollbar.h">
 				</File>
 				<File
-					RelativePath="..\tn5250\src\session.h">
+					RelativePath="..\tn5250\lib5250\session.h">
 				</File>
 				<File
-					RelativePath="..\tn5250\src\stream.h">
+					RelativePath="..\tn5250\lib5250\stream.h">
 				</File>
 				<File
-					RelativePath="..\tn5250\src\terminal.h">
+					RelativePath="..\tn5250\lib5250\terminal.h">
 				</File>
 				<File
-					RelativePath="..\tn5250\src\tn5250-private.h">
+					RelativePath="..\tn5250\lib5250\tn5250-private.h">
 				</File>
 				<File
-					RelativePath="..\tn5250\src\transmaps.h">
+					RelativePath="..\tn5250\lib5250\transmaps.h">
 				</File>
 				<File
-					RelativePath="..\tn5250\src\utility.h">
+					RelativePath="..\tn5250\lib5250\utility.h">
 				</File>
 				<File
-					RelativePath="..\tn5250\src\window.h">
+					RelativePath="..\tn5250\lib5250\window.h">
 				</File>
 				<File
-					RelativePath="..\tn5250\src\wtd.h">
+					RelativePath="..\tn5250\lib5250\wtd.h">
 				</File>
 			</Filter>
 		</Filter>
