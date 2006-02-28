@@ -1,3 +1,6 @@
+// (c) 2005-2006 Marc-Antoine Ruel
+//
+// "Magical" code that helps to easily remap any key
 #pragma once
 #include "Term.h"
 
