@@ -74,15 +74,15 @@ Win32 Installer from our files area</a>.</li>
 </ul>
 
 <p>Finally, you can get the latest tn5250 sources from anonymous CVS, or just
-<a href="http://cvs.sourceforge.net/cgi-bin/viewcvs.cgi/tn5250/tn5250/">browse
+<a href="http://tn5250.cvs.sourceforge.net/tn5250/tn5250/">browse
 them online</a>.</p>
 
 <p>To check out the main branch of tn5250 via anonymous CVS,
 enter the following commands.
 When asked for a password for ‘anonymous’, just press Enter.</p>
 
-<pre>cvs -d:pserver:anonymous@cvs.sourceforge.net:/cvsroot/tn5250 login
-cvs -z3 -d:pserver:anonymous@cvs.sourceforge.net:/cvsroot/tn5250 co tn5250</pre>
+<pre>cvs -d:pserver:anonymous@tn5250.cvs.sourceforge.net:/cvsroot/tn5250 login
+cvs -z3 -d:pserver:anonymous@tn5250.cvs.sourceforge.net:/cvsroot/tn5250 co -P tn5250</pre>
 
 <p>To build the Unix version of tn5250 from CVS, you’ll need automake,
 autoconf, libtool and ncurses.  Run <kbd>./autogen.sh</kbd>, 
@@ -123,7 +123,7 @@ related documentation</a> on this site.</p>
 <p><a href="http://tn5250j.sourceforge.net/">tn5250j</a> is a 5250
 emulator written in Java.</p>
 
-<p><a href="http://www.geocities.com/SiliconValley/Peaks/7814/">x3270</a>
+<p><a href="http://x3270.bgp.nu/">x3270</a>
 implements the tn3270 protocol, which is very similar to tn5250.</p>
 
 </body>
